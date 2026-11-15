@@ -11,8 +11,6 @@
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACBklEQVR42u3dsW0CQRCG0WPlAnB2JUAtBG7BFThw4CIICFwBLRBQCy2QuQUHJEiYzDPLLO9r4Bfep5NPQuxiOa8m6a+aP4HgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOASH4BAcgkOCQ3AIDsEhOASH4BAcgkNwSHAIDsEhOJTRy9gfb/N+ip447teeHGT0XIGj6pmN6qORwccT4eh1TuP58LYiOASH4BAcgkNwCA7BITgEhwSH4BAcgkNwCA7BITgEh+CQ4BAcgkNwCA7BITgEh+AQHBIcgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcGhyr+y/t919R098fX44yHpPjgQZaStwVD0zPirhyD8tPmrg6HVOfHhbERyCQ3AIDsEhOASHBIfgEByain+f45n7OczRE69vZ08OMjqswFFYRvQWHLVlhC7CUV5G3C4cgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcAgOCQ7BITgEh+AQHIJDcAgOwSHBITgEhx4eR6+7PC+7x/26y/plN/S3H6fc35xsw9z1er2Y7+N6Md9H0GIb4y7g261MH7dbmT7ittoAd0XfW8nxcW8lx0foymI5r/znJW8rgkNwCA7BITgEh+AQHIJDgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDQ/ULTltTDbdxFiMAAAAASUVORK5CYII=">
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACBklEQVR42u3dsW0CQRCG0WPlAnB2JUAtBG7BFThw4CIICFwBLRBQCy2QuQUHJEiYzDPLLO9r4Bfep5NPQuxiOa8m6a+aP4HgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOASH4BAcgkOCQ3AIDsEhOASH4BAcgkNwSHAIDsEhOJTRy9gfb/N+ip447teeHGT0XIGj6pmN6qORwccT4eh1TuP58LYiOASH4BAcgkNwCA7BITgEhwSH4BAcgkNwCA7BITgEh+CQ4BAcgkNwCA7BITgEh+AQHBIcgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcGhyr+y/t919R098fX44yHpPjgQZaStwVD0zPirhyD8tPmrg6HVOfHhbERyCQ3AIDsEhOASHBIfgEByain+f45n7OczRE69vZ08OMjqswFFYRvQWHLVlhC7CUV5G3C4cgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcAgOCQ7BITgEh+AQHIJDcAgOwSHBITgEhx4eR6+7PC+7x/26y/plN/S3H6fc35xsw9z1er2Y7+N6Md9H0GIb4y7g261MH7dbmT7ittoAd0XfW8nxcW8lx0foymI5r/znJW8rgkNwCA7BITgEh+AQHIJDgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDQ/ULTltTDbdxFiMAAAAASUVORK5CYII=">
 <title>Podium Maths Trainer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 <style>
 /* Layout idea: one calm column, answer-sheet lozenges as the signature control, medal colours only for rewards. */
 :root{
@@ -1173,8 +1171,8 @@ function vAccount() {
   </section>
   <section class="card">
     <span class="eyebrow">Offline</span>
-    <h2>Works without a connection once it has loaded</h2>
-    <p class="muted">Every question, solution and flashcard is inside the page, so nothing needs the internet after it opens. For a copy that opens with no signal at all, save the offline file and open it from your device. Use a backup code to bring your progress across.</p>
+    <h2>${window.OFFLINE_READY ? 'Ready to use offline' : window.OFFLINE_CAPABLE ? 'Not saved for offline yet' : 'Works without a connection once it has loaded'}</h2>
+    <p class="muted">${window.OFFLINE_READY ? 'A full copy of the app is stored on this device. You can open it with no signal.' : window.OFFLINE_CAPABLE ? 'Stay connected for a few seconds, then close and reopen the app. This message changes when the copy is stored.' : 'Every question, solution and flashcard is inside the page, so nothing needs the internet after it opens.'}</p>
   </section>
   <section class="card"><span class="eyebrow">Danger zone</span>
     <button class="btn danger small" data-act="reset">${CONFIRM ? 'Tap again to erase everything' : 'Reset all progress'}</button>
@@ -1308,8 +1306,17 @@ if (typeof document !== 'undefined' && app) { render(); cloudInit(); }
 
 </script>
 <script>
-if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
-  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+window.OFFLINE_CAPABLE = 'serviceWorker' in navigator && /^https?:$/.test(location.protocol);
+if (window.OFFLINE_CAPABLE) {
+  navigator.serviceWorker.register('sw.js').then(function () { return navigator.serviceWorker.ready; }).then(function () {
+    return caches.match('./').then(function (hit) {
+      if (!hit) return;
+      window.OFFLINE_READY = true;
+      var first = false; try { first = !localStorage.getItem('podium.offline'); localStorage.setItem('podium.offline', '1'); } catch (e) {}
+      if (first) toast('Ready to use offline', 'good');
+      if (!MODE && route() === 'account') render();
+    });
+  }).catch(function () {});
 }
 </script>
 </body>

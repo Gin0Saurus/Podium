@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Podium">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#edf0f5">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACBklEQVR42u3dsW0CQRCG0WPlAnB2JUAtBG7BFThw4CIICFwBLRBQCy2QuQUHJEiYzDPLLO9r4Bfep5NPQuxiOa8m6a+aP4HgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOASH4BAcgkOCQ3AIDsEhOASH4BAcgkNwSHAIDsEhOJTRy9gfb/N+ip447teeHGT0XIGj6pmN6qORwccT4eh1TuP58LYiOASH4BAcgkNwCA7BITgEhwSH4BAcgkNwCA7BITgEh+CQ4BAcgkNwCA7BITgEh+AQHBIcgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcGhyr+y/t919R098fX44yHpPjgQZaStwVD0zPirhyD8tPmrg6HVOfHhbERyCQ3AIDsEhOASHBIfgEByain+f45n7OczRE69vZ08OMjqswFFYRvQWHLVlhC7CUV5G3C4cgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcAgOCQ7BITgEh+AQHIJDcAgOwSHBITgEhx4eR6+7PC+7x/26y/plN/S3H6fc35xsw9z1er2Y7+N6Md9H0GIb4y7g261MH7dbmT7ittoAd0XfW8nxcW8lx0foymI5r/znJW8rgkNwCA7BITgEh+AQHIJDgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDQ/ULTltTDbdxFiMAAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACBklEQVR42u3dsW0CQRCG0WPlAnB2JUAtBG7BFThw4CIICFwBLRBQCy2QuQUHJEiYzDPLLO9r4Bfep5NPQuxiOa8m6a+aP4HgEByCQ3AIDsEhOASH4BAcEhyCQ3AIDsEhOASH4BAcgkOCQ3AIDsEhOASH4BAcgkNwSHAIDsEhOJTRy9gfb/N+ip447teeHGT0XIGj6pmN6qORwccT4eh1TuP58LYiOASH4BAcgkNwCA7BITgEhwSH4BAcgkNwCA7BITgEh+CQ4BAcgkNwCA7BITgEh+AQHBIcgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcGhyr+y/t919R098fX44yHpPjgQZaStwVD0zPirhyD8tPmrg6HVOfHhbERyCQ3AIDsEhOASHBIfgEByain+f45n7OczRE69vZ08OMjqswFFYRvQWHLVlhC7CUV5G3C4cgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDcAgOCQ7BITgEh+AQHIJDcAgOwSHBITgEhx4eR6+7PC+7x/26y/plN/S3H6fc35xsw9z1er2Y7+N6Md9H0GIb4y7g261MH7dbmT7ittoAd0XfW8nxcW8lx0foymI5r/znJW8rgkNwCA7BITgEh+AQHIJDgkNwCA7BITgEh+AQHIJDcEhwCA7BITgEh+AQHIJDQ/ULTltTDbdxFiMAAAAASUVORK5CYII=">
+<title>Podium Maths Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: one calm column, answer-sheet lozenges as the signature control, medal colours only for rewards. */
+:root{
+  --bg:#edf0f5;--surface:#ffffff;--surface2:#f5f7fa;--ink:#101828;--muted:#566175;--line:#d7dce6;
+  --accent:#2446f5;--accent-ink:#ffffff;--accent-soft:#e3e8ff;
+  --good:#0f7a57;--good-soft:#dbf2e8;--bad:#c2362c;--bad-soft:#fbe4e1;--gold:#b98200;--gold-soft:#fff2cc;--flame:#e8590c;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;--shadow:0 1px 2px rgba(16,24,40,.06),0 6px 20px rgba(16,24,40,.05);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1019;--surface:#141b29;--surface2:#1a2233;--ink:#edf1f8;--muted:#9aa6ba;--line:#283247;
+  --accent:#8799ff;--accent-ink:#0b1019;--accent-soft:#1e2852;
+  --good:#4fd1a1;--good-soft:#11372c;--bad:#ff8a7f;--bad-soft:#45201d;--gold:#ffc940;--gold-soft:#3d3110;--flame:#ff8a3d;
+  --shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1019;--surface:#141b29;--surface2:#1a2233;--ink:#edf1f8;--muted:#9aa6ba;--line:#283247;
+  --accent:#8799ff;--accent-ink:#0b1019;--accent-soft:#1e2852;
+  --good:#4fd1a1;--good-soft:#11372c;--bad:#ff8a7f;--bad-soft:#45201d;--gold:#ffc940;--gold-soft:#3d3110;--flame:#ff8a3d;
+  --shadow:0 1px 2px rgba(0,0,0,.4);color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding-bottom:84px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:1.7rem;line-height:1.15;font-weight:700}
+h2{font-size:1.15rem;line-height:1.25;font-weight:650}
+p{margin:0}
+a{color:var(--accent)}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg.fill{fill:currentColor;stroke:none}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.74rem;font-weight:650;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.hint{font-size:.85rem;color:var(--muted)}
+.empty{color:var(--muted);padding:18px;border:1px dashed var(--line);border-radius:var(--r)}
+
+.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top-in{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px}
+.logo{display:flex;align-items:center;gap:8px;font:700 1.2rem var(--display);color:var(--ink);text-decoration:none;margin-right:auto}
+.logo svg{width:26px;height:26px;stroke:none}
+.stat{display:flex;align-items:center;gap:4px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat.flame svg{color:var(--flame)}.stat.bolt svg{color:var(--gold)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 6px 10px}
+nav a{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:10px;color:var(--muted);text-decoration:none;font-size:.7rem;font-weight:600}
+nav a[aria-current="page"]{color:var(--accent);background:var(--accent-soft)}
+body.focus nav{display:none}body.focus{padding-bottom:24px}
+@media (min-width:820px){
+  body{padding-bottom:32px}
+  nav{position:static;border:0;background:none;padding:0;gap:4px;justify-content:flex-start;flex:1}
+  nav a{flex:none;flex-direction:row;gap:6px;padding:8px 12px;font-size:.9rem;max-width:none}
+  .logo{margin-right:8px}
+  body.focus nav{display:flex;visibility:hidden}
+}
+main{max-width:860px;margin:0 auto;padding:20px 16px;display:flex;flex-direction:column;gap:16px}
+.page-head{display:flex;flex-direction:column;gap:4px}
+.section{font-size:.95rem;margin-top:8px;color:var(--muted);font-family:var(--body);font-weight:650}
+
+.row{display:flex;align-items:center}.between{justify-content:space-between;gap:12px}.gap{gap:10px}.wrap{flex-wrap:wrap}.centerrow{justify-content:center}
+.card,.hero,.qcard,.tile,.deck,.rowbtn,.rowstat,.badge{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.card{padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.card>.bar,.card>.row,.card>dl,.card>.heat{align-self:stretch}
+.card.done{opacity:.7}.card.accent{border-color:var(--accent)}
+.hero{padding:22px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);border-top:4px solid var(--accent)}
+.hero-top{display:flex;justify-content:space-between;gap:10px}
+.cards2{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{padding:14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile b{font:700 1.6rem/1.1 var(--display);font-variant-numeric:tabular-nums}
+.tile b small{font-size:.9rem;color:var(--muted);font-weight:600}
+.tile span{font-size:.8rem;color:var(--muted)}
+.tile-ic{color:var(--accent)}.tile-ic.flame{color:var(--flame)}.tile-ic.bolt{color:var(--gold)}
+.tile .bar{margin-top:6px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:650;text-decoration:none;color:var(--ink);transition:transform .08s,background .15s}
+.btn:hover{background:var(--surface2)}.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 3px 0 color-mix(in srgb,var(--accent) 65%,#000)}
+.btn.primary:hover{filter:brightness(1.06);background:var(--accent)}.btn.primary:active{box-shadow:none;transform:translateY(3px)}
+.btn.wide{width:100%}.btn.small{padding:7px 12px;font-size:.88rem;border-radius:10px}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.link{background:none;border:0;padding:0;color:var(--accent);font-weight:650;text-decoration:underline}
+.icon{background:none;border:0;padding:6px;border-radius:8px;color:var(--muted);display:flex}
+.pill{font-size:.78rem;font-weight:650;padding:3px 10px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good);border-color:transparent}.pill.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 6px;margin:0 -16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--surface);font-weight:650;font-size:.9rem;color:var(--muted)}
+.chip[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.bar{display:block;height:6px;border-radius:99px;background:var(--line);overflow:hidden;width:100%}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--accent);transition:width .4s}
+.bar.big{height:10px}.bar.warn i{background:var(--bad)}
+.dots{display:inline-flex;gap:3px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--ink)}
+
+.list{display:flex;flex-direction:column;gap:8px}
+.rowbtn,.rowstat{display:flex;align-items:center;gap:12px;padding:14px 16px;text-align:left;width:100%}
+.rowbtn:hover{border-color:var(--accent)}
+.rowbtn-main{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+.rowbtn-main small{color:var(--muted);font-size:.84rem}
+.rowbtn-go{color:var(--accent);display:flex}
+.score{font:700 1.3rem var(--display);font-variant-numeric:tabular-nums}.score small{font-size:.8rem;color:var(--muted)}
+
+.run{display:flex;flex-direction:column;gap:14px;max-width:680px;margin:0 auto;width:100%}
+.run-top{display:flex;align-items:center;gap:12px}
+.run-top.mock{justify-content:space-between}
+.count{font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.timer{font:700 1.3rem var(--display);font-variant-numeric:tabular-nums;padding:4px 14px;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+.qcard{padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.qcard.center{align-items:center;text-align:center;padding:32px 20px}
+.qmeta{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.82rem;color:var(--muted);font-weight:600}
+.stem{font-size:1.12rem;line-height:1.5;max-width:62ch}
+.stem sup,.opt sup,.fb sup{font-size:.7em}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts.two{display:grid;grid-template-columns:1fr 1fr;width:100%}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);text-align:left;font-size:1.02rem;transition:border-color .12s,background .12s}
+.opt.mid{justify-content:center;font:650 1.15rem var(--display);padding:16px}
+.opt:not(:disabled):hover{border-color:var(--accent);background:var(--accent-soft)}
+/* The lozenge mirrors the pencil-in boxes on the real answer sheet */
+.loz{flex:none;width:34px;height:22px;border:1.5px solid var(--muted);border-radius:6px;display:grid;place-items:center;font:700 .78rem var(--body);color:var(--muted)}
+.opt.picked{border-color:var(--ink);background:var(--surface2)}
+.opt.picked .loz{background:repeating-linear-gradient(115deg,var(--ink) 0 2px,color-mix(in srgb,var(--ink) 78%,transparent) 2px 4px);color:var(--bg);border-color:var(--ink)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}.opt.right .loz{background:var(--good);border-color:var(--good);color:var(--surface)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}.opt.wrong .loz{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.opt.dim{opacity:.55}.opt:disabled{cursor:default}
+.numform{display:flex;flex-direction:column;gap:8px}.numform label{font-size:.88rem;color:var(--muted)}
+.numform input{width:130px;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font:700 1.2rem var(--display)}
+.fb{padding:18px;border-radius:var(--r);background:var(--surface);border:1.5px solid var(--line);display:flex;flex-direction:column;gap:12px;animation:rise .25s ease-out}
+.fb.good{background:var(--good-soft);border-color:var(--good)}.fb.bad{background:var(--bad-soft);border-color:var(--bad)}
+.fb-head{display:flex;align-items:center;gap:8px}.fb-head b{flex:1}
+.fb.good .fb-ic{color:var(--good)}.fb.bad .fb-ic{color:var(--bad)}.fb-ic{display:flex}
+.xp{font-weight:700;color:var(--gold);background:var(--gold-soft);padding:2px 10px;border-radius:99px;font-size:.85rem;white-space:nowrap}
+.bigscore{font:800 4rem/1 var(--display);font-variant-numeric:tabular-nums}.bigscore small{font-size:1.5rem;color:var(--muted)}
+.sprintq{font:700 2.2rem var(--display)}
+.flash-good{animation:fg .35s}.flash-bad{animation:fbad .35s}
+@keyframes fg{from{background:var(--good-soft)}}@keyframes fbad{from{background:var(--bad-soft)}}
+@keyframes rise{from{transform:translateY(8px);opacity:.4}}
+.flagbtn{display:inline-flex;align-items:center;gap:4px;background:none;border:1.5px solid var(--line);border-radius:8px;padding:4px 10px;font-size:.82rem;font-weight:650;color:var(--muted)}
+.flagbtn svg{width:15px;height:15px}.flagbtn.on{color:var(--flame);border-color:var(--flame)}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+.qgrid button{aspect-ratio:1;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);font-weight:650;font-size:.85rem;font-variant-numeric:tabular-nums;color:var(--muted)}
+.qgrid .ans{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.qgrid .flag{box-shadow:inset 0 -4px 0 var(--flame)}
+.qgrid .cur{outline:2.5px solid var(--accent);outline-offset:1px}
+
+.flash{min-height:260px;padding:26px;border-radius:18px;border:1.5px solid var(--line);background:var(--surface);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.flash.flipped{background:var(--accent-soft);border-color:var(--accent)}
+.flash-t{font-size:1.2rem;line-height:1.45;max-width:46ch}
+.deck{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.deck>.row.gap{align-items:flex-start;flex-wrap:wrap}
+.readlist{flex:1 1 100%;order:3}.readlist summary{list-style:none;display:inline-flex}.readlist summary::-webkit-details-marker{display:none}
+.deck>.row.gap{position:relative}
+.readlist[open] summary{background:var(--surface2)}
+.readlist ul{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.readlist li{display:flex;flex-direction:column;gap:2px;padding-left:12px;border-left:3px solid var(--line)}
+.readlist li span{color:var(--muted);font-size:.94rem}
+.guide{margin:0;display:flex;flex-direction:column}
+.guide div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.guide dt{font-weight:650;font-size:.88rem;color:var(--muted)}.guide dd{margin:0}
+@media (max-width:440px){.guide div{grid-template-columns:1fr;gap:2px}.grid3{gap:6px}.tile{padding:10px}.tile b{font-size:1.3rem}}
+
+.heat{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;max-width:340px}
+.heat i{aspect-ratio:1;border-radius:6px;background:var(--line)}
+.heat .h1{background:color-mix(in srgb,var(--accent) 35%,var(--line))}.heat .h2{background:color-mix(in srgb,var(--accent) 65%,var(--line))}.heat .h3{background:var(--accent)}
+.fold{padding:0;gap:0}.fold summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;flex-direction:column;gap:8px;align-self:stretch}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary span{display:flex;justify-content:space-between;gap:10px}.fold summary small{color:var(--muted)}
+.topics{align-self:stretch;padding:4px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.topicrow{display:grid;grid-template-columns:minmax(120px,1.2fr) 2fr 70px;gap:10px;align-items:center;font-size:.9rem}
+.topicrow .num{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;font-size:.82rem}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.badge{padding:14px;display:flex;flex-direction:column;gap:4px;color:var(--muted)}
+.badge small{font-size:.8rem}.badge .medal{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);border:1.5px dashed var(--line)}
+.badge.got{color:var(--ink);border-color:var(--gold)}.badge.got .medal{background:var(--gold-soft);color:var(--gold);border:1.5px solid var(--gold)}
+.settings label{display:flex;flex-direction:column;gap:4px;font-weight:650;font-size:.9rem}
+.settings input,.settings select{padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);min-width:200px}
+.review{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.review summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.review summary::-webkit-details-marker{display:none}
+.review .num{width:26px;font-weight:700;font-variant-numeric:tabular-nums}.rv-t{flex:1;color:var(--muted);font-size:.9rem}
+.rv-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+#toasts{position:fixed;top:64px;left:0;right:0;z-index:20;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 16px}
+.toast{background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:650;font-size:.92rem;box-shadow:var(--shadow);animation:rise .25s;transition:opacity .4s}
+.toast.gold{background:var(--gold);color:#1a1300}.toast.good{background:var(--good);color:var(--surface)}.toast.out{opacity:0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+svg.fig{width:100%;max-width:270px;height:auto;align-self:center;stroke-width:1.6;overflow:visible}
+.fig .soft{fill:var(--accent-soft)}.fig .paper{fill:var(--surface)}.fig .dash{stroke-dasharray:5 4}.fig .dot{fill:currentColor}
+.fig text{fill:currentColor;stroke:none;font:600 13px var(--body)}
+.review .fig{align-self:flex-start}
+.me{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font:700 .9rem var(--display);text-decoration:none}
+.field{display:flex;flex-direction:column;gap:4px;font-weight:650;font-size:.9rem;align-self:stretch}
+.field input,.field textarea,.settings input{padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:400}
+.field textarea{font:400 .8rem ui-monospace,Menlo,Consolas,monospace;word-break:break-all;resize:vertical;width:100%}
+.qgrid.sheet .c{background:var(--good);border-color:var(--good);color:var(--surface)}
+.qgrid.sheet .w{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.bigscore.small{font-size:2.4rem}
+.run-top h2{flex:1}
+a.btn{text-decoration:none}
+
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="logo" href="#home" aria-label="Podium home"><svg viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="13" width="8" height="12" rx="1.500" fill="var(--muted)"/><rect x="9" y="5" width="8" height="20" rx="1.500" fill="var(--accent)"/><rect x="17" y="16" width="8" height="9" rx="1.500" fill="var(--gold)"/></svg>Podium</a>
+  <nav aria-label="Main">
+    <a href="#home"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>Home</a>
+    <a href="#practice"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>Practice</a>
+    <a href="#mocks"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.500 2M9 3h6"/></svg>Mocks</a>
+    <a href="#remember"><svg viewBox="0 0 24 24"><rect x="4" y="6" width="13" height="14" rx="2"/><path d="M8 3h10a2 2 0 0 1 2 2v12"/></svg>Remember</a>
+    <a href="#progress"><svg viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-7m4 7H2"/></svg>Progress</a>
+  </nav>
+  <span class="stat flame" title="Day streak"><svg viewBox="0 0 24 24" class="fill"><path d="M12 2c1 4 5 5.500 5 10.500A5 5 0 0 1 7 13c0-1.800.800-3 1.800-4 .300 1.600 1 2.300 1.700 2.600C10.300 8.500 10.500 5 12 2z"/></svg><span id="chip-streak">0</span></span>
+  <span class="stat bolt" title="Total XP"><svg viewBox="0 0 24 24" class="fill"><path d="M13 2L5 13.500h5.500L9.500 22 19 9.500h-6z"/></svg><span id="chip-xp">0</span></span>
+  <a class="me" id="me-btn" href="#account" aria-label="Account">?</a>
+</div></header>
+<div id="toasts" aria-live="polite"></div>
+<main id="app"></main>
+<script>
+// Original practice questions written in the style of each paper. Not past-paper questions.
+// Q(id, track, topic, difficulty 1-3, stem, options|null, answer index | integer | null, solution)
+const QUESTIONS = [];
+const Q = (id, tr, tp, d, q, o, a, s) => QUESTIONS.push({ id, tr, tp, d, q, o, a, s });
+
+/* ───────────── Intermediate Mathematical Challenge ───────────── */
+Q('i1','imc','Number',1,`What is the value of 2026 − 202.6 + 20.26?`,['1803.14','1823.4','1843.66','1848.86','2248.86'],2,`2026 − 202.6 = 1823.4, and 1823.4 + 20.26 = 1843.66.`);
+Q('i2','imc','Number',1,`What is the value of 6 × 7 × 8 ÷ (6 + 7 + 8)?`,['8','12','14','16','21'],3,`6 + 7 + 8 = 21 = 3 × 7. So the answer is (6 × 7 × 8) ÷ (3 × 7) = 2 × 8 = 16. Cancel before you multiply.`);
+Q('i3','imc','Ratio & percentages',1,`Half of a third of a quarter of a number is 5. What is the number?`,['120','180','240','360','480'],0,`½ × ⅓ × ¼ = 1/24, so the number is 5 × 24 = 120.`);
+Q('i4','imc','Geometry',1,`The angles of a triangle are in the ratio 2 : 3 : 4. What is the size of the largest angle?`,['60°','72°','75°','80°','90°'],3,`There are 9 parts making 180°, so one part is 20°. The largest angle is 4 × 20° = 80°.`);
+Q('i5','imc','Number',1,`How many prime numbers are there between 30 and 50?`,['1','2','3','4','5'],4,`They are 31, 37, 41, 43 and 47, which is 5 primes. (33, 39 are multiples of 3; 49 = 7².)`);
+Q('i6','imc','Logic & puzzles',1,`A film lasting 2 hours 35 minutes ends at 21:10. At what time did it start?`,['18:25','18:35','18:45','19:35','19:45'],1,`Go back 2 hours to 19:10, then back 35 minutes to 18:35.`);
+Q('i7','imc','Algebra',1,`If 3<i>x</i> + 7 = 2<i>x</i> + 19, what is the value of 5<i>x</i>?`,['12','24','48','60','130'],3,`Subtract 2<i>x</i> and 7 from both sides: <i>x</i> = 12, so 5<i>x</i> = 60. Read what the question actually asks for.`);
+Q('i8','imc','Ratio & percentages',1,`A coat is reduced by 20% in a sale and now costs £60. What did it cost before the sale?`,['£48','£72','£75','£80','£84'],2,`£60 is 80% of the old price, so the old price is 60 ÷ 0.8 = £75. Adding 20% of £60 gives £72, the classic trap.`);
+Q('i9','imc','Number',1,`What is the remainder when 1 + 2 + 3 + … + 20 is divided by 9?`,['0','3','5','6','7'],1,`The sum is ½ × 20 × 21 = 210. Since 207 = 9 × 23, the remainder is 3. (Or: digit sum of 210 is 3.)`);
+Q('i10','imc','Geometry',1,`A rectangle has perimeter 30 cm and its length is twice its width. What is its area, in cm²?`,['50','54','56','100','200'],0,`Width <i>w</i>, length 2<i>w</i>: perimeter 6<i>w</i> = 30, so <i>w</i> = 5. Area = 5 × 10 = 50.`);
+Q('i11','imc','Logic & puzzles',1,`Ada, Ben and Cal each own a different pet: a cat, a dog and a fish. Ada does not own the dog. Ben owns neither the dog nor the cat. Who owns the cat?`,['Ada','Ben','Cal','It could be Ada or Cal','It is impossible to tell'],0,`Ben must own the fish. Ada does not own the dog, so Ada owns the cat (and Cal owns the dog).`);
+Q('i12','imc','Number',1,`Which of these fractions is the largest?`,['3/5','5/8','7/12','11/18','13/20'],4,`As decimals: 0.6, 0.625, 0.583…, 0.611…, 0.65. The largest is 13/20.`);
+Q('i13','imc','Algebra',1,`The mean of five numbers is 12. When a sixth number is included, the mean becomes 13. What is the sixth number?`,['13','14','16','18','25'],3,`Totals: 5 × 12 = 60 and 6 × 13 = 78. The sixth number is 78 − 60 = 18. Work with totals, not means.`);
+Q('i14','imc','Counting & probability',1,`How many two-digit numbers have digits that add up to 9?`,['8','9','10','11','18'],1,`The tens digit can be 1 to 9 and the units digit is then fixed: 18, 27, 36, 45, 54, 63, 72, 81, 90. That is 9 numbers.`);
+Q('i15','imc','Ratio & percentages',1,`What is 15% of 40 added to 40% of 15?`,['12','15','18','24','55'],0,`15% of 40 = 6, and 40% of 15 is also 6 (<i>a</i>% of <i>b</i> always equals <i>b</i>% of <i>a</i>). Total 12.`);
+
+Q('i16','imc','Number',2,`The product of three consecutive positive integers is 990. What is their sum?`,['27','30','33','36','39'],1,`10³ = 1000, so try numbers around 10: 9 × 10 × 11 = 990. The sum is 30.`);
+Q('i17','imc','Geometry',2,`Each interior angle of a regular polygon is 156°. How many sides does the polygon have?`,['12','15','18','20','24'],1,`Each exterior angle is 180° − 156° = 24°. Exterior angles total 360°, so there are 360 ÷ 24 = 15 sides.`);
+Q('i18','imc','Algebra',2,`Given that <i>x</i> + <i>y</i> = 10 and <i>x</i> − <i>y</i> = 4, what is the value of <i>x</i>² − <i>y</i>²?`,['14','21','40','58','84'],2,`<i>x</i>² − <i>y</i>² = (<i>x</i> + <i>y</i>)(<i>x</i> − <i>y</i>) = 10 × 4 = 40. No need to find <i>x</i> and <i>y</i>.`);
+Q('i19','imc','Ratio & percentages',2,`Zara cycles to school at 12 km/h and returns along the same route at 8 km/h. What is her average speed for the whole journey, in km/h?`,['9','9.6','10','10.4','11'],1,`Take the distance each way as 24 km: 2 hours out, 3 hours back. Total 48 km in 5 hours = 9.6 km/h. It is never just the mean of the speeds.`);
+Q('i20','imc','Number',2,`How many positive factors does 72 have?`,['6','8','9','10','12'],4,`72 = 2³ × 3². The number of factors is (3 + 1)(2 + 1) = 12.`);
+Q('i21','imc','Geometry',2,`The diagonal of a square has length 10 cm. What is the area of the square, in cm²?`,['25','50','50√2','100','200'],1,`Area of a square = ½ × diagonal² = ½ × 100 = 50. (Or side = 10/√2, so side² = 50.)`);
+Q('i22','imc','Number',2,`What is the last digit of 7<sup>2026</sup>?`,['1','3','5','7','9'],4,`Last digits of powers of 7 cycle 7, 9, 3, 1. Since 2026 leaves remainder 2 when divided by 4, the last digit is the second in the cycle: 9.`);
+Q('i23','imc','Ratio & percentages',2,`In a class the ratio of boys to girls is 3 : 5. There are 8 more girls than boys. How many pupils are in the class?`,['32','40','48','56','64'],0,`The difference of 2 parts is 8 pupils, so 1 part is 4. There are 8 parts in total: 32 pupils.`);
+Q('i24','imc','Counting & probability',2,`In how many different ways can the letters of the word LEVEL be arranged in a row?`,['10','20','30','60','120'],2,`5 letters with L twice and E twice: 5! ÷ (2! × 2!) = 120 ÷ 4 = 30.`);
+Q('i25','imc','Algebra',2,`The sum of five consecutive odd numbers is 135. What is the largest of them?`,['23','25','27','29','31'],4,`The middle number is the mean: 135 ÷ 5 = 27. The numbers are 23, 25, 27, 29, 31.`);
+Q('i26','imc','Geometry',2,`A circle fits exactly inside a square of side 4 cm, touching all four sides. What is the area, in cm², of the region inside the square but outside the circle?`,['4π − 8','8 − 2π','16 − 2π','16 − 4π','16π − 16'],3,`The circle has radius 2, so its area is 4π. The square has area 16. The difference is 16 − 4π.`);
+Q('i27','imc','Number',2,`What is the smallest integer greater than 1 that leaves a remainder of 1 when divided by each of 2, 3, 4, 5 and 6?`,['31','41','61','121','721'],2,`One less than the number is a multiple of 2, 3, 4, 5 and 6. Their lowest common multiple is 60, so the number is 61.`);
+Q('i28','imc','Counting & probability',2,`Two fair dice are rolled. What is the probability that the two scores add up to 8?`,['1/12','1/9','5/36','1/6','7/36'],2,`The pairs are (2,6), (3,5), (4,4), (5,3), (6,2): 5 outcomes out of 36.`);
+Q('i29','imc','Number',2,`What is the value of 2026² − 2025²?`,['1','2025','2026','4051','4052'],3,`Difference of two squares: (2026 − 2025)(2026 + 2025) = 1 × 4051 = 4051.`);
+Q('i30','imc','Logic & puzzles',2,`On an island, knights always tell the truth and knaves always lie. Three islanders meet. The first says “All three of us are knaves.” The second says “Exactly one of us is a knight.” How many of the three are knaves?`,['0','1','2','3','It is impossible to tell'],2,`The first cannot be a knight (a knight could not truthfully say that), so the first is a knave and not all three are knaves. If the second were a knave, the third would have to be the only knight, making the second’s statement true: contradiction. So the second is a knight, the only one, and there are 2 knaves.`);
+
+Q('i31','imc','Number',3,`How many positive integers less than 1000 are multiples of 6 but not multiples of 9?`,['55','100','105','110','111'],4,`Multiples of 6 below 1000: 166. Those also divisible by 9 are the multiples of 18: 55. So 166 − 55 = 111.`);
+Q('i32','imc','Geometry',3,`A right-angled triangle has shorter sides of length 6 and 8. What is the radius of the largest circle that fits inside the triangle?`,['1','1.5','2','2.4','3'],2,`The hypotenuse is 10. Area = 24 = ½ × <i>r</i> × perimeter = ½ × <i>r</i> × 24, so <i>r</i> = 2. Shortcut for right-angled triangles: <i>r</i> = (<i>a</i> + <i>b</i> − <i>c</i>) ÷ 2.`);
+Q('i33','imc','Algebra',3,`The positive integers <i>m</i> and <i>n</i> satisfy <i>mn</i> + <i>m</i> + <i>n</i> = 34. What is the value of <i>m</i> + <i>n</i>?`,['9','10','11','12','16'],1,`Add 1 to both sides: (<i>m</i> + 1)(<i>n</i> + 1) = 35 = 5 × 7 (1 × 35 would make one of them 0). So <i>m</i> and <i>n</i> are 4 and 6, with sum 10.`);
+Q('i34','imc','Counting & probability',3,`How many three-digit numbers have digits that strictly increase from left to right (such as 258)?`,['72','84','96','120','504'],1,`No digit can be 0. Choose any 3 different digits from 1 to 9; there is exactly one increasing order. That gives 9 × 8 × 7 ÷ 6 = 84.`);
+Q('i35','imc','Number',3,`The number 2<sup>12</sup> × 5<sup>8</sup> is written out in full. How many digits does it have?`,['8','9','10','12','20'],2,`2<sup>12</sup> × 5<sup>8</sup> = 2⁴ × 10⁸ = 16 × 10⁸ = 1 600 000 000, which has 10 digits.`);
+Q('i36','imc','Geometry',3,`What is the area of a regular hexagon with sides of length 2?`,['6√3','12','8√3','12√3','24'],0,`A regular hexagon is six equilateral triangles. Each has area (√3/4) × 2² = √3, so the total is 6√3.`);
+Q('i37','imc','Ratio & percentages',3,`A tap fills a bath in 12 minutes. With the tap off, the plughole empties the full bath in 20 minutes. Starting empty, with the tap on and the plug out, how many minutes does the bath take to fill?`,['8','16','24','30','32'],3,`Each minute the tap adds 1/12 of a bath and the plughole removes 1/20. Net: 1/12 − 1/20 = 1/30 per minute, so 30 minutes.`);
+Q('i38','imc','Number',3,`How many zeros are there at the end of 50! (the product of all the integers from 1 to 50)?`,['5','10','11','12','25'],3,`Count factors of 5: there are 10 multiples of 5, and 25 and 50 each give one extra. 10 + 2 = 12.`);
+Q('i39','imc','Algebra',3,`The number <i>x</i> satisfies <i>x</i> + 1/<i>x</i> = 3. What is the value of <i>x</i>² + 1/<i>x</i>²?`,['7','8','9','10','11'],0,`Square both sides: <i>x</i>² + 2 + 1/<i>x</i>² = 9, so <i>x</i>² + 1/<i>x</i>² = 7.`);
+Q('i40','imc','Counting & probability',3,`A bag contains 3 red counters and 5 blue counters. Two counters are taken at random without replacement. What is the probability that they are different colours?`,['15/64','3/8','15/32','1/2','15/28'],4,`Red then blue: 3/8 × 5/7 = 15/56. Blue then red: 5/8 × 3/7 = 15/56. Total 30/56 = 15/28.`);
+Q('i41','imc','Geometry',3,`A circle passes through all four vertices of a square of side 2. What is the area of the region inside the circle but outside the square?`,['4 − π','π − 2','2π − 2','4π − 4','2π − 4'],4,`The diameter is the diagonal, 2√2, so the radius is √2 and the circle has area 2π. Subtract the square: 2π − 4.`);
+Q('i42','imc','Counting & probability',3,`The digits 1, 2, 3, 4 and 5 are each used once to make a five-digit number. How many of these numbers are multiples of 4?`,['6','12','16','18','24'],4,`A number is a multiple of 4 when its last two digits are. The possible endings are 12, 24, 32 and 52. For each, the other three digits can be arranged in 3! = 6 ways: 4 × 6 = 24.`);
+Q('i43','imc','Number',3,`What is the sum of all the positive factors of 100?`,['117','186','216','217','248'],3,`100 = 2² × 5². The sum of factors is (1 + 2 + 4)(1 + 5 + 25) = 7 × 31 = 217.`);
+Q('i44','imc','Algebra',3,`In a sequence, each term after the second is the sum of the two terms before it. The third term is 7 and the sixth term is 31. What is the seventh term?`,['43','45','48','50','55'],3,`Call the first two terms <i>a</i>, <i>b</i>. The terms are <i>a</i>, <i>b</i>, <i>a</i>+<i>b</i>, <i>a</i>+2<i>b</i>, 2<i>a</i>+3<i>b</i>, 3<i>a</i>+5<i>b</i>. From <i>a</i>+<i>b</i> = 7 and 3<i>a</i>+5<i>b</i> = 31 we get <i>b</i> = 5, <i>a</i> = 2. The fifth term is 19, so the seventh is 19 + 31 = 50.`);
+Q('i45','imc','Geometry',3,`A triangle has sides of length 13, 14 and 15. What is its area?`,['84','90','91','97.5','105'],0,`Drop the height onto the side of length 14: it splits the triangle into 5-12-13 and 9-12-15 right-angled triangles (5 + 9 = 14). The height is 12, so the area is ½ × 14 × 12 = 84.`);
+
+/* ───────────── Senior Mathematical Challenge ───────────── */
+Q('s1','smc','Number',1,`What is the value of 2<sup>10</sup> − 2<sup>9</sup> − 2<sup>8</sup>?`,['0','2<sup>7</sup>','2<sup>8</sup>','2<sup>9</sup>','2<sup>10</sup>'],2,`2<sup>10</sup> − 2<sup>9</sup> = 2<sup>9</sup>, and 2<sup>9</sup> − 2<sup>8</sup> = 2<sup>8</sup>.`);
+Q('s2','smc','Algebra',1,`How many integers <i>n</i> satisfy <i>n</i>² &lt; 50?`,['7','8','14','15','49'],3,`<i>n</i> can be anything from −7 to 7 inclusive (7² = 49). That is 15 integers. Do not forget zero and the negatives.`);
+Q('s3','smc','Algebra',1,`The line <i>y</i> = 2<i>x</i> + <i>c</i> is a tangent to the curve <i>y</i> = <i>x</i>². What is the value of <i>c</i>?`,['−2','−1','0','1','2'],1,`<i>x</i>² − 2<i>x</i> − <i>c</i> = 0 must have a repeated root, so the discriminant 4 + 4<i>c</i> = 0, giving <i>c</i> = −1.`);
+Q('s4','smc','Functions & trigonometry',1,`What is the value of sin²10° + sin²20° + sin²30° + … + sin²80°?`,['2','2.5','3','3.5','4'],4,`sin 80° = cos 10°, so sin²10° + sin²80° = 1. The eight terms pair up into four pairs, each summing to 1.`);
+Q('s5','smc','Number',1,`What is the sum of the digits of 10<sup>20</sup> − 20?`,['162','170','171','178','180'],1,`10<sup>20</sup> − 20 is eighteen 9s followed by 80. Digit sum = 18 × 9 + 8 = 170.`);
+Q('s6','smc','Algebra',1,`Given that 4<sup><i>x</i></sup> = 8, what is the value of 16<sup><i>x</i></sup>?`,['16','32','48','64','128'],3,`16<sup><i>x</i></sup> = (4<sup><i>x</i></sup>)² = 8² = 64.`);
+Q('s7','smc','Algebra',1,`The roots of <i>x</i>² − 5<i>x</i> + 3 = 0 are <i>p</i> and <i>q</i>. What is the value of <i>p</i>² + <i>q</i>²?`,['19','22','25','28','31'],0,`<i>p</i> + <i>q</i> = 5 and <i>pq</i> = 3. So <i>p</i>² + <i>q</i>² = (<i>p</i> + <i>q</i>)² − 2<i>pq</i> = 25 − 6 = 19.`);
+Q('s8','smc','Geometry',1,`A cube has surface area 54. What is the length of the diagonal joining two opposite corners of the cube?`,['√3','3','2√3','3√2','3√3'],4,`Each face has area 9, so the side is 3. The space diagonal of a cube of side <i>s</i> is <i>s</i>√3 = 3√3.`);
+Q('s9','smc','Counting & probability',1,`Five people sit in a row. Two of them insist on sitting next to each other. How many seating arrangements are possible?`,['24','48','60','96','120'],1,`Treat the pair as one block: 4 objects give 4! = 24 orders, and the pair can swap places: 24 × 2 = 48.`);
+
+Q('s10','smc','Number',2,`What is the remainder when 3<sup>100</sup> is divided by 8?`,['1','3','5','7','0'],0,`3² = 9 leaves remainder 1 on division by 8, and 3<sup>100</sup> = (3²)<sup>50</sup>, so the remainder is 1.`);
+Q('s11','smc','Geometry',2,`A chord of length 8 is drawn in a circle of radius 5. A second chord of length 6 is drawn parallel to it on the opposite side of the centre. How far apart are the chords?`,['5','6','7','8','10'],2,`Half-chords of 4 and 3 with radius 5 give distances 3 and 4 from the centre (3-4-5 triangles). On opposite sides the gap is 3 + 4 = 7.`);
+Q('s12','smc','Algebra',2,`The sum of the first <i>n</i> positive odd integers is 2025. What is the value of <i>n</i>?`,['45','46','90','1012','1013'],0,`The sum of the first <i>n</i> odd numbers is <i>n</i>². Since 45² = 2025, <i>n</i> = 45.`);
+Q('s13','smc','Functions & trigonometry',2,`How many real solutions does the equation |<i>x</i>² − 4| = 3 have?`,['0','1','2','3','4'],4,`Either <i>x</i>² − 4 = 3, giving <i>x</i> = ±√7, or <i>x</i>² − 4 = −3, giving <i>x</i> = ±1. Four solutions.`);
+Q('s14','smc','Geometry',2,`An equilateral triangle and a regular hexagon have the same perimeter. What is the ratio of the area of the triangle to the area of the hexagon?`,['1 : 2','2 : 3','3 : 4','1 : √3','1 : 1'],1,`If the hexagon has side <i>s</i>, the triangle has side 2<i>s</i>. The triangle splits into 4 small equilateral triangles of side <i>s</i>; the hexagon is 6 of them. Ratio 4 : 6 = 2 : 3.`);
+Q('s15','smc','Algebra',2,`How many pairs of positive integers (<i>x</i>, <i>y</i>) satisfy 1/<i>x</i> + 1/<i>y</i> = 1/6?`,['5','6','8','9','12'],3,`Rearranging gives (<i>x</i> − 6)(<i>y</i> − 6) = 36. Both brackets must be positive, and 36 has 9 positive factors, so there are 9 ordered pairs.`);
+Q('s16','smc','Functions & trigonometry',2,`The function <i>f</i> satisfies <i>f</i>(<i>x</i>) + 2<i>f</i>(1/<i>x</i>) = 3<i>x</i> for all non-zero <i>x</i>. What is the value of <i>f</i>(2)?`,['−2','−1','0','1','2'],1,`Put <i>x</i> = 2: <i>f</i>(2) + 2<i>f</i>(½) = 6. Put <i>x</i> = ½: <i>f</i>(½) + 2<i>f</i>(2) = 3/2. Eliminating <i>f</i>(½) gives −3<i>f</i>(2) = 3, so <i>f</i>(2) = −1.`);
+Q('s17','smc','Counting & probability',2,`Three fair dice are rolled. What is the probability that all three show different numbers?`,['5/36','5/18','4/9','1/2','5/9'],4,`(6 × 5 × 4) ÷ 6³ = 120/216 = 5/9.`);
+Q('s18','smc','Number',2,`What is the units digit of 1! + 2! + 3! + … + 100!?`,['3','4','5','7','9'],0,`From 5! onwards every term ends in 0. 1 + 2 + 6 + 24 = 33, so the units digit is 3.`);
+
+Q('s19','smc','Number',3,`What is the largest power of 2 that divides 20!?`,['2<sup>10</sup>','2<sup>16</sup>','2<sup>17</sup>','2<sup>18</sup>','2<sup>20</sup>'],3,`Count factors of 2: ⌊20/2⌋ + ⌊20/4⌋ + ⌊20/8⌋ + ⌊20/16⌋ = 10 + 5 + 2 + 1 = 18.`);
+Q('s20','smc','Number',3,`How many pairs of positive integers (<i>a</i>, <i>b</i>) satisfy <i>a</i>² − <i>b</i>² = 105?`,['2','3','4','6','8'],2,`(<i>a</i> − <i>b</i>)(<i>a</i> + <i>b</i>) = 105 = 3 × 5 × 7. The factor pairs are 1 × 105, 3 × 35, 5 × 21 and 7 × 15; every factor is odd, so each pair gives integer <i>a</i> and <i>b</i>. Four pairs.`);
+Q('s21','smc','Geometry',3,`In triangle <i>ABC</i>, <i>AB</i> = 7, <i>BC</i> = 8 and <i>CA</i> = 9. What is the value of cos <i>B</i>?`,['1/7','2/7','1/3','3/7','1/2'],1,`Cosine rule: cos <i>B</i> = (7² + 8² − 9²) ÷ (2 × 7 × 8) = 32/112 = 2/7.`);
+Q('s22','smc','Algebra',3,`What is the value of 1/(1×2) + 1/(2×3) + 1/(3×4) + … + 1/(99×100)?`,['4/5','9/10','49/50','98/99','99/100'],4,`Each term is 1/<i>n</i> − 1/(<i>n</i> + 1), so the sum telescopes to 1 − 1/100 = 99/100.`);
+Q('s23','smc','Counting & probability',3,`How many of the integers from 1 to 100 inclusive are divisible by none of 2, 3 and 5?`,['22','24','26','28','30'],2,`Inclusion–exclusion: 50 + 33 + 20 − 16 − 10 − 6 + 3 = 74 are divisible by at least one. That leaves 100 − 74 = 26.`);
+Q('s24','smc','Geometry',3,`A sphere is inscribed in a cube, and the cube is inscribed in a larger sphere. What is the ratio of the volume of the larger sphere to the volume of the smaller sphere?`,['2√2','3','3√3','8','9'],2,`For a cube of side <i>s</i> the radii are <i>s</i>/2 and <i>s</i>√3/2, a ratio of √3. Volumes scale with the cube: (√3)³ = 3√3.`);
+Q('s25','smc','Algebra',3,`The real numbers <i>x</i> and <i>y</i> satisfy <i>x</i>² + <i>y</i>² = 1. What is the largest possible value of 3<i>x</i> + 4<i>y</i>?`,['5','6','7','12','25'],0,`The line 3<i>x</i> + 4<i>y</i> = <i>k</i> is at distance <i>k</i>/5 from the origin, and it must touch the unit circle, so <i>k</i> = 5 (reached at <i>x</i> = 3/5, <i>y</i> = 4/5).`);
+Q('s26','smc','Counting & probability',3,`Three vertices of a regular octagon are chosen to form a triangle. How many of these triangles are right-angled?`,['12','16','20','24','28'],3,`The vertices lie on a circle, so the triangle is right-angled exactly when one side is a diameter. There are 4 diameters and 6 choices for the third vertex: 4 × 6 = 24.`);
+Q('s27','smc','Algebra',3,`The positive numbers <i>x</i> and <i>y</i> satisfy <i>x</i> + <i>y</i> = 10. What is the largest possible value of <i>x</i>²<i>y</i>?`,['125','144','4000/27','150','160'],2,`By AM–GM on <i>x</i>/2, <i>x</i>/2 and <i>y</i>: their sum is 10, so their product (<i>x</i>²<i>y</i>/4) is at most (10/3)³. So <i>x</i>²<i>y</i> ≤ 4000/27, reached at <i>x</i> = 20/3.`);
+Q('s28','smc','Number',3,`How many pairs of positive integers (<i>x</i>, <i>y</i>) with <i>x</i> &lt; <i>y</i> satisfy <i>x</i> + <i>y</i> + <i>xy</i> = 2026?`,['0','1','2','4','2027'],0,`Add 1: (<i>x</i> + 1)(<i>y</i> + 1) = 2027. But 2027 is prime, so one bracket would have to be 1, making <i>x</i> = 0. There are no such pairs.`);
+
+/* ───────────── Follow-on rounds ───────────── */
+Q('k1','fo','Kangaroo',1,`A kangaroo jumps 3 m forwards, then 1 m backwards, and keeps repeating this. How many jumps has it made when it first reaches a point 10 m in front of its start?`,['7','8','9','10','11'],2,`After each forward jump it is at 3, 5, 7, 9, 11 metres. The fifth forward jump is the first to pass through 10 m, and four backward jumps came before it: 9 jumps.`);
+Q('k2','fo','Kangaroo',1,`The total of the ages of five friends is 60. In how many years’ time will the total of their ages be 100?`,['5','8','10','20','40'],1,`Each year the total rises by 5. It needs to rise by 40, which takes 8 years.`);
+Q('k3','fo','Kangaroo',2,`A rectangle is cut into four smaller rectangles by one horizontal and one vertical line. The top-left piece has area 6, the top-right 8 and the bottom-left 12. What is the area of the bottom-right piece?`,['10','14','16','18','24'],2,`Pieces in the same row share a height and pieces in the same column share a width, so top-left × bottom-right = top-right × bottom-left. Bottom-right = 8 × 12 ÷ 6 = 16.`);
+Q('k4','fo','Kangaroo',2,`What is the smallest number of people that must be in a room to guarantee that at least three of them were born in the same month?`,['25','26','36','37','48'],0,`With 24 people you could have exactly two per month. A 25th person forces a third into some month (pigeonhole principle).`);
+Q('k5','fo','Kangaroo',2,`Five different positive integers add up to 20. What is the largest possible value of the biggest one?`,['6','8','9','10','14'],3,`Make the other four as small as possible: 1 + 2 + 3 + 4 = 10. The biggest is then 20 − 10 = 10.`);
+Q('k6','fo','Kangaroo',3,`Between midday and midnight, how many times do the hour and minute hands of a clock point in exactly opposite directions?`,['10','11','12','22','24'],1,`The minute hand gains 11 full turns on the hour hand in 12 hours, and the hands are opposite once in each of those laps: 11 times.`);
+Q('k7','fo','Kangaroo',3,`How many integers from 1 to 1000 inclusive have digits that add up to 3?`,['3','6','9','10','12'],3,`Write each number below 1000 with three digits (leading zeros allowed). Share 3 between three digit places: 5 × 4 ÷ 2 = 10 ways. 1000 does not count.`);
+Q('k8','fo','Kangaroo',3,`A 3 × 3 × 3 cube is painted on the outside and then cut into 27 unit cubes. How many of the unit cubes have exactly two painted faces?`,['6','8','12','18','24'],2,`These are the cubes in the middle of each edge. A cube has 12 edges, so there are 12.`);
+
+Q('sk1','fo','Senior Kangaroo',2,`What is the sum of all the positive integers less than 100 that leave a remainder of 3 when divided by 7?`,null,679,`They are 3, 10, 17, …, 94: that is 14 terms. Sum = 14 × (3 + 94) ÷ 2 = 679.`);
+Q('sk2','fo','Senior Kangaroo',2,`How many three-digit positive integers are divisible by 7?`,null,128,`Multiples of 7 up to 999: 142. Multiples of 7 up to 99: 14. So 142 − 14 = 128.`);
+Q('sk3','fo','Senior Kangaroo',2,`A right-angled triangle has integer sides. One of the shorter sides is 20 and the hypotenuse is 29. What is the area of the triangle?`,null,210,`29² − 20² = (29 − 20)(29 + 20) = 9 × 49 = 441 = 21². Area = ½ × 20 × 21 = 210.`);
+Q('sk4','fo','Senior Kangaroo',3,`What is the smallest positive integer <i>n</i> for which <i>n</i>! ends in exactly six zeros?`,null,25,`24! has ⌊24/5⌋ = 4 factors of 5, so four zeros. 25 = 5² adds two more at once, so 25! ends in six zeros.`);
+Q('sk5','fo','Senior Kangaroo',3,`The positive integers <i>x</i> and <i>y</i> satisfy <i>x</i>² − <i>y</i>² = 77. What is the sum of all the possible values of <i>x</i>?`,null,48,`(<i>x</i> − <i>y</i>)(<i>x</i> + <i>y</i>) = 77 = 1 × 77 or 7 × 11. These give <i>x</i> = 39 and <i>x</i> = 9. Sum: 48.`);
+Q('sk6','fo','Senior Kangaroo',2,`How many diagonals does a regular polygon with 20 sides have?`,null,170,`Each vertex joins to 17 non-adjacent vertices, and each diagonal is counted twice: 20 × 17 ÷ 2 = 170.`);
+
+Q('o1','fo','Olympiad',2,`<b>Cayley level.</b> Prove that the product of any four consecutive positive integers is always one less than a perfect square.`,null,null,`Let the integers be <i>n</i>, <i>n</i>+1, <i>n</i>+2, <i>n</i>+3. Pair the outer two and the inner two: <i>n</i>(<i>n</i>+3) = <i>n</i>² + 3<i>n</i> and (<i>n</i>+1)(<i>n</i>+2) = <i>n</i>² + 3<i>n</i> + 2. Writing <i>m</i> = <i>n</i>² + 3<i>n</i> + 1, the product is (<i>m</i> − 1)(<i>m</i> + 1) = <i>m</i>² − 1. So the product is one less than the square of <i>n</i>² + 3<i>n</i> + 1. A full-mark answer states the pairing, the algebra and the conclusion in sentences.`);
+Q('o2','fo','Olympiad',3,`<b>Hamilton level.</b> Find all positive integers <i>n</i> for which <i>n</i>² + 20<i>n</i> + 11 is a perfect square.`,null,null,`Suppose <i>n</i>² + 20<i>n</i> + 11 = <i>m</i>² with <i>m</i> positive. Complete the square: (<i>n</i> + 10)² − <i>m</i>² = 89, so (<i>n</i> + 10 − <i>m</i>)(<i>n</i> + 10 + <i>m</i>) = 89. Since 89 is prime and the second bracket is the larger positive one, <i>n</i> + 10 − <i>m</i> = 1 and <i>n</i> + 10 + <i>m</i> = 89. Adding, <i>n</i> + 10 = 45, so <i>n</i> = 35. Check: 35² + 700 + 11 = 1936 = 44². So <i>n</i> = 35 is the only solution. Marks are lost for not checking or not showing it is the only one.`);
+Q('o3','fo','Olympiad',3,`<b>Maclaurin level.</b> <i>ABCD</i> is a square. The point <i>P</i> lies inside the square so that triangle <i>ABP</i> is equilateral. Find the size of angle <i>CPD</i>, with proof.`,null,null,`Since <i>ABP</i> is equilateral, <i>AP</i> = <i>AB</i> = <i>AD</i> and angle <i>PAD</i> = 90° − 60° = 30°. Triangle <i>APD</i> is isosceles, so angle <i>APD</i> = (180° − 30°) ÷ 2 = 75°. By symmetry angle <i>BPC</i> = 75°. Angles round <i>P</i> total 360°, so angle <i>CPD</i> = 360° − 60° − 75° − 75° = 150°. Give a reason for every angle step.`);
+Q('o4','fo','Olympiad',2,`<b>Hamilton level.</b> Prove that there is no positive integer <i>n</i> for which <i>n</i>² + <i>n</i> + 1 is a multiple of 5.`,null,null,`Consider the remainder when <i>n</i> is divided by 5. For remainders 0, 1, 2, 3, 4 the value of <i>n</i>² + <i>n</i> + 1 leaves the same remainder as 1, 3, 7, 13, 21, which is 1, 3, 2, 3, 1. None of these is 0, so <i>n</i>² + <i>n</i> + 1 is never a multiple of 5. The key idea is that only the remainder of <i>n</i> matters; say so explicitly.`);
+Q('b1','fo','Olympiad',3,`<b>BMO Round 1 level.</b> Find all pairs of prime numbers (<i>p</i>, <i>q</i>) such that <i>p</i>² − 2<i>q</i>² = 1.`,null,null,`<i>p</i>² = 2<i>q</i>² + 1 is odd, so <i>p</i> is odd. Then (<i>p</i> − 1)(<i>p</i> + 1) = 2<i>q</i>² is a product of two consecutive even numbers, so it is divisible by 8. Hence <i>q</i>² is divisible by 4, so <i>q</i> is even, and the only even prime is <i>q</i> = 2. Then <i>p</i>² = 9, so <i>p</i> = 3. The only pair is (3, 2), and it works: 9 − 8 = 1.`);
+Q('b2','fo','Olympiad',3,`<b>BMO Round 1 level.</b> Prove that for all positive real numbers <i>a</i>, <i>b</i> and <i>c</i>, (<i>a</i> + <i>b</i>)(<i>b</i> + <i>c</i>)(<i>c</i> + <i>a</i>) ≥ 8<i>abc</i>.`,null,null,`By AM–GM, <i>a</i> + <i>b</i> ≥ 2√(<i>ab</i>), <i>b</i> + <i>c</i> ≥ 2√(<i>bc</i>) and <i>c</i> + <i>a</i> ≥ 2√(<i>ca</i>). All sides are positive, so multiplying the three inequalities gives (<i>a</i> + <i>b</i>)(<i>b</i> + <i>c</i>)(<i>c</i> + <i>a</i>) ≥ 8√(<i>a</i>²<i>b</i>²<i>c</i>²) = 8<i>abc</i>. Equality holds exactly when <i>a</i> = <i>b</i> = <i>c</i>.`);
+
+/* ───────────── GCSE Maths ───────────── */
+Q('g1','gm','Number',1,`Write 0.000 47 in standard form.`,['4.7 × 10⁻³','4.7 × 10⁻⁴','47 × 10⁻⁵','4.7 × 10⁴'],1,`Move the decimal point 4 places to get 4.7, so it is 4.7 × 10⁻⁴. (47 × 10⁻⁵ has the right value but is not standard form.)`);
+Q('g2','gm','Algebra',1,`Expand and simplify (2<i>x</i> − 3)(<i>x</i> + 5).`,['2<i>x</i>² + 7<i>x</i> − 15','2<i>x</i>² + 2<i>x</i> − 15','2<i>x</i>² − 7<i>x</i> − 15','2<i>x</i>² + 13<i>x</i> − 15'],0,`2<i>x</i>² + 10<i>x</i> − 3<i>x</i> − 15 = 2<i>x</i>² + 7<i>x</i> − 15.`);
+Q('g3','gm','Algebra',2,`Solve <i>x</i>² − 5<i>x</i> − 14 = 0.`,['<i>x</i> = −7 or 2','<i>x</i> = 7 or 2','<i>x</i> = −7 or −2','<i>x</i> = 7 or −2'],3,`Factorise: (<i>x</i> − 7)(<i>x</i> + 2) = 0, so <i>x</i> = 7 or <i>x</i> = −2.`);
+Q('g4','gm','Number',2,`£2000 is invested at 5% compound interest per year. What is it worth after 2 years?`,['£2100','£2200','£2205','£2250'],2,`2000 × 1.05² = 2000 × 1.1025 = £2205.`);
+Q('g5','gm','Geometry',2,`A right-angled triangle has hypotenuse 10 cm and one angle of 30°. What is the length of the side opposite the 30° angle?`,['5 cm','5√2 cm','5√3 cm','20 cm'],0,`opposite = hypotenuse × sin 30° = 10 × ½ = 5 cm.`);
+Q('g6','gm','Number',2,`Simplify √48 + √27.`,['5√3','7√3','7√6','12√3'],1,`√48 = 4√3 and √27 = 3√3, so the sum is 7√3.`);
+Q('g7','gm','Algebra',2,`What is the gradient of a line perpendicular to <i>y</i> = 2<i>x</i> − 1?`,['2','−2','½','−½'],3,`Perpendicular gradients multiply to −1. The line has gradient 2, so the perpendicular has gradient −½.`);
+Q('g8','gm','Algebra',1,`What is the <i>n</i>th term of the sequence 5, 8, 11, 14, …?`,['<i>n</i> + 3','5<i>n</i>','3<i>n</i> + 2','3<i>n</i> + 5'],2,`The terms go up in 3s, so it starts 3<i>n</i>. When <i>n</i> = 1 we need 5, so add 2: 3<i>n</i> + 2.`);
+Q('g9','gm','Geometry',1,`A cylinder has radius 3 cm and height 10 cm. What is its volume in terms of π?`,['30π cm³','60π cm³','90π cm³','900π cm³'],2,`V = π<i>r</i>²<i>h</i> = π × 9 × 10 = 90π cm³.`);
+Q('g10','gm','Algebra',3,`<i>y</i> is directly proportional to <i>x</i>². When <i>x</i> = 2, <i>y</i> = 12. What is <i>y</i> when <i>x</i> = 5?`,['30','60','75','150'],2,`<i>y</i> = <i>kx</i>², so 12 = 4<i>k</i> and <i>k</i> = 3. When <i>x</i> = 5, <i>y</i> = 3 × 25 = 75.`);
+Q('g11','gm','Statistics & probability',2,`A bag holds 4 red and 6 blue counters. A counter is taken, replaced, and another is taken. What is the probability that both are red?`,['2/15','4/25','2/5','16/25'],1,`With replacement the picks are independent: 4/10 × 4/10 = 16/100 = 4/25.`);
+Q('g12','gm','Algebra',1,`Solve the inequality 3<i>x</i> − 7 &gt; 11.`,['<i>x</i> &gt; 6','<i>x</i> &lt; 6','<i>x</i> &gt; 4/3','<i>x</i> &gt; 18'],0,`Add 7: 3<i>x</i> &gt; 18. Divide by 3: <i>x</i> &gt; 6.`);
+Q('g13','gm','Geometry',2,`An arc of a circle subtends an angle of 140° at the centre. What angle does the same arc subtend at a point on the circumference (on the major arc)?`,['20°','35°','40°','70°'],3,`The angle at the centre is twice the angle at the circumference: 140° ÷ 2 = 70°.`);
+Q('g14','gm','Algebra',2,`Factorise fully 3<i>x</i>² − 12.`,['3(<i>x</i>² − 4)','(3<i>x</i> − 4)(<i>x</i> + 3)','3(<i>x</i> − 2)(<i>x</i> + 2)','3(<i>x</i> − 2)²'],2,`Take out 3 to get 3(<i>x</i>² − 4), then use the difference of two squares: 3(<i>x</i> − 2)(<i>x</i> + 2). “Fully” means keep going.`);
+Q('g15','gm','Algebra',2,`Solve the simultaneous equations 2<i>x</i> + <i>y</i> = 11 and <i>x</i> − <i>y</i> = 1. What is the value of <i>x</i>?`,['1','2','3','4'],3,`Add the equations: 3<i>x</i> = 12, so <i>x</i> = 4 (and <i>y</i> = 3).`);
+Q('g16','gm','Statistics & probability',2,`What is the interquartile range of 3, 5, 6, 8, 9, 12, 15?`,['6','7','9','12'],1,`The median is 8. The lower quartile is the middle of 3, 5, 6 (5) and the upper quartile is the middle of 9, 12, 15 (12). IQR = 12 − 5 = 7.`);
+
+/* ───────────── A-level Maths ───────────── */
+Q('a1','am','Pure',1,`Differentiate <i>y</i> = <i>x</i>³ − 4<i>x</i>² + 7 with respect to <i>x</i>.`,['3<i>x</i>² − 8<i>x</i>','3<i>x</i>² − 4<i>x</i>','<i>x</i>² − 8<i>x</i>','3<i>x</i>² − 8<i>x</i> + 7'],0,`Multiply by the power and reduce the power by one; the constant disappears: 3<i>x</i>² − 8<i>x</i>.`);
+Q('a2','am','Pure',1,`Evaluate the integral of 3<i>x</i>² with respect to <i>x</i> from 0 to 2.`,['8','12','16','24'],0,`The integral is [<i>x</i>³] from 0 to 2 = 8 − 0 = 8.`);
+Q('a3','am','Pure',2,`Solve 2<sup><i>x</i></sup> = 10, giving your answer to 3 significant figures.`,['3.01','3.32','3.46','5.00'],1,`<i>x</i> = ln 10 ÷ ln 2 = 3.3219… = 3.32.`);
+Q('a4','am','Pure',1,`What is the derivative of sin 3<i>x</i>?`,['cos 3<i>x</i>','−3 cos 3<i>x</i>','3 sin 3<i>x</i>','3 cos 3<i>x</i>'],3,`Chain rule: differentiate sin to get cos, then multiply by the derivative of 3<i>x</i>: 3 cos 3<i>x</i>.`);
+Q('a5','am','Pure',1,`A geometric series has first term 6 and common ratio ⅓. What is its sum to infinity?`,['4','6','8','9'],3,`S<sub>∞</sub> = <i>a</i> ÷ (1 − <i>r</i>) = 6 ÷ (2/3) = 9.`);
+Q('a6','am','Pure',2,`What is the coefficient of <i>x</i>² in the expansion of (1 + 2<i>x</i>)⁵?`,['10','20','40','80'],2,`The term is ⁵C₂ × (2<i>x</i>)² = 10 × 4<i>x</i>² = 40<i>x</i>².`);
+Q('a7','am','Pure',2,`Solve sin <i>x</i> = ½ for 0° ≤ <i>x</i> &lt; 360°.`,['30° only','30° and 150°','30° and 330°','60° and 120°'],1,`The principal value is 30°. Sine is also positive in the second quadrant: 180° − 30° = 150°.`);
+Q('a8','am','Pure',2,`What are the coordinates of the stationary point of <i>y</i> = <i>x</i>² − 6<i>x</i> + 11?`,['(3, 2)','(−3, 38)','(3, 11)','(6, 11)'],0,`d<i>y</i>/d<i>x</i> = 2<i>x</i> − 6 = 0 gives <i>x</i> = 3, then <i>y</i> = 9 − 18 + 11 = 2. (Or complete the square: (<i>x</i> − 3)² + 2.)`);
+Q('a9','am','Pure',2,`What is the derivative of <i>x</i>e<sup><i>x</i></sup>?`,['e<sup><i>x</i></sup>','<i>x</i>e<sup><i>x</i></sup>','(1 + <i>x</i>)e<sup><i>x</i></sup>','<i>x</i>²e<sup><i>x</i></sup>'],2,`Product rule: 1 × e<sup><i>x</i></sup> + <i>x</i> × e<sup><i>x</i></sup> = (1 + <i>x</i>)e<sup><i>x</i></sup>.`);
+Q('a10','am','Pure',2,`Which single logarithm equals ln <i>a</i> + ln <i>b</i> − 2 ln <i>c</i>?`,['ln(<i>a</i> + <i>b</i> − 2<i>c</i>)','ln(<i>ab</i>/<i>c</i>²)','ln(<i>ab</i>/2<i>c</i>)','ln(2<i>ab</i>/<i>c</i>)'],1,`Adding logs multiplies, subtracting divides, and 2 ln <i>c</i> = ln <i>c</i>²: ln(<i>ab</i>/<i>c</i>²).`);
+Q('a11','am','Mechanics',1,`A particle starts from rest and accelerates at 3 m s⁻² for 4 s. How far does it travel?`,['6 m','12 m','18 m','24 m'],3,`<i>s</i> = <i>ut</i> + ½<i>at</i>² = 0 + ½ × 3 × 16 = 24 m.`);
+Q('a12','am','Mechanics',1,`A block of mass 5 kg on a smooth horizontal surface is pulled by a horizontal force of 20 N. What is its acceleration?`,['0.25 m s⁻²','4 m s⁻²','15 m s⁻²','100 m s⁻²'],1,`<i>F</i> = <i>ma</i>, so <i>a</i> = 20 ÷ 5 = 4 m s⁻².`);
+Q('a13','am','Statistics',2,`<i>X</i> ~ B(4, 0.5). What is P(<i>X</i> = 2)?`,['0.0625','0.25','0.375','0.5'],2,`⁴C₂ × 0.5² × 0.5² = 6 × 0.0625 = 0.375.`);
+Q('a14','am','Statistics',2,`Events <i>A</i> and <i>B</i> are independent with P(<i>A</i>) = 0.5 and P(<i>B</i>) = 0.4. What is P(<i>A</i> ∪ <i>B</i>)?`,['0.2','0.45','0.7','0.9'],2,`P(<i>A</i> ∩ <i>B</i>) = 0.5 × 0.4 = 0.2. Then P(<i>A</i> ∪ <i>B</i>) = 0.5 + 0.4 − 0.2 = 0.7.`);
+Q('a15','am','Pure',2,`What is the integral of cos 2<i>x</i> with respect to <i>x</i>?`,['2 sin 2<i>x</i> + <i>c</i>','sin 2<i>x</i> + <i>c</i>','−½ sin 2<i>x</i> + <i>c</i>','½ sin 2<i>x</i> + <i>c</i>'],3,`Integrating cos gives sin, and you divide by the coefficient of <i>x</i>: ½ sin 2<i>x</i> + <i>c</i>.`);
+Q('a16','am','Pure',3,`What is the radius of the circle <i>x</i>² + <i>y</i>² − 6<i>x</i> + 4<i>y</i> − 12 = 0?`,['√12','4','5','25'],2,`Complete the square: (<i>x</i> − 3)² + (<i>y</i> + 2)² = 12 + 9 + 4 = 25, so the radius is 5.`);
+
+/* ───────────── GCSE Science ───────────── */
+Q('gb1','gs','Biology',1,`Which part of a cell is the site of aerobic respiration?`,['Nucleus','Ribosome','Mitochondria','Chloroplast'],2,`Mitochondria release energy by aerobic respiration. Ribosomes make proteins; chloroplasts carry out photosynthesis.`);
+Q('gb2','gs','Biology',1,`Which word equation shows photosynthesis?`,['carbon dioxide + water → glucose + oxygen','glucose + oxygen → carbon dioxide + water','carbon dioxide + oxygen → glucose + water','water + glucose → carbon dioxide + oxygen'],0,`Plants use light energy to turn carbon dioxide and water into glucose and oxygen. The second option is aerobic respiration, the reverse.`);
+Q('gb3','gs','Biology',1,`Which blood vessels carry blood away from the heart?`,['Veins','Arteries','Capillaries','Venules'],1,`Arteries carry blood Away from the heart at high pressure. Veins bring it back.`);
+Q('gb4','gs','Biology',1,`Which enzyme breaks down starch into sugars?`,['Protease','Lipase','Amylase','Catalase'],2,`Amylase (made in the salivary glands, pancreas and small intestine) digests starch. Protease digests proteins; lipase digests fats.`);
+Q('gb5','gs','Biology',2,`Two parents both have the genotype Bb, where B is dominant. What proportion of their offspring would be expected to show the recessive characteristic?`,['0','1/4','1/2','3/4'],1,`The Punnett square gives BB, Bb, Bb, bb. Only bb shows the recessive characteristic: 1 in 4.`);
+Q('gb6','gs','Biology',1,`What is the name for the movement of water through a partially permeable membrane from a dilute solution to a more concentrated one?`,['Osmosis','Diffusion','Active transport','Transpiration'],0,`Osmosis is the diffusion of water across a partially permeable membrane. Active transport needs energy and moves substances against the gradient.`);
+Q('gc1','gs','Chemistry',1,`An atom has 11 protons and 12 neutrons. What is its mass number?`,['11','12','23','34'],2,`Mass number = protons + neutrons = 11 + 12 = 23. The atomic number is 11 (sodium).`);
+Q('gc2','gs','Chemistry',1,`What type of bonding is found in sodium chloride?`,['Covalent','Metallic','Intermolecular only','Ionic'],3,`A metal (sodium) transfers an electron to a non-metal (chlorine), forming oppositely charged ions held by ionic bonds.`);
+Q('gc3','gs','Chemistry',2,`What is the relative formula mass of calcium carbonate, CaCO₃? (A<sub>r</sub>: Ca = 40, C = 12, O = 16)`,['68','84','100','124'],2,`40 + 12 + (3 × 16) = 100.`);
+Q('gc4','gs','Chemistry',1,`What is the pH of a neutral solution?`,['1','7','10','14'],1,`pH 7 is neutral. Below 7 is acidic; above 7 is alkaline.`);
+Q('gc5','gs','Chemistry',1,`Which gas is produced when magnesium reacts with dilute hydrochloric acid?`,['Hydrogen','Oxygen','Carbon dioxide','Chlorine'],0,`metal + acid → salt + hydrogen. Test for it with a lit splint: it burns with a squeaky pop.`);
+Q('gc6','gs','Chemistry',2,`How many moles of water are there in 36 g of water? (M<sub>r</sub> of H₂O = 18)`,['0.5','2','18','648'],1,`moles = mass ÷ M<sub>r</sub> = 36 ÷ 18 = 2.`);
+Q('gp1','gs','Physics',1,`A car travels 150 m in 12 s. What is its average speed?`,['8 m/s','10 m/s','12 m/s','12.5 m/s'],3,`speed = distance ÷ time = 150 ÷ 12 = 12.5 m/s.`);
+Q('gp2','gs','Physics',1,`The potential difference across a resistor is 12 V and the current through it is 3 A. What is its resistance?`,['0.25 Ω','4 Ω','15 Ω','36 Ω'],1,`<i>V</i> = <i>IR</i>, so <i>R</i> = 12 ÷ 3 = 4 Ω.`);
+Q('gp3','gs','Physics',2,`What is the kinetic energy of a 2 kg mass moving at 3 m/s?`,['3 J','6 J','9 J','18 J'],2,`KE = ½<i>mv</i>² = ½ × 2 × 9 = 9 J. Square the speed first.`);
+Q('gp4','gs','Physics',1,`Which of these electromagnetic waves has the shortest wavelength?`,['Radio waves','Infrared','Ultraviolet','Gamma rays'],3,`In order of decreasing wavelength: radio, microwave, infrared, visible, ultraviolet, X-rays, gamma rays.`);
+Q('gp5','gs','Physics',1,`What is the weight of a 5 kg mass on Earth? (<i>g</i> = 9.8 N/kg)`,['0.51 N','5 N','14.8 N','49 N'],3,`<i>W</i> = <i>mg</i> = 5 × 9.8 = 49 N. Mass is in kg; weight is a force in newtons.`);
+Q('gp6','gs','Physics',2,`A wave has frequency 50 Hz and wavelength 0.2 m. What is its speed?`,['10 m/s','25 m/s','100 m/s','250 m/s'],0,`<i>v</i> = <i>f</i>λ = 50 × 0.2 = 10 m/s.`);
+
+/* ───────────── A-level Science ───────────── */
+Q('ab1','as','Biology',1,`Which type of bond joins amino acids together in a polypeptide?`,['Glycosidic','Ester','Peptide','Phosphodiester'],2,`Peptide bonds form by condensation between the amine group of one amino acid and the carboxyl group of the next. Glycosidic bonds join sugars; ester bonds are in lipids; phosphodiester bonds join nucleotides.`);
+Q('ab2','as','Biology',1,`In DNA, which base pairs with adenine?`,['Thymine','Uracil','Guanine','Cytosine'],0,`A pairs with T (two hydrogen bonds); C pairs with G (three). Uracil replaces thymine in RNA.`);
+Q('ab3','as','Biology',2,`Where in the chloroplast does the light-independent reaction (the Calvin cycle) take place?`,['Thylakoid membrane','Stroma','Matrix','Cristae'],1,`The Calvin cycle is in the stroma. The light-dependent reaction is on the thylakoid membranes. Matrix and cristae belong to mitochondria.`);
+Q('ab4','as','Biology',2,`What is the net yield of ATP from glycolysis of one molecule of glucose?`,['2','4','36','38'],0,`Glycolysis makes 4 ATP but uses 2 to phosphorylate glucose, so the net gain is 2 ATP (plus 2 reduced NAD).`);
+Q('ab5','as','Biology',2,`Which enzyme separates the two strands of the DNA double helix during replication?`,['DNA polymerase','DNA ligase','DNA helicase','RNA polymerase'],2,`DNA helicase breaks the hydrogen bonds between base pairs. DNA polymerase then joins new nucleotides to each template strand.`);
+Q('ac1','as','Chemistry',1,`What are the shape and bond angle of a methane molecule, CH₄?`,['Trigonal planar, 120°','Tetrahedral, 109.5°','Pyramidal, 107°','Linear, 180°'],1,`Four bonding pairs and no lone pairs repel equally, giving a tetrahedral shape with 109.5° angles.`);
+Q('ac2','as','Chemistry',2,`What is the pH of 0.010 mol dm⁻³ hydrochloric acid?`,['1','2','3','12'],1,`HCl is a strong acid, so [H⁺] = 0.010. pH = −log₁₀(0.010) = 2.`);
+Q('ac3','as','Chemistry',2,`How many moles of NaOH are in 250 cm³ of a 0.20 mol dm⁻³ solution?`,['0.050','0.080','0.50','50'],0,`<i>n</i> = <i>cV</i> with volume in dm³: 0.20 × 0.250 = 0.050 mol. Convert cm³ to dm³ by dividing by 1000.`);
+Q('ac4','as','Chemistry',2,`Which reagent can be used to distinguish an aldehyde from a ketone?`,['Bromine water','Sodium carbonate','Acidified silver nitrate','Tollens’ reagent'],3,`Aldehydes are oxidised by Tollens’ reagent, leaving a silver mirror. Ketones cannot be oxidised this way, so nothing happens.`);
+Q('ac5','as','Chemistry',2,`What is the oxidation state of manganese in KMnO₄?`,['+2','+4','+6','+7'],3,`K is +1 and each O is −2: 1 + Mn + 4(−2) = 0, so Mn = +7.`);
+Q('ap1','as','Physics',2,`What is the energy of a photon of frequency 5.0 × 10¹⁴ Hz? (<i>h</i> = 6.63 × 10⁻³⁴ J s)`,['1.3 × 10⁻⁴⁸ J','3.3 × 10⁻¹⁹ J','3.3 × 10⁻¹⁵ J','7.5 × 10⁴⁷ J'],1,`<i>E</i> = <i>hf</i> = 6.63 × 10⁻³⁴ × 5.0 × 10¹⁴ = 3.3 × 10⁻¹⁹ J.`);
+Q('ap2','as','Physics',2,`A ball is thrown horizontally at 12 m s⁻¹ from a height of 20 m. Ignoring air resistance, how long does it take to reach the ground? (<i>g</i> = 9.8 m s⁻²)`,['0.6 s','1.4 s','2.0 s','4.1 s'],2,`Vertical motion only: 20 = ½ × 9.8 × <i>t</i>², so <i>t</i> = √(40 ÷ 9.8) = 2.0 s. The horizontal speed does not matter.`);
+Q('ap3','as','Physics',2,`Two 6 Ω resistors are connected in parallel, and this pair is in series with a 3 Ω resistor. What is the total resistance?`,['3 Ω','6 Ω','9 Ω','15 Ω'],1,`Two equal resistors in parallel give half of one: 3 Ω. Add the series 3 Ω: 6 Ω.`);
+Q('ap4','as','Physics',2,`An object moves in a circle of radius 5 m at a steady speed of 10 m s⁻¹. What is its centripetal acceleration?`,['0.5 m s⁻²','2 m s⁻²','20 m s⁻²','50 m s⁻²'],2,`<i>a</i> = <i>v</i>² ÷ <i>r</i> = 100 ÷ 5 = 20 m s⁻².`);
+Q('ap5','as','Physics',1,`A radioactive isotope has a half-life of 8 days. What fraction of a sample remains undecayed after 24 days?`,['1/3','1/4','1/6','1/8'],3,`24 days is 3 half-lives: ½ × ½ × ½ = 1/8.`);
+
+
+// Things to remember: flashcard decks and paper guides.
+const DECKS = [
+  { id: 'tech', tr: 'imc', name: 'Exam technique', note: 'How to pick up marks you already deserve' },
+  { id: 'num', tr: 'imc', name: 'Number facts', note: 'Primes, squares, divisibility' },
+  { id: 'geo', tr: 'imc', name: 'Geometry facts', note: 'Angles, triangles, circles' },
+  { id: 'alg', tr: 'imc', name: 'Algebra and counting tricks', note: 'Shortcuts that come up every year' },
+  { id: 'smc', tr: 'smc', name: 'Senior extras', note: 'What the Senior paper adds' },
+  { id: 'fo', tr: 'fo', name: 'Kangaroo and Olympiad', note: 'Formats and how to write a proof' },
+  { id: 'gm', tr: 'gm', name: 'GCSE Maths formulae', note: 'Including the ones not on the sheet' },
+  { id: 'am', tr: 'am', name: 'A-level Maths essentials', note: 'Calculus, logs, trig, mechanics' },
+  { id: 'gs', tr: 'gs', name: 'GCSE Science equations', note: 'Physics equations and core facts' },
+  { id: 'as', tr: 'as', name: 'A-level Science essentials', note: 'Key equations and definitions' },
+];
+const CARDS = [];
+const C = (dk, f, b) => CARDS.push({ id: dk + CARDS.length, dk, f, b });
+
+C('tech', `How is the Intermediate Challenge marked?`, `Q1–15: 5 marks each. Q16–20: 6 marks, lose 1 if wrong. Q21–25: 6 marks, lose 2 if wrong. Blank scores 0. Maximum 135.`);
+C('tech', `Should you guess on the Intermediate paper?`, `Q1–15: yes, always answer (no penalty). Q16–25: only if you can rule options out. A blind guess on Q21–25 loses marks on average.`);
+C('tech', `What are you not allowed to use?`, `Calculators, squared paper and measuring instruments. Rough working on blank or lined paper is fine.`);
+C('tech', `How should you split the 60 minutes?`, `Aim to finish Q1–15 in about 30 minutes, check them, then spend what is left on the 6-mark questions you like the look of. You are not expected to finish.`);
+C('tech', `You are stuck. What are three things to try?`, `1. Test the five options (work backwards). 2. Try a small or simple case. 3. Estimate and eliminate options that are clearly too big or too small.`);
+C('tech', `Why check the units digit or parity?`, `Options often differ in their last digit or in odd/even. Working out only the last digit can pick the answer in seconds.`);
+C('tech', `Diagrams on the paper are…`, `Not drawn to scale. Never measure or judge by eye; reason from the given facts.`);
+C('tech', `What is the most common way to lose easy marks?`, `Answering a different question: giving <i>x</i> when it asks for 5<i>x</i>, the smallest instead of the largest, or the number of items instead of their sum. Reread the last line.`);
+
+C('num', `Primes below 50`, `2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 (fifteen of them). 1 is not prime.`);
+C('num', `Squares from 11² to 20²`, `121, 144, 169, 196, 225, 256, 289, 324, 361, 400.`);
+C('num', `Cubes from 1³ to 10³`, `1, 8, 27, 64, 125, 216, 343, 512, 729, 1000.`);
+C('num', `Powers of 2 up to 2<sup>10</sup>`, `2, 4, 8, 16, 32, 64, 128, 256, 512, 1024.`);
+C('num', `Divisible by 3? By 9?`, `Add the digits. If the digit sum is a multiple of 3 (or 9), so is the number. The digit sum also gives the remainder on division by 9.`);
+C('num', `Divisible by 4? By 8?`, `4: the last two digits form a multiple of 4. 8: the last three digits form a multiple of 8.`);
+C('num', `Divisible by 11?`, `Alternately add and subtract the digits. If the result is 0 or a multiple of 11, the number is divisible by 11. Example: 2816 → 2 − 8 + 1 − 6 = −11.`);
+C('num', `1001 = ?`, `7 × 11 × 13. It explains why <i>abcabc</i> is always divisible by 7, 11 and 13.`);
+C('num', `Facts about this year’s numbers`, `2025 = 45² = 3⁴ × 5². 2026 = 2 × 1013. 2027 is prime. Setters love the year.`);
+C('num', `How many factors does a number have?`, `Write it as a product of prime powers, add 1 to each power and multiply. 72 = 2³ × 3² has (3+1)(2+1) = 12 factors.`);
+C('num', `How many zeros end <i>n</i>!?`, `Count the factors of 5: ⌊<i>n</i>/5⌋ + ⌊<i>n</i>/25⌋ + ⌊<i>n</i>/125⌋ + … For 50!: 10 + 2 = 12.`);
+C('num', `1 + 2 + 3 + … + <i>n</i>`, `½<i>n</i>(<i>n</i> + 1). So 1 + … + 100 = 5050.`);
+C('num', `1 + 3 + 5 + … (first <i>n</i> odd numbers)`, `<i>n</i>². For example 1 + 3 + 5 + 7 = 16.`);
+C('num', `Last-digit cycles of powers`, `2: 2, 4, 8, 6. 3: 3, 9, 7, 1. 7: 7, 9, 3, 1. 8: 8, 4, 2, 6. All have length 4, so use the remainder of the power on division by 4.`);
+C('num', `HCF × LCM of two numbers`, `Equals the product of the two numbers.`);
+C('num', `Fractions worth knowing as decimals`, `1/8 = 0.125, 3/8 = 0.375, 5/8 = 0.625, 7/8 = 0.875, 1/6 = 0.1666…, 1/7 = 0.142857…, 1/9 = 0.111…, 1/11 = 0.0909…`);
+C('num', `<i>a</i>% of <i>b</i> compared with <i>b</i>% of <i>a</i>`, `They are always equal. 16% of 25 = 25% of 16 = 4.`);
+C('num', `Average speed for there and back at speeds <i>u</i> and <i>v</i>`, `2<i>uv</i> ÷ (<i>u</i> + <i>v</i>), never the ordinary mean. 12 and 8 km/h give 9.6 km/h.`);
+
+C('geo', `Interior angle sum of a polygon with <i>n</i> sides`, `(<i>n</i> − 2) × 180°. The exterior angles always total 360°.`);
+C('geo', `Each exterior angle of a regular <i>n</i>-gon`, `360° ÷ <i>n</i>. Find the interior angle as 180° minus this. It is usually the fastest route.`);
+C('geo', `Pythagorean triples to recognise`, `3-4-5, 5-12-13, 8-15-17, 7-24-25, 20-21-29, and their multiples such as 6-8-10 and 9-12-15.`);
+C('geo', `Area of an equilateral triangle of side <i>s</i>`, `(√3 ÷ 4) × <i>s</i>². Its height is (√3 ÷ 2) × <i>s</i>.`);
+C('geo', `Sides of a 30°-60°-90° triangle`, `1 : √3 : 2 (shortest side opposite 30°). A 45°-45°-90° triangle is 1 : 1 : √2.`);
+C('geo', `Diagonal of a square of side <i>s</i>; area from the diagonal <i>d</i>`, `Diagonal = <i>s</i>√2. Area = ½<i>d</i>².`);
+C('geo', `Area of a regular hexagon of side <i>s</i>`, `Six equilateral triangles: (3√3 ÷ 2) × <i>s</i>².`);
+C('geo', `Lengths scale by <i>k</i>. What happens to area and volume?`, `Area scales by <i>k</i>², volume by <i>k</i>³.`);
+C('geo', `Angle in a semicircle`, `90°. So a triangle inscribed in a circle is right-angled exactly when one side is a diameter.`);
+C('geo', `Radius of the circle inside a right-angled triangle`, `(<i>a</i> + <i>b</i> − <i>c</i>) ÷ 2, where <i>c</i> is the hypotenuse. For any triangle: area = ½ × <i>r</i> × perimeter.`);
+C('geo', `Number of diagonals of an <i>n</i>-gon`, `<i>n</i>(<i>n</i> − 3) ÷ 2.`);
+C('geo', `Angles in an isosceles triangle with apex angle <i>a</i>`, `Each base angle is (180° − <i>a</i>) ÷ 2. Look for equal lengths (radii, sides of regular shapes) to spot hidden isosceles triangles.`);
+C('geo', `Area of a trapezium`, `½ × (sum of the parallel sides) × the distance between them.`);
+
+C('alg', `Difference of two squares`, `<i>a</i>² − <i>b</i>² = (<i>a</i> − <i>b</i>)(<i>a</i> + <i>b</i>). Use it for sums like 2026² − 2025² or 99 × 101.`);
+C('alg', `(<i>a</i> + <i>b</i>)² and what it gives you`, `<i>a</i>² + 2<i>ab</i> + <i>b</i>². So <i>a</i>² + <i>b</i>² = (<i>a</i> + <i>b</i>)² − 2<i>ab</i>.`);
+C('alg', `Given <i>x</i> + 1/<i>x</i> = <i>k</i>, find <i>x</i>² + 1/<i>x</i>²`, `Square both sides: <i>x</i>² + 1/<i>x</i>² = <i>k</i>² − 2.`);
+C('alg', `<i>mn</i> + <i>m</i> + <i>n</i> = something. What now?`, `Add 1 to both sides and factorise: (<i>m</i> + 1)(<i>n</i> + 1). Then list factor pairs.`);
+C('alg', `Mean questions`, `Convert to totals straight away: total = mean × how many.`);
+C('alg', `Consecutive numbers with a known sum`, `The middle one (or the mean) is the sum divided by how many there are.`);
+C('alg', `Arranging letters when some repeat`, `<i>n</i>! divided by the factorial of each repeat count. LEVEL: 5! ÷ (2! × 2!) = 30.`);
+C('alg', `Choosing <i>r</i> things from <i>n</i> when order does not matter`, `<i>n</i>C<i>r</i> = <i>n</i>! ÷ (<i>r</i>! (<i>n</i> − <i>r</i>)!). Choosing 3 from 9: 9 × 8 × 7 ÷ 6 = 84.`);
+C('alg', `Probability of “at least one”`, `1 − P(none). Usually much quicker than adding the cases.`);
+C('alg', `Pigeonhole principle`, `If more than <i>k</i> × <i>n</i> objects go into <i>n</i> boxes, some box holds at least <i>k</i> + 1. 25 people guarantee three sharing a birth month.`);
+C('alg', `Combined work rates`, `Add rates, not times. A tap filling in 12 minutes has rate 1/12 per minute.`);
+C('alg', `Reverse percentage`, `After a 20% decrease the new price is 80% of the old, so divide by 0.8. Never add 20% back on.`);
+
+C('smc', `How is the Senior Challenge marked?`, `Everyone starts on 25. Each correct answer adds 4, each wrong answer subtracts 1, a blank scores 0. Maximum 125. 25 questions in 90 minutes.`);
+C('smc', `Sum and product of the roots of <i>ax</i>² + <i>bx</i> + <i>c</i> = 0`, `Sum = −<i>b</i>/<i>a</i>, product = <i>c</i>/<i>a</i>.`);
+C('smc', `Discriminant and tangency`, `A line is tangent to a curve when the equation for their intersection has a repeated root: <i>b</i>² − 4<i>ac</i> = 0.`);
+C('smc', `AM–GM inequality`, `For positive numbers, the arithmetic mean is at least the geometric mean: (<i>a</i> + <i>b</i>) ÷ 2 ≥ √(<i>ab</i>), with equality when <i>a</i> = <i>b</i>.`);
+C('smc', `Telescoping fractions`, `1/(<i>n</i>(<i>n</i> + 1)) = 1/<i>n</i> − 1/(<i>n</i> + 1). Sums of these collapse to first minus last.`);
+C('smc', `sin and cos of complementary angles`, `sin(90° − <i>x</i>) = cos <i>x</i>, and sin²<i>x</i> + cos²<i>x</i> = 1. Pair up angles that add to 90°.`);
+C('smc', `Cosine rule`, `<i>c</i>² = <i>a</i>² + <i>b</i>² − 2<i>ab</i> cos <i>C</i>. Rearranged: cos <i>C</i> = (<i>a</i>² + <i>b</i>² − <i>c</i>²) ÷ 2<i>ab</i>.`);
+C('smc', `Sine rule and triangle area`, `<i>a</i>/sin <i>A</i> = <i>b</i>/sin <i>B</i> = <i>c</i>/sin <i>C</i>. Area = ½<i>ab</i> sin <i>C</i>.`);
+C('smc', `Exact trig values`, `sin 30° = ½, sin 45° = √2/2, sin 60° = √3/2. cos is the same list reversed. tan 30° = 1/√3, tan 45° = 1, tan 60° = √3.`);
+C('smc', `Largest power of a prime <i>p</i> dividing <i>n</i>!`, `⌊<i>n</i>/<i>p</i>⌋ + ⌊<i>n</i>/<i>p</i>²⌋ + ⌊<i>n</i>/<i>p</i>³⌋ + …`);
+C('smc', `Inclusion–exclusion for three sets`, `|A ∪ B ∪ C| = |A| + |B| + |C| − |A∩B| − |A∩C| − |B∩C| + |A∩B∩C|.`);
+C('smc', `Space diagonal of a cuboid`, `√(<i>a</i>² + <i>b</i>² + <i>c</i>²). For a cube of side <i>s</i>: <i>s</i>√3.`);
+C('smc', `Distance from the origin to the line <i>ax</i> + <i>by</i> = <i>k</i>`, `|<i>k</i>| ÷ √(<i>a</i>² + <i>b</i>²). Handy for “maximise 3<i>x</i> + 4<i>y</i> on a circle”.`);
+
+C('fo', `Grey and Pink Kangaroo: format`, `Grey is for Year 9 and below, Pink for Years 10–11. 25 multiple-choice questions in an hour: Q1–15 are worth 5 marks, Q16–25 are worth 6. No marks are lost for wrong answers, so answer everything.`);
+C('fo', `Cayley, Hamilton, Maclaurin: format`, `Cayley is Year 9 and below, Hamilton Year 10, Maclaurin Year 11. Six questions in two hours, full written solutions, each marked out of 10.`);
+C('fo', `Senior Kangaroo: format`, `20 questions in 60 minutes. No options: every answer is a whole number from 1 to 999. 5 marks each, no penalties.`);
+C('fo', `BMO Round 1: format`, `Six problems in 3½ hours, full written proofs, each marked out of 10. Even one complete solution is a good result.`);
+C('fo', `How are Olympiad solutions marked?`, `Roughly “10 minus” for a complete solution with small slips, or “0 plus” for partial progress. A right answer with no reasoning scores very little.`);
+C('fo', `What must a written solution contain?`, `Define your letters, give a reason for every step, write in sentences, and finish with a clear conclusion that answers the question.`);
+C('fo', `“Find all…” questions need two things`, `Show your answers work, and prove there are no others. Both halves carry marks.`);
+C('fo', `Olympiad number theory toolkit`, `Factorise and compare factor pairs; look at remainders (mod 2, 3, 4, 5, 8); use parity; bound the variables so only a few cases remain.`);
+C('fo', `Can you sit both a Kangaroo and an Olympiad?`, `No. A student sits one follow-on round. Which one you are invited to depends on your Challenge score and school year.`);
+
+C('gm', `Quadratic formula`, `<i>x</i> = (−<i>b</i> ± √(<i>b</i>² − 4<i>ac</i>)) ÷ 2<i>a</i>.`);
+C('gm', `Sine rule, cosine rule and area`, `<i>a</i>/sin <i>A</i> = <i>b</i>/sin <i>B</i>. <i>a</i>² = <i>b</i>² + <i>c</i>² − 2<i>bc</i> cos <i>A</i>. Area = ½<i>ab</i> sin <i>C</i>.`);
+C('gm', `Exact values: sin, cos, tan of 30°, 45°, 60°`, `sin: ½, √2/2, √3/2. cos: √3/2, √2/2, ½. tan: 1/√3, 1, √3.`);
+C('gm', `Volume of a sphere, cone and pyramid`, `Sphere 4/3 π<i>r</i>³. Cone ⅓π<i>r</i>²<i>h</i>. Pyramid ⅓ × base area × height.`);
+C('gm', `Surface area of a sphere; curved surface of a cone`, `Sphere 4π<i>r</i>². Cone π<i>rl</i>, where <i>l</i> is the slant height.`);
+C('gm', `Compound interest`, `Amount = start × (1 + rate/100)<sup>years</sup>. Depreciation uses (1 − rate/100).`);
+C('gm', `Circle theorems (the main five)`, `Angle at centre is twice the angle at the circumference. Angles in the same segment are equal. Angle in a semicircle is 90°. Opposite angles of a cyclic quadrilateral add to 180°. A tangent meets a radius at 90°.`);
+C('gm', `Parallel and perpendicular gradients`, `Parallel lines have equal gradients. Perpendicular gradients multiply to −1.`);
+C('gm', `Laws of indices`, `<i>a</i><sup>m</sup> × <i>a</i><sup>n</sup> = <i>a</i><sup>m+n</sup>, (<i>a</i><sup>m</sup>)<sup>n</sup> = <i>a</i><sup>mn</sup>, <i>a</i>⁰ = 1, <i>a</i><sup>−n</sup> = 1/<i>a</i><sup>n</sup>, <i>a</i><sup>1/n</sup> = <i>n</i>th root of <i>a</i>.`);
+C('gm', `Direct and inverse proportion`, `Direct: <i>y</i> = <i>kx</i>. Inverse: <i>y</i> = <i>k</i>/<i>x</i>. Find <i>k</i> from the given pair first.`);
+C('gm', `Arc length and sector area`, `Arc = (θ/360) × 2π<i>r</i>. Sector = (θ/360) × π<i>r</i>².`);
+C('gm', `Speed, density, pressure`, `speed = distance ÷ time, density = mass ÷ volume, pressure = force ÷ area.`);
+
+C('am', `Differentiate <i>x</i><sup>n</sup>, e<sup>kx</sup>, ln <i>x</i>, sin <i>kx</i>, cos <i>kx</i>`, `<i>nx</i><sup>n−1</sup>, <i>k</i>e<sup>kx</sup>, 1/<i>x</i>, <i>k</i> cos <i>kx</i>, −<i>k</i> sin <i>kx</i>.`);
+C('am', `Product, quotient and chain rules`, `(<i>uv</i>)′ = <i>u</i>′<i>v</i> + <i>uv</i>′. (<i>u</i>/<i>v</i>)′ = (<i>u</i>′<i>v</i> − <i>uv</i>′)/<i>v</i>². d<i>y</i>/d<i>x</i> = d<i>y</i>/d<i>u</i> × d<i>u</i>/d<i>x</i>.`);
+C('am', `Integrate <i>x</i><sup>n</sup>, 1/<i>x</i>, e<sup>kx</sup>, cos <i>kx</i>, sin <i>kx</i>`, `<i>x</i><sup>n+1</sup>/(<i>n</i>+1), ln|<i>x</i>|, e<sup>kx</sup>/<i>k</i>, (sin <i>kx</i>)/<i>k</i>, −(cos <i>kx</i>)/<i>k</i>. Always add <i>c</i>.`);
+C('am', `Laws of logarithms`, `log <i>a</i> + log <i>b</i> = log <i>ab</i>. log <i>a</i> − log <i>b</i> = log(<i>a</i>/<i>b</i>). <i>k</i> log <i>a</i> = log <i>a</i><sup>k</sup>. To solve <i>a</i><sup>x</sup> = <i>b</i>: <i>x</i> = ln <i>b</i> ÷ ln <i>a</i>.`);
+C('am', `Arithmetic series`, `<i>n</i>th term <i>a</i> + (<i>n</i> − 1)<i>d</i>. Sum = ½<i>n</i>(2<i>a</i> + (<i>n</i> − 1)<i>d</i>).`);
+C('am', `Geometric series`, `<i>n</i>th term <i>ar</i><sup>n−1</sup>. Sum = <i>a</i>(1 − <i>r</i><sup>n</sup>)/(1 − <i>r</i>). Sum to infinity = <i>a</i>/(1 − <i>r</i>) when |<i>r</i>| &lt; 1.`);
+C('am', `Trig identities`, `sin²θ + cos²θ = 1. tan θ = sin θ / cos θ. sin 2θ = 2 sin θ cos θ. cos 2θ = cos²θ − sin²θ = 1 − 2 sin²θ = 2 cos²θ − 1.`);
+C('am', `SUVAT equations`, `<i>v</i> = <i>u</i> + <i>at</i>. <i>s</i> = <i>ut</i> + ½<i>at</i>². <i>v</i>² = <i>u</i>² + 2<i>as</i>. <i>s</i> = ½(<i>u</i> + <i>v</i>)<i>t</i>. Constant acceleration only.`);
+C('am', `Binomial expansion term`, `The <i>x</i><sup>r</sup> term of (<i>a</i> + <i>bx</i>)<sup>n</sup> is <sup>n</sup>C<sub>r</sub> <i>a</i><sup>n−r</sup>(<i>bx</i>)<sup>r</sup>.`);
+C('am', `Binomial distribution B(<i>n</i>, <i>p</i>)`, `P(<i>X</i> = <i>r</i>) = <sup>n</sup>C<sub>r</sub> <i>p</i><sup>r</sup>(1 − <i>p</i>)<sup>n−r</sup>. Mean <i>np</i>, variance <i>np</i>(1 − <i>p</i>).`);
+C('am', `Independent and mutually exclusive events`, `Independent: P(<i>A</i> ∩ <i>B</i>) = P(<i>A</i>)P(<i>B</i>). Mutually exclusive: P(<i>A</i> ∩ <i>B</i>) = 0. Always: P(<i>A</i> ∪ <i>B</i>) = P(<i>A</i>) + P(<i>B</i>) − P(<i>A</i> ∩ <i>B</i>).`);
+C('am', `Circle equation`, `(<i>x</i> − <i>a</i>)² + (<i>y</i> − <i>b</i>)² = <i>r</i>² has centre (<i>a</i>, <i>b</i>) and radius <i>r</i>. Complete the square to get this form.`);
+
+C('gs', `Speed, acceleration, force`, `speed = distance ÷ time. acceleration = change in velocity ÷ time. force = mass × acceleration.`);
+C('gs', `Weight, work, power`, `<i>W</i> = <i>mg</i>. work done = force × distance. power = energy ÷ time.`);
+C('gs', `Kinetic and gravitational potential energy`, `KE = ½<i>mv</i>². GPE = <i>mgh</i>.`);
+C('gs', `Electricity equations`, `<i>V</i> = <i>IR</i>. <i>P</i> = <i>IV</i> = <i>I</i>²<i>R</i>. <i>Q</i> = <i>It</i>. <i>E</i> = <i>Pt</i>.`);
+C('gs', `Wave speed; density`, `<i>v</i> = <i>f</i>λ. density = mass ÷ volume.`);
+C('gs', `Electromagnetic spectrum, long to short wavelength`, `Radio, microwave, infrared, visible, ultraviolet, X-rays, gamma rays. Frequency and energy increase in the same order.`);
+C('gs', `Photosynthesis and aerobic respiration`, `Photosynthesis: carbon dioxide + water → glucose + oxygen (needs light). Respiration: glucose + oxygen → carbon dioxide + water (releases energy).`);
+C('gs', `Mitosis versus meiosis`, `Mitosis: two genetically identical cells, for growth and repair. Meiosis: four genetically different gametes with half the chromosomes.`);
+C('gs', `Digestive enzymes`, `Amylase: starch → sugars. Protease: proteins → amino acids. Lipase: fats → fatty acids and glycerol.`);
+C('gs', `Moles`, `moles = mass ÷ M<sub>r</sub>. For solutions, moles = concentration × volume in dm³.`);
+C('gs', `Protons, neutrons, electrons`, `Atomic number = protons. Mass number = protons + neutrons. A neutral atom has electrons equal to protons. Isotopes differ in neutrons.`);
+C('gs', `Reactivity series (most to least reactive)`, `Potassium, sodium, calcium, magnesium, aluminium, (carbon), zinc, iron, (hydrogen), copper, silver, gold.`);
+C('gs', `Tests for gases`, `Hydrogen: squeaky pop with a lit splint. Oxygen: relights a glowing splint. Carbon dioxide: turns limewater cloudy. Chlorine: bleaches damp litmus.`);
+
+C('as', `Photon energy and wave equation`, `<i>E</i> = <i>hf</i> = <i>hc</i>/λ. <i>c</i> = <i>f</i>λ.`);
+C('as', `Circular motion`, `<i>a</i> = <i>v</i>²/<i>r</i> = ω²<i>r</i>. <i>F</i> = <i>mv</i>²/<i>r</i>. <i>v</i> = ω<i>r</i>.`);
+C('as', `Resistors in series and parallel`, `Series: <i>R</i> = <i>R</i>₁ + <i>R</i>₂. Parallel: 1/<i>R</i> = 1/<i>R</i>₁ + 1/<i>R</i>₂.`);
+C('as', `Radioactive decay`, `<i>N</i> = <i>N</i>₀e<sup>−λt</sup>. Half-life = ln 2 ÷ λ. After <i>n</i> half-lives the fraction left is (½)<sup>n</sup>.`);
+C('as', `Ideal gas equation`, `<i>pV</i> = <i>nRT</i>, with pressure in Pa, volume in m³ and temperature in K.`);
+C('as', `pH`, `pH = −log₁₀[H⁺]. For a strong monoprotic acid, [H⁺] equals the acid concentration. <i>K</i><sub>w</sub> = [H⁺][OH⁻] = 1.0 × 10⁻¹⁴ at 298 K.`);
+C('as', `Shapes of molecules`, `2 pairs: linear 180°. 3: trigonal planar 120°. 4: tetrahedral 109.5°. 3 bonding + 1 lone: pyramidal 107°. 2 bonding + 2 lone: bent 104.5°. 6: octahedral 90°.`);
+C('as', `Tests for organic functional groups`, `Alkene: decolourises bromine water. Aldehyde: silver mirror with Tollens’ reagent. Carboxylic acid: fizzes with sodium carbonate. Haloalkane: precipitate with silver nitrate after hydrolysis.`);
+C('as', `Bonds in biological molecules`, `Carbohydrates: glycosidic. Proteins: peptide. Lipids: ester. Nucleic acids: phosphodiester. All form by condensation and break by hydrolysis.`);
+C('as', `DNA replication enzymes`, `Helicase unzips the helix. DNA polymerase joins nucleotides to each template strand. Replication is semi-conservative.`);
+C('as', `Where photosynthesis and respiration stages happen`, `Light-dependent: thylakoid membranes. Calvin cycle: stroma. Glycolysis: cytoplasm. Link reaction and Krebs cycle: mitochondrial matrix. Oxidative phosphorylation: cristae.`);
+
+const GUIDES = {
+  imc: { title: 'Intermediate Mathematical Challenge', rows: [
+    ['Who', 'Year 11 or below in England and Wales, S4 or below in Scotland. Mostly Years 9–11.'],
+    ['When', 'Late January or early February. The last two were 29 January 2025 and 28 January 2026. Your school will confirm the date.'],
+    ['Paper', '25 multiple-choice questions, options A–E, 60 minutes. Questions get harder as you go.'],
+    ['Not allowed', 'Calculators, squared paper and measuring instruments.'],
+    ['Marking', 'Q1–15: 5 marks. Q16–20: 6 marks, minus 1 if wrong. Q21–25: 6 marks, minus 2 if wrong. Maximum 135.'],
+    ['Awards', 'About the top half get a certificate, split gold, silver and bronze in the ratio 1 : 2 : 3.'],
+    ['What next', 'The highest scorers are invited to an Olympiad (Cayley, Hamilton or Maclaurin). The next group sit the Grey or Pink Kangaroo.'],
+  ] },
+  smc: { title: 'Senior Mathematical Challenge', rows: [
+    ['Who', 'Year 13 or below in England and Wales, S6 or below in Scotland. Mostly sixth-formers.'],
+    ['When', 'October. The 2025 paper was on 9 October.'],
+    ['Paper', '25 multiple-choice questions, options A–E, 90 minutes. No calculators.'],
+    ['Marking', 'Start with 25 marks. Plus 4 for each correct answer, minus 1 for each wrong answer, 0 for a blank. Maximum 125.'],
+    ['Awards', 'Roughly the top 60% get a certificate, split gold, silver and bronze in the ratio 1 : 2 : 3.'],
+    ['What next', 'Around the top 1000 are invited to British Mathematical Olympiad Round 1. The next few thousand sit the Senior Kangaroo.'],
+  ] },
+  fo: { title: 'Follow-on rounds', rows: [
+    ['Grey Kangaroo', 'Year 9 and below. 25 multiple-choice questions in an hour, no penalties for wrong answers.'],
+    ['Pink Kangaroo', 'Years 10 and 11. Same format as the Grey.'],
+    ['Olympiads', 'Cayley (Year 9 and below), Hamilton (Year 10), Maclaurin (Year 11). Six written questions in two hours, each out of 10.'],
+    ['Senior Kangaroo', '20 questions in an hour. Each answer is a whole number from 1 to 999. 5 marks each.'],
+    ['BMO Round 1', 'Six written problems in 3½ hours, each out of 10. The top scorers go on to Round 2 (four problems, 3½ hours).'],
+    ['One round only', 'You sit either a Kangaroo or an Olympiad, not both.'],
+  ] },
+  gm: { title: 'GCSE Maths', rows: [
+    ['Papers', 'Three papers of 1 hour 30 minutes for AQA, Edexcel and OCR. The first is non-calculator for AQA and Edexcel.'],
+    ['Tiers', 'Foundation covers grades 1–5 and Higher covers 4–9.'],
+    ['Best habit', 'Show every line of working. Method marks are available even when the final answer is wrong.'],
+  ] },
+  am: { title: 'A-level Maths', rows: [
+    ['Content', 'Pure maths (about two thirds), statistics and mechanics.'],
+    ['Papers', 'Three two-hour papers for the main exam boards, calculators allowed in all of them.'],
+    ['Best habit', 'Learn which results are in the formula booklet and which are not, and practise the ones that are not.'],
+  ] },
+  gs: { title: 'GCSE Science', rows: [
+    ['Routes', 'Combined Science (two GCSEs) or separate Biology, Chemistry and Physics.'],
+    ['Equations', 'Check with your teacher which physics equations your board gives you and which you must recall.'],
+    ['Best habit', 'Learn the required practicals: method, variables and sources of error come up every year.'],
+  ] },
+  as: { title: 'A-level Science', rows: [
+    ['Subjects', 'Biology, Chemistry and Physics are separate A-levels, each with a practical endorsement.'],
+    ['Maths content', 'At least 10% of the marks in Biology, 20% in Chemistry and 40% in Physics test maths skills.'],
+    ['Best habit', 'Use the exact wording from mark schemes for definitions.'],
+  ] },
+};
+
+// Diagrams, drawn from coordinates so the geometry is right.
+const FIGS = (() => {
+  const r1 = n => Math.round(n * 10) / 10;
+  const S = (body, w = 220, h = 150) => `<svg class="fig" viewBox="0 0 ${w} ${h}" role="img" aria-label="Diagram for this question">${body}</svg>`;
+  const L = (a, b, c = '') => `<line x1="${r1(a[0])}" y1="${r1(a[1])}" x2="${r1(b[0])}" y2="${r1(b[1])}" class="${c}"/>`;
+  const P = (pts, c = '') => `<polygon points="${pts.map(p => r1(p[0]) + ',' + r1(p[1])).join(' ')}" class="${c}"/>`;
+  const C = (o, r, c = '') => `<circle cx="${r1(o[0])}" cy="${r1(o[1])}" r="${r1(r)}" class="${c}"/>`;
+  const T = (p, t, a = 'middle') => `<text x="${r1(p[0])}" y="${r1(p[1])}" text-anchor="${a}">${t}</text>`;
+  const D = o => `<circle cx="${r1(o[0])}" cy="${r1(o[1])}" r="2.2" class="dot"/>`;
+  const pol = (o, r, deg) => [o[0] + r * Math.cos(deg * Math.PI / 180), o[1] + r * Math.sin(deg * Math.PI / 180)];
+  const ra = (p, dx, dy, s = 9) => `<polyline points="${p[0] + dx * s},${p[1]} ${p[0] + dx * s},${p[1] + dy * s} ${p[0]},${p[1] + dy * s}"/>`;
+  const F = {};
+  F.i10 = S(P([[30, 30], [190, 30], [190, 110], [30, 110]], 'soft') + T([110, 128], 'length = 2 × width') + T([40, 74], 'width', 'start'), 220, 140);
+  F.i21 = S(P([[55, 15], [165, 15], [165, 125], [55, 125]], 'soft') + L([55, 125], [165, 15], 'dash') + T([100, 62], '10 cm'), 220, 140);
+  F.i26 = S(P([[50, 10], [170, 10], [170, 130], [50, 130]], 'soft') + C([110, 70], 60, 'paper') + T([110, 146], '4 cm'), 220, 150);
+  { const A = [40, 125], B = [168, 125], Cc = [40, 29]; F.i32 = S(P([A, B, Cc]) + C([72, 93], 32, 'soft') + ra(A, 1, -1) + T([104, 142], '8') + T([28, 80], '6', 'end'), 220, 150); }
+  { const o = [110, 72]; F.i36 = S(P([0, 60, 120, 180, 240, 300].map(d => pol(o, 58, d)), 'soft') + T([110, 140], '2'), 220, 150); }
+  { const o = [110, 75], v = [45, 135, 225, 315].map(d => pol(o, 62, d)); F.i41 = S(C(o, 62, 'soft') + P(v, 'paper') + T([110, 132], '2'), 220, 150); }
+  { const B = [40, 135], Cc = [180, 135], A = [90, 15]; F.i45 = S(P([A, B, Cc], 'soft') + T([54, 72], '13', 'end') + T([146, 72], '15', 'start') + T([110, 149], '14'), 220, 152); }
+  { const o = [110, 78], u = 12; F.s11 = S(C(o, 5 * u) + L([o[0] - 4 * u, o[1] - 3 * u], [o[0] + 4 * u, o[1] - 3 * u]) + L([o[0] - 3 * u, o[1] + 4 * u], [o[0] + 3 * u, o[1] + 4 * u]) + D(o) + T([110, 36], '8') + T([110, 121], '6') + T([118, 82], 'O', 'start'), 220, 150); }
+  { const B = [50, 135], Cc = [170, 135], sinB = Math.sqrt(45) / 7, A = [50 + 105 * 2 / 7, 135 - 105 * sinB]; F.s21 = S(P([A, B, Cc], 'soft') + T([A[0], A[1] - 6], 'A') + T([40, 140], 'B', 'end') + T([180, 140], 'C', 'start') + T([56, 82], '7', 'end') + T([134, 82], '9', 'start') + T([110, 149], '8'), 220, 152); }
+  { const o = [110, 75]; F.s26 = S(C(o, 60, 'dash') + P([22.5, 67.5, 112.5, 157.5, 202.5, 247.5, 292.5, 337.5].map(d => pol(o, 60, d)), 'soft'), 220, 150); }
+  { const x = 30 + 160 * 3 / 7, y = 15 + 110 / 3; F.k3 = S(P([[30, 15], [190, 15], [190, 125], [30, 125]], 'soft') + L([x, 15], [x, 125]) + L([30, y], [190, y]) + T([(30 + x) / 2, (15 + y) / 2 + 4], '6') + T([(x + 190) / 2, (15 + y) / 2 + 4], '8') + T([(30 + x) / 2, (y + 125) / 2 + 4], '12') + T([(x + 190) / 2, (y + 125) / 2 + 4], '?'), 220, 140); }
+  { const A = [60, 135], B = [160, 135], Cc = [160, 35], Dd = [60, 35], Pp = [110, 135 - 50 * Math.sqrt(3)]; F.o3 = S(P([A, B, Cc, Dd]) + P([A, B, Pp], 'soft') + L(Pp, Cc, 'dash') + L(Pp, Dd, 'dash') + T([50, 140], 'A', 'end') + T([170, 140], 'B', 'start') + T([170, 32], 'C', 'start') + T([50, 32], 'D', 'end') + T([110, Pp[1] + 22], 'P'), 220, 150); }
+  { const X = [30, 115], Y = [30 + 16 * 5 * Math.sqrt(3), 115], Z = [Y[0], 35]; F.g5 = S(P([X, Y, Z], 'soft') + ra(Y, -1, -1) + T([92, 66], '10 cm', 'end') + T([64, 110], '30°') + T([Y[0] + 8, 80], '?', 'start'), 220, 135); }
+  { const o = [110, 78], A = pol(o, 60, 160), B = pol(o, 60, 20), Cc = pol(o, 60, 270); F.g13 = S(C(o, 60) + L(o, A) + L(o, B) + L(Cc, A) + L(Cc, B) + D(o) + T([110, 98], '140°') + T([110, 42], '?') + T([110, 72], 'O'), 220, 150); }
+  { const o = [110, 75]; F.i17 = ''; }
+  delete F.i17;
+  return F;
+})();
+const fig = q => FIGS[q.id] || '';
+
+'use strict';
+/* ───────── Data helpers ───────── */
+const TRACKS = [
+  { id: 'imc', name: 'Intermediate Challenge', short: 'IMC', blurb: 'UKMT · Years 9–11 · 25 questions in 60 minutes' },
+  { id: 'smc', name: 'Senior Challenge', short: 'SMC', blurb: 'UKMT · sixth form · 25 questions in 90 minutes' },
+  { id: 'fo', name: 'Follow-on rounds', short: 'Follow-on', blurb: 'Kangaroo, Senior Kangaroo, Olympiad and BMO1' },
+  { id: 'gm', name: 'GCSE Maths', short: 'GCSE Maths', blurb: 'Number, algebra, geometry, statistics' },
+  { id: 'am', name: 'A-level Maths', short: 'A-level Maths', blurb: 'Pure, statistics and mechanics' },
+  { id: 'gs', name: 'GCSE Science', short: 'GCSE Science', blurb: 'Biology, chemistry and physics' },
+  { id: 'as', name: 'A-level Science', short: 'A-level Science', blurb: 'Biology, chemistry and physics' },
+];
+const TR = Object.fromEntries(TRACKS.map(t => [t.id, t]));
+const BYID = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+const LETTERS = 'ABCDE';
+const kind = q => (q.o ? 'mcq' : q.a === null ? 'written' : 'numeric');
+
+const I = {
+  home: '<svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>',
+  practice: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
+  mocks: '<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M9 3h6"/></svg>',
+  remember: '<svg viewBox="0 0 24 24"><rect x="4" y="6" width="13" height="14" rx="2"/><path d="M8 3h10a2 2 0 0 1 2 2v12"/></svg>',
+  progress: '<svg viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-7m4 7H2"/></svg>',
+  flame: '<svg viewBox="0 0 24 24" class="fill"><path d="M12 2c1 4 5 5.500 5 10.500A5 5 0 0 1 7 13c0-1.800.800-3 1.800-4 .300 1.600 1 2.300 1.700 2.600C10.300 8.500 10.500 5 12 2z"/></svg>',
+  bolt: '<svg viewBox="0 0 24 24" class="fill"><path d="M13 2L5 13.500h5.500L9.500 22 19 9.500h-6z"/></svg>',
+  check: '<svg viewBox="0 0 24 24"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>',
+  cross: '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  flag: '<svg viewBox="0 0 24 24"><path d="M6 21V4h11l-2 4 2 4H6"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24"><path d="M5 12h14m-5-5l5 5-5 5"/></svg>',
+  lock: '<svg viewBox="0 0 24 24"><rect x="6" y="11" width="12" height="9" rx="2"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/></svg>',
+};
+
+/* ───────── State ───────── */
+const KEY = 'podium.v1';
+const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
+let S = loadState();
+function loadState() {
+  try { const r = JSON.parse(localStorage.getItem(KEY)); if (r && r.v === 1) return Object.assign(blank(), r); } catch (e) { /* storage unavailable */ }
+  return blank();
+}
+function persistLocal() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage unavailable */ } }
+function save() { S.updated = Date.now(); persistLocal(); cloudPush(); }
+
+const pad = n => String(n).padStart(2, '0');
+const dayKey = (d = new Date()) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const dayShift = n => { const d = new Date(); d.setDate(d.getDate() + n); return dayKey(d); };
+const streakNow = () => (S.lastDay === dayKey() || S.lastDay === dayShift(-1) ? S.streak : 0);
+const thr = L => 25 * L * (L - 1);
+const level = xp => Math.floor((1 + Math.sqrt(1 + 4 * xp / 25)) / 2);
+const RANKS = [[20, 'Medallist'], [15, 'Olympian'], [11, 'Kangaroo'], [8, 'Gold'], [5, 'Silver'], [3, 'Bronze'], [1, 'Participant']];
+const rank = L => RANKS.find(r => L >= r[0])[1];
+
+function addXP(n) {
+  if (n <= 0) return;
+  const t = dayKey(), before = level(S.xp);
+  if (S.lastDay !== t) { S.streak = S.lastDay === dayShift(-1) ? S.streak + 1 : 1; S.lastDay = t; S.best = Math.max(S.best, S.streak); }
+  const hadGoal = (S.days[t] || 0) >= S.goal;
+  S.days[t] = (S.days[t] || 0) + n; S.xp += n;
+  const after = level(S.xp);
+  if (after > before) toast(`Level ${after} · ${rank(after)}`, 'gold');
+  if (!hadGoal && S.days[t] >= S.goal) toast('Daily goal reached', 'good');
+}
+function record(q, ok) {
+  const r = S.q[q.id] || (S.q[q.id] = { n: 0, c: 0, last: 0, t: 0 });
+  r.n++; if (ok) r.c++; r.last = ok ? 1 : 0; r.t = Date.now();
+}
+const totals = () => { let n = 0, c = 0; for (const k in S.q) { n += S.q[k].n; c += S.q[k].c; } return { n, c }; };
+function topicStats(tr) {
+  const m = new Map();
+  for (const q of QUESTIONS) if (q.tr === tr) {
+    const t = m.get(q.tp) || { tp: q.tp, total: 0, done: 0, n: 0, c: 0 }; const r = S.q[q.id];
+    t.total++; if (r) { t.n += r.n; t.c += r.c; if (r.last) t.done++; } m.set(q.tp, t);
+  }
+  return [...m.values()];
+}
+const mistakes = tr => QUESTIONS.filter(q => q.tr === tr && S.q[q.id] && !S.q[q.id].last);
+const cardsLearned = dk => CARDS.filter(c => (!dk || c.dk === dk) && (S.cards[c.id] || 0) >= 2).length;
+
+/* ───────── Badges ───────── */
+const BADGES = [
+  ['first', 'Pencil sharpened', 'Answer your first question', () => totals().n >= 1],
+  ['c10', 'Warming up', '10 correct answers', () => totals().c >= 10],
+  ['c50', 'Half century', '50 correct answers', () => totals().c >= 50],
+  ['c100', 'Centurion', '100 correct answers', () => totals().c >= 100],
+  ['s3', 'Three in a row', '3-day streak', () => S.best >= 3],
+  ['s7', 'Full week', '7-day streak', () => S.best >= 7],
+  ['s14', 'Fortnight', '14-day streak', () => S.best >= 14],
+  ['perfect', 'Clean sheet', 'Finish a session with no mistakes', () => S.perfect >= 1],
+  ['mock1', 'Under the clock', 'Finish a timed mock', () => S.mocks.length >= 1],
+  ['gold', 'Gold standard', 'Score in the gold range in a mock', () => S.mocks.some(m => m.band === 'Gold' || /invite/.test(m.band || ''))],
+  ['topic', 'Topic master', 'Get every question in a topic right', () => TRACKS.some(t => topicStats(t.id).some(s => s.total >= 4 && s.done === s.total))],
+  ['poly', 'All-rounder', 'Answer questions in 4 different tracks', () => new Set(Object.keys(S.q).map(id => BYID[id] && BYID[id].tr)).size >= 4],
+  ['cards', 'Card sharp', 'Learn 25 flashcards', () => cardsLearned() >= 25],
+  ['daily5', 'Regular', 'Complete 5 daily challenges', () => Object.keys(S.daily).length >= 5],
+  ['sprint', 'Quick thinker', 'Score 12 or more in a number sprint', () => S.sprint >= 12],
+  ['lvl8', 'Gold rank', 'Reach level 8', () => level(S.xp) >= 8],
+];
+function checkBadges() {
+  for (const [id, name, , test] of BADGES) if (!S.badges[id] && test()) { S.badges[id] = dayKey(); toast(`Badge earned: ${name}`, 'gold'); }
+}
+
+/* ───────── Random ───────── */
+const shuffle = (a, rnd = Math.random) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function seeded(str) { let h = 1779033703; for (const ch of str) h = Math.imul(h ^ ch.charCodeAt(0), 3432918353), h = (h << 13) | (h >>> 19); return () => { h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; }; }
+
+/* ───────── Scoring (pure) ───────── */
+function scheme(tr, n, pos) {
+  if (tr === 'smc') return [4, -1];
+  const a = Math.round(n * 0.6), b = Math.round(n * 0.8);
+  return pos < a ? [5, 0] : pos < b ? [6, -1] : [6, -2];
+}
+function scoreMock(tr, marks) { // marks: array of 'c' | 'w' | 'b'
+  const n = marks.length; let score = tr === 'smc' ? n : 0, max = score, c = 0, w = 0, b = 0, lost = 0;
+  marks.forEach((m, i) => { const [up, down] = scheme(tr, n, i); max += up; if (m === 'c') { score += up; c++; } else if (m === 'w') { score += down; lost -= down; w++; } else b++; });
+  return { score, max, c, w, b, lost };
+}
+const BANDS = {
+  imc: { full: 135, cuts: [[115, 'Olympiad invite range'], [96, 'Kangaroo invite range'], [86, 'Gold'], [70, 'Silver'], [55, 'Bronze']] },
+  smc: { full: 125, cuts: [[105, 'BMO1 invite range'], [92, 'Senior Kangaroo invite range'], [88, 'Gold'], [70, 'Silver'], [55, 'Bronze']] },
+};
+function band(tr, score, max) { const B = BANDS[tr]; const scaled = score * B.full / max; const hit = B.cuts.find(c => scaled >= c[0]); return hit ? hit[1] : 'Below bronze'; }
+
+/* ───────── UI plumbing ───────── */
+const app = document.getElementById('app');
+let CONFIRM = false, BACKUP = false, SHEET = null, cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
+const ROUTES = ['home', 'practice', 'mocks', 'remember', 'progress', 'account'];
+const readHash = () => { try { const h = String(location.hash || '').slice(1); return ROUTES.includes(h) ? h : ''; } catch (e) { return ''; } };
+let ROUTE = readHash() || 'home';
+const route = () => ROUTE;
+// Navigation never depends on the address bar: some phone viewers block or mishandle # links.
+function setRoute(r) {
+  if (!ROUTES.includes(r)) return;
+  ROUTE = r; clearInterval(tickId); MODE = null; render(); window.scrollTo(0, 0);
+  try { if (/^https?:$/.test(location.protocol) && readHash() !== r) location.hash = r; } catch (e) { /* address bar not available */ }
+}
+function toast(msg, kind) {
+  const box = document.getElementById('toasts'), el = document.createElement('div');
+  el.className = 'toast ' + (kind || ''); el.textContent = msg; box.appendChild(el);
+  setTimeout(() => el.classList.add('out'), 2600); setTimeout(() => el.remove(), 3100);
+}
+function render() {
+  document.body.classList.toggle('focus', !!MODE);
+  const r = route();
+  document.querySelectorAll('nav a').forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + r ? 'page' : 'false'));
+  document.getElementById('chip-streak').textContent = streakNow();
+  document.getElementById('chip-xp').textContent = S.xp;
+  app.innerHTML = MODE === 'run' ? vRun() : MODE === 'mock' ? vMock() : MODE === 'mockres' ? vMockResult() : MODE === 'cards' ? vCards() : MODE === 'sprint' ? vSprint() : MODE === 'sheet' ? vSheet()
+    : ({ home: vHome, practice: vPractice, mocks: vMocks, remember: vRemember, progress: vProgress, account: vAccount })[r]();
+  const me = document.getElementById('me-btn'); if (me) me.textContent = (S.name || cloudName || '?').trim().charAt(0).toUpperCase() || '?';
+}
+function go(mode) { MODE = mode; render(); window.scrollTo(0, 0); }
+function leave() { clearInterval(tickId); MODE = null; RUN = null; DECK = null; SPRINT = null; SHEET = null; render(); window.scrollTo(0, 0); }
+window.addEventListener('hashchange', () => { const h = readHash(); if (!h || h === ROUTE || MODE === 'mock') return; setRoute(h); });
+
+const trackChips = () => `<div class="chips" role="tablist" aria-label="Track">${TRACKS.map(t => `<button class="chip" role="tab" aria-selected="${t.id === S.track}" data-act="track" data-id="${t.id}">${t.short}</button>`).join('')}</div>`;
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const bar = (p, cls = '') => `<span class="bar ${cls}"><i style="width:${Math.max(0, Math.min(100, p))}%"></i></span>`;
+const dots = d => `<span class="dots" aria-label="Difficulty ${d} of 3">${[1, 2, 3].map(i => `<i class="${i <= d ? 'on' : ''}"></i>`).join('')}</span>`;
+
+/* ───────── Home ───────── */
+function dailyQ() { const pool = QUESTIONS.filter(q => q.tr === S.track && q.o); return pool[Math.floor(seeded(dayKey() + S.track)() * pool.length)]; }
+function weakest(tr) {
+  const st = topicStats(tr); const tried = st.filter(s => s.n >= 2).sort((a, b) => a.c / a.n - b.c / b.n)[0];
+  if (tried && tried.c / tried.n < 0.8) return { ...tried, why: `${Math.round(100 * tried.c / tried.n)}% correct so far` };
+  const fresh = st.filter(s => s.done < s.total).sort((a, b) => a.done / a.total - b.done / b.total)[0];
+  return fresh ? { ...fresh, why: `${fresh.total - fresh.done} questions still to get right` } : null;
+}
+function vHome() {
+  const L = level(S.xp), t = dayKey(), today = S.days[t] || 0, tr = TR[S.track], w = weakest(S.track), st = streakNow();
+  const into = S.xp - thr(L), need = thr(L + 1) - thr(L);
+  let cd = `<button class="link" data-act="nav" data-to="account">Set your paper date</button>`;
+  if (S.exam) { const d = Math.ceil((new Date(S.exam + 'T09:00') - Date.now()) / 864e5); cd = d > 0 ? `<b>${d}</b> day${d === 1 ? '' : 's'} to your paper` : d === 0 ? '<b>Today</b> is the day. Good luck.' : 'Your paper date has passed'; }
+  const dq = dailyQ(), dDone = S.daily[t + S.track];
+  return `
+  <section class="hero">
+    <div class="hero-top"><span class="eyebrow">Level ${L} · ${rank(L)}</span><span class="eyebrow">${into} / ${need} XP</span></div>
+    ${bar(100 * into / need, 'big')}
+    <h1>${S.name ? esc(S.name) + ', ' : ''}${st ? `${S.name ? 'a ' : ''}${st}-day streak. Keep it going.` : `${S.name ? 't' : 'T'}en minutes a day beats cramming.`}</h1>
+    <p class="muted">Training for <b>${tr.name}</b>. ${cd}</p>
+    <button class="btn primary wide" data-act="quick">Start 6 questions ${I.arrow}</button>
+  </section>
+  ${trackChips()}
+  <div class="grid3">
+    <div class="tile"><span class="tile-ic flame">${I.flame}</span><b>${st}</b><span>day streak</span></div>
+    <div class="tile"><span class="tile-ic bolt">${I.bolt}</span><b>${today}<small> / ${S.goal}</small></b><span>XP today</span>${bar(100 * today / S.goal)}</div>
+    <div class="tile"><span class="tile-ic">${I.check}</span><b>${totals().c}</b><span>correct answers</span></div>
+  </div>
+  <div class="cards2">
+    <article class="card ${dDone ? 'done' : ''}">
+      <span class="eyebrow">Daily challenge · double XP</span>
+      <h2>${dDone ? 'Done for today' : `One ${tr.short} question`}</h2>
+      <p class="muted">${dDone ? 'A new one arrives tomorrow.' : `${dq.tp}. Get it right for ${2 * baseXP(dq)} XP.`}</p>
+      ${dDone ? '' : `<button class="btn" data-act="daily">Take it on</button>`}
+    </article>
+    <article class="card">
+      <span class="eyebrow">Number sprint · 60 seconds</span>
+      <h2>Squares, primes, fractions</h2>
+      <p class="muted">The facts that save time on the paper. Best so far: <b>${S.sprint}</b>.</p>
+      <button class="btn" data-act="sprint">Start sprint</button>
+    </article>
+    ${w ? `<article class="card">
+      <span class="eyebrow">Focus next</span>
+      <h2>${w.tp}</h2>
+      <p class="muted">${w.why}.</p>
+      <button class="btn" data-act="topic" data-tp="${w.tp}">Practise ${w.tp.toLowerCase()}</button>
+    </article>` : ''}
+    <article class="card">
+      <span class="eyebrow">Under exam conditions</span>
+      <h2>Timed mock papers</h2>
+      <p class="muted">Real marking, including the penalties for wrong answers.</p>
+      <button class="btn" data-act="nav" data-to="mocks">See mocks</button>
+    </article>
+  </div>`;
+}
+
+/* ───────── Practice ───────── */
+function pick(tr, tp, n) {
+  const pool = QUESTIONS.filter(q => q.tr === tr && (!tp || q.tp === tp));
+  const cls = q => { const r = S.q[q.id]; return !r ? 0 : !r.last ? 1 : 2; };
+  return shuffle(pool).sort((a, b) => cls(a) - cls(b) || (S.q[a.id] ? S.q[a.id].t : 0) - (S.q[b.id] ? S.q[b.id].t : 0)).slice(0, n).sort((a, b) => a.d - b.d);
+}
+function vPractice() {
+  const tr = TR[S.track], st = topicStats(S.track), miss = mistakes(S.track).length;
+  const all = st.reduce((a, s) => a + s.total, 0), done = st.reduce((a, s) => a + s.done, 0);
+  return `
+  <header class="page-head"><h1>Practice</h1><p class="muted">Instant feedback and a worked solution after every question.</p></header>
+  ${trackChips()}
+  <section class="card">
+    <div class="row between"><div><h2>${tr.name}</h2><p class="muted">${tr.blurb}</p></div><span class="pill">${done} / ${all} mastered</span></div>
+    ${bar(100 * done / all, 'big')}
+    <div class="row gap wrap">
+      <button class="btn primary" data-act="quick">Mixed practice</button>
+      ${miss ? `<button class="btn" data-act="mistakes">Fix my mistakes (${miss})</button>` : ''}
+    </div>
+  </section>
+  <h3 class="section">Topics</h3>
+  <div class="list">${st.map(s => `
+    <button class="rowbtn" data-act="topic" data-tp="${s.tp}">
+      <span class="rowbtn-main"><b>${s.tp}</b><small>${s.done} of ${s.total} mastered${s.n ? ` · ${Math.round(100 * s.c / s.n)}% accuracy` : ''}</small>${bar(100 * s.done / s.total)}</span>
+      <span class="rowbtn-go">${s.done === s.total ? I.check : I.arrow}</span>
+    </button>`).join('')}</div>`;
+}
+
+const baseXP = q => [0, 10, 12, 15][q.d];
+function startRun(qs, o = {}) {
+  if (!qs.length) { toast('Nothing to practise here yet'); return; }
+  RUN = Object.assign({ qs, i: 0, sel: null, ok: null, gain: 0, correct: 0, xp: 0, combo: 0, done: false, mult: 1, title: 'Practice', reveal: false }, o);
+  go('run');
+}
+function finishAnswer(q, ok, gain) {
+  record(q, ok); RUN.ok = ok; RUN.gain = gain; RUN.xp += gain; if (ok) RUN.correct++;
+  addXP(gain); checkBadges(); save(); render();
+  const fb = document.getElementById('fb'); if (fb) fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function vRun() {
+  if (RUN.done) return vRunDone();
+  const q = RUN.qs[RUN.i], k = kind(q), ans = RUN.ok !== null;
+  let body = '';
+  if (k === 'mcq') body = `<div class="opts">${q.o.map((o, i) => {
+    const st = !ans ? '' : i === q.a ? 'right' : i === RUN.sel ? 'wrong' : 'dim';
+    return `<button class="opt ${st}" data-act="ans" data-i="${i}" ${ans ? 'disabled' : ''}><span class="loz">${LETTERS[i]}</span><span>${o}</span></button>`;
+  }).join('')}</div>`;
+  else if (k === 'numeric') body = `<form class="numform" data-form="num"><label for="numin">Your answer (a whole number from 1 to 999)</label>
+    <div class="row gap"><input id="numin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" ${ans ? `disabled value="${RUN.sel}"` : ''}><button class="btn primary" ${ans ? 'disabled' : ''}>Check</button></div></form>`;
+  else body = RUN.reveal ? '' : `<p class="muted">Write a full solution on paper first, as you would in the Olympiad. Then compare it with the model solution.</p><button class="btn primary" data-act="reveal">Show model solution</button>`;
+  let fb = '';
+  if (ans) fb = `<div id="fb" class="fb ${RUN.ok ? 'good' : 'bad'}">
+      <div class="fb-head"><span class="fb-ic">${RUN.ok ? I.check : I.cross}</span><b>${RUN.ok ? (RUN.combo >= 3 ? `Correct. ${RUN.combo} in a row.` : 'Correct.') : k === 'written' ? 'Marked. Read the model solution again.' : `Not this time. The answer is ${k === 'mcq' ? LETTERS[q.a] : q.a}.`}</b>${RUN.gain ? `<span class="xp">+${RUN.gain} XP</span>` : ''}</div>
+      <p>${q.s}</p>
+      <button class="btn primary wide" data-act="next">${RUN.i + 1 === RUN.qs.length ? 'Finish' : 'Next question'} ${I.arrow}</button></div>`;
+  else if (k === 'written' && RUN.reveal) fb = `<div id="fb" class="fb"><div class="fb-head"><b>Model solution</b></div><p>${q.s}</p>
+      <p class="muted">Mark yourself honestly. How close was your written solution?</p>
+      <div class="row gap wrap"><button class="btn" data-act="self" data-v="0">Could not start</button><button class="btn" data-act="self" data-v="1">Right idea, gaps</button><button class="btn primary" data-act="self" data-v="2">Complete proof</button></div></div>`;
+  return `<div class="run">
+    <div class="run-top"><button class="icon" data-act="quit" aria-label="Leave session">${I.cross}</button>${bar(100 * (RUN.i + (ans ? 1 : 0)) / RUN.qs.length, 'big')}<span class="count">${RUN.i + 1}/${RUN.qs.length}</span></div>
+    <article class="qcard">
+      <div class="qmeta"><span>${RUN.title} · ${q.tp}</span>${dots(q.d)}</div>
+      <p class="stem">${q.q}</p>${fig(q)}
+      ${body}
+    </article>
+    ${fb}
+  </div>`;
+}
+function vRunDone() {
+  const n = RUN.qs.length, perfect = RUN.correct === n;
+  return `<div class="run"><article class="qcard center">
+    <span class="eyebrow">${RUN.title}</span>
+    <div class="bigscore">${RUN.correct}<small>/${n}</small></div>
+    <h1>${perfect ? 'Clean sheet.' : RUN.correct >= n / 2 ? 'Solid work.' : 'That is how you find the gaps.'}</h1>
+    <p class="muted">You earned <b>${RUN.xp} XP</b>${RUN.bonus ? ` including a ${RUN.bonus} XP bonus for getting everything right` : ''}. Streak: ${streakNow()} day${streakNow() === 1 ? '' : 's'}.</p>
+    <div class="row gap wrap centerrow">${RUN.again ? `<button class="btn primary" data-act="again">Go again</button>` : ''}<button class="btn" data-act="quit">Done</button></div>
+  </article></div>`;
+}
+
+/* ───────── Mocks ───────── */
+const MOCKS = [
+  { id: 'imc', tr: 'imc', n: 25, mins: 60, name: 'Intermediate full paper', d: [8, 9, 8] },
+  { id: 'imc-mini', tr: 'imc', n: 10, mins: 24, name: 'Intermediate mini paper', d: [4, 3, 3] },
+  { id: 'smc', tr: 'smc', n: 25, mins: 90, name: 'Senior full paper', d: [8, 9, 8] },
+  { id: 'smc-mini', tr: 'smc', n: 10, mins: 36, name: 'Senior mini paper', d: [4, 3, 3] },
+];
+function schemeText(m) {
+  if (m.tr === 'smc') return `Start on ${m.n} marks. Plus 4 for each correct answer, minus 1 for each wrong one, 0 for a blank.`;
+  const a = Math.round(m.n * 0.6), b = Math.round(m.n * 0.8);
+  return `Q1–${a}: 5 marks. Q${a + 1}–${b}: 6 marks, minus 1 if wrong. Q${b + 1}–${m.n}: 6 marks, minus 2 if wrong.`;
+}
+function buildMock(def) { let qs = []; [1, 2, 3].forEach((d, i) => { qs = qs.concat(shuffle(QUESTIONS.filter(q => q.tr === def.tr && q.o && q.d === d)).slice(0, def.d[i])); }); return qs; }
+function vMocks() {
+  const hist = S.mocks.slice().reverse();
+  return `
+  <header class="page-head"><h1>Timed mocks</h1><p class="muted">Sit a paper against the clock with the real marking rules. Leaving a question blank is allowed, and sometimes wise.</p></header>
+  ${MOCK && !MOCK.done ? `<section class="card accent"><h2>You have a paper in progress</h2><button class="btn primary" data-act="resume">Resume</button></section>` : ''}
+  <div class="cards2">${MOCKS.map(m => `
+    <article class="card">
+      <span class="eyebrow">${m.n} questions · ${m.mins} minutes</span>
+      <h2>${m.name}</h2>
+      <p class="muted">${schemeText(m)}</p>
+      <button class="btn ${m.n === 25 ? 'primary' : ''}" data-act="mock" data-id="${m.id}">Start paper</button>
+    </article>`).join('')}</div>
+  <section class="card">
+    <span class="eyebrow">Real past papers</span>
+    <h2>Sit an official paper, mark it here</h2>
+    <p class="muted">UKMT publishes its past papers and solutions free. Sit one on paper, mark it with the official solutions, then enter right, wrong or blank for each question. Your score is worked out with the real marking and saved to your results.</p>
+    <div class="row gap wrap"><button class="btn primary" data-act="sheet">Mark a past paper</button>
+    <a class="btn" href="https://ukmt.org.uk/intermediate-challenges/intermediate-mathematical-challenge" target="_blank" rel="noopener">Intermediate papers</a>
+    <a class="btn" href="https://ukmt.org.uk/senior-challenges/senior-mathematical-challenge" target="_blank" rel="noopener">Senior papers</a></div>
+  </section>
+  <h3 class="section">Your results</h3>
+  ${hist.length ? `<div class="list">${hist.map(m => `<div class="rowstat"><span class="rowbtn-main"><b>${m.name}</b><small>${m.date} · ${m.c} right, ${m.w} wrong, ${m.b} blank · ${m.band}</small>${bar(100 * m.score / m.max)}</span><span class="score">${m.score}<small>/${m.max}</small></span></div>`).join('')}</div>` : `<p class="empty">No papers yet. Your scores will build up here so you can see the trend.</p>`}`;
+}
+function startMock(id) {
+  const def = MOCKS.find(m => m.id === id), qs = buildMock(def);
+  MOCK = { def, qs, ans: qs.map(() => null), flag: qs.map(() => false), i: 0, end: Date.now() + def.mins * 60000, done: false, confirm: false };
+  go('mock'); startMockTimer();
+}
+const fmt = s => `${Math.floor(s / 60)}:${pad(s % 60)}`;
+function startMockTimer() {
+  clearInterval(tickId);
+  tickId = setInterval(() => {
+    const left = Math.max(0, Math.round((MOCK.end - Date.now()) / 1000)), el = document.getElementById('mtime');
+    if (el) { el.textContent = fmt(left); el.classList.toggle('low', left < 300); }
+    if (left <= 0) finishMock();
+  }, 1000);
+}
+function vMock() {
+  const M = MOCK, q = M.qs[M.i], n = M.qs.length, [up, down] = scheme(M.def.tr, n, M.i), blanks = M.ans.filter(a => a === null).length;
+  const left = Math.max(0, Math.round((M.end - Date.now()) / 1000));
+  return `<div class="run">
+    <div class="run-top mock"><span class="count"><b>Q${M.i + 1}</b> of ${n}</span><span id="mtime" class="timer ${left < 300 ? 'low' : ''}">${fmt(left)}</span><button class="btn small" data-act="msubmit">Submit</button></div>
+    ${M.confirm ? `<div class="fb"><div class="fb-head"><b>Hand in your paper?</b></div><p>${blanks ? `${blanks} question${blanks === 1 ? ' is' : 's are'} blank.` : 'Every question has an answer.'} You cannot change answers afterwards.</p><div class="row gap"><button class="btn primary" data-act="mfinish">Hand in</button><button class="btn" data-act="mcancel">Keep working</button></div></div>` : ''}
+    <article class="qcard">
+      <div class="qmeta"><span>${up} marks${down ? ` · lose ${-down} if wrong` : ' · no penalty'}</span><button class="flagbtn ${M.flag[M.i] ? 'on' : ''}" data-act="mflag" aria-pressed="${M.flag[M.i]}">${I.flag} Flag</button></div>
+      <p class="stem">${q.q}</p>${fig(q)}
+      <div class="opts">${q.o.map((o, i) => `<button class="opt ${M.ans[M.i] === i ? 'picked' : ''}" data-act="mans" data-i="${i}" aria-pressed="${M.ans[M.i] === i}"><span class="loz">${LETTERS[i]}</span><span>${o}</span></button>`).join('')}</div>
+      <p class="hint">Tap your answer again to leave the question blank.</p>
+    </article>
+    <div class="row between"><button class="btn" data-act="mgo" data-i="${M.i - 1}" ${M.i === 0 ? 'disabled' : ''}>Back</button><button class="btn primary" data-act="mgo" data-i="${M.i + 1}" ${M.i === n - 1 ? 'disabled' : ''}>Next ${I.arrow}</button></div>
+    <div class="qgrid" aria-label="Question navigator">${M.qs.map((_, i) => `<button class="${i === M.i ? 'cur' : ''} ${M.ans[i] !== null ? 'ans' : ''} ${M.flag[i] ? 'flag' : ''}" data-act="mgo" data-i="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`).join('')}</div>
+  </div>`;
+}
+function finishMock() {
+  clearInterval(tickId);
+  const M = MOCK, tr = M.def.tr, marks = M.ans.map((a, i) => a === null ? 'b' : a === M.qs[i].a ? 'c' : 'w');
+  const r = scoreMock(tr, marks); r.band = band(tr, r.score, r.max); r.marks = marks;
+  M.qs.forEach((q, i) => { if (marks[i] !== 'b') record(q, marks[i] === 'c'); });
+  r.xp = 20 + r.c * 4; M.result = r; M.done = true;
+  S.mocks.push({ name: M.def.name, tr, date: dayKey(), score: r.score, max: r.max, c: r.c, w: r.w, b: r.b, band: r.band });
+  if (S.mocks.length > 40) S.mocks.shift();
+  addXP(r.xp); checkBadges(); save(); go('mockres');
+}
+function vMockResult() {
+  const M = MOCK, r = M.result;
+  return `<div class="run">
+    <article class="qcard center">
+      <span class="eyebrow">${M.def.name}</span>
+      <div class="bigscore">${r.score}<small>/${r.max}</small></div>
+      <h1>${r.band}</h1>
+      <p class="muted">${r.c} right, ${r.w} wrong, ${r.b} blank. ${r.lost ? `Wrong answers cost you <b>${r.lost}</b> mark${r.lost === 1 ? '' : 's'}.` : 'No marks lost to penalties.'} +${r.xp} XP.</p>
+      <p class="hint">Award ranges are a rough guide scaled from recent years. The real boundaries move every year.</p>
+      <button class="btn primary" data-act="quit">Done</button>
+    </article>
+    <h3 class="section">Review every question</h3>
+    <div class="list">${M.qs.map((q, i) => { const m = r.marks[i]; return `<details class="review ${m}"><summary><span class="num">${i + 1}</span><span class="rv-t">${q.tp}</span><span class="pill ${m === 'c' ? 'good' : m === 'w' ? 'bad' : ''}">${m === 'c' ? 'Correct' : m === 'w' ? 'Wrong' : 'Blank'}</span></summary>
+      <div class="rv-body"><p class="stem">${q.q}</p>${fig(q)}<p><b>Answer: ${LETTERS[q.a]}</b> (${q.o[q.a]})${m === 'w' ? `. You chose ${LETTERS[M.ans[i]]}.` : ''}</p><p>${q.s}</p></div></details>`; }).join('')}</div>
+  </div>`;
+}
+
+/* ───────── Remember ───────── */
+function vRemember() {
+  const g = GUIDES[S.track], decks = DECKS.slice().sort((a, b) => (b.tr === S.track) - (a.tr === S.track));
+  return `
+  <header class="page-head"><h1>Things to remember</h1><p class="muted">The paper guide, then the facts worth knowing by heart.</p></header>
+  ${trackChips()}
+  <section class="card">
+    <span class="eyebrow">Paper guide</span><h2>${g.title}</h2>
+    <dl class="guide">${g.rows.map(r => `<div><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`).join('')}</dl>
+    ${['imc', 'smc', 'fo'].includes(S.track) ? `<p class="hint">Dates and rules can change. Check <a href="https://ukmt.org.uk" target="_blank" rel="noopener">ukmt.org.uk</a> or ask your teacher.</p>` : ''}
+  </section>
+  <h3 class="section">Flashcard decks</h3>
+  <div class="list">${decks.map(d => { const cs = CARDS.filter(c => c.dk === d.id), l = cardsLearned(d.id); return `
+    <div class="deck">
+      <div class="row between"><span class="rowbtn-main"><b>${d.name}</b><small>${TR[d.tr].short} · ${d.note}</small>${bar(100 * l / cs.length)}</span><span class="pill">${l}/${cs.length}</span></div>
+      <div class="row gap"><button class="btn primary small" data-act="deck" data-id="${d.id}">Study</button>
+      <details class="readlist"><summary class="btn small">Read as a list</summary><ul>${cs.map(c => `<li><b>${c.f}</b><span>${c.b}</span></li>`).join('')}</ul></details></div>
+    </div>`; }).join('')}</div>`;
+}
+function startDeck(id) {
+  const cs = CARDS.filter(c => c.dk === id).sort((a, b) => (S.cards[a.id] || 0) - (S.cards[b.id] || 0));
+  DECK = { id, cs, i: 0, flip: false, got: 0, done: false }; go('cards');
+}
+function vCards() {
+  const D = DECK, d = DECKS.find(x => x.id === D.id);
+  if (D.done) return `<div class="run"><article class="qcard center"><span class="eyebrow">${d.name}</span><div class="bigscore">${D.got}<small>/${D.cs.length}</small></div><h1>Deck finished</h1><p class="muted">Cards you marked “Again” come first next time.</p><div class="row gap wrap centerrow"><button class="btn primary" data-act="deck" data-id="${D.id}">Go round again</button><button class="btn" data-act="quit">Done</button></div></article></div>`;
+  const c = D.cs[D.i];
+  return `<div class="run">
+    <div class="run-top"><button class="icon" data-act="quit" aria-label="Leave deck">${I.cross}</button>${bar(100 * D.i / D.cs.length, 'big')}<span class="count">${D.i + 1}/${D.cs.length}</span></div>
+    <button class="flash ${D.flip ? 'flipped' : ''}" data-act="flip" aria-live="polite">
+      <span class="eyebrow">${D.flip ? 'Answer' : d.name}</span>
+      <span class="flash-t">${D.flip ? c.b : c.f}</span>
+      ${D.flip ? '' : '<span class="hint">Say the answer, then tap to check</span>'}
+    </button>
+    ${D.flip ? `<div class="row gap"><button class="btn wide" data-act="card" data-v="0">Again</button><button class="btn primary wide" data-act="card" data-v="1">Got it</button></div>` : `<button class="btn primary wide" data-act="flip">Show answer</button>`}
+  </div>`;
+}
+
+/* ───────── Number sprint ───────── */
+const FR = [['1/8', '0.125'], ['3/8', '0.375'], ['5/8', '0.625'], ['7/8', '0.875'], ['1/6', '0.1666…'], ['1/7', '0.1428…'], ['1/9', '0.111…'], ['1/11', '0.0909…'], ['1/12', '0.0833…'], ['3/20', '0.15'], ['7/20', '0.35'], ['1/16', '0.0625']];
+const PR = [53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113], NP = [51, 57, 63, 69, 77, 87, 91, 93, 111, 117, 119, 121, 133, 143];
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+function genSprint() {
+  const t = ri(0, 4); let q, a, o;
+  const numOpts = (v, alts) => { const s = new Set([v]); for (const x of shuffle(alts)) { if (s.size < 4 && x > 0) s.add(x); } let k = 1; while (s.size < 4) s.add(v + 7 * k++); return shuffle([...s]).map(String); };
+  if (t === 0) { const n = ri(11, 25); a = n * n; q = `${n}²`; o = numOpts(a, [a + n, a - n, a + 10, a - 10, (n + 1) * (n + 1), a + 20]); }
+  else if (t === 1) { const p = Math.random() < 0.5, n = p ? PR[ri(0, PR.length - 1)] : NP[ri(0, NP.length - 1)]; q = `Is ${n} prime?`; a = p ? 'Prime' : 'Not prime'; o = ['Prime', 'Not prime']; }
+  else if (t === 2) { const n = ri(5, 12); a = 2 ** n; q = `2<sup>${n}</sup>`; o = numOpts(a, [a * 2, a / 2, a + a / 4, a - a / 4, a + 2]); }
+  else if (t === 3) { const f = FR[ri(0, FR.length - 1)]; q = `${f[0]} as a decimal`; a = f[1]; o = shuffle([a, ...shuffle(FR.filter(x => x[1] !== a)).slice(0, 3).map(x => x[1])]); }
+  else { const x = [15, 25, 35, 45, 125, 11, 99][ri(0, 6)], y = x === 125 ? ri(2, 9) * 2 : ri(3, 12) * 2; a = x * y; q = `${x} × ${y}`; o = numOpts(a, [a + x, a - x, a + 10, a - 10, a + 2 * x, a + 20]); }
+  return { q, a: String(a), o };
+}
+function startSprint() {
+  SPRINT = { end: Date.now() + 60000, score: 0, wrong: 0, cur: genSprint(), done: false, flash: '' };
+  go('sprint'); clearInterval(tickId);
+  tickId = setInterval(() => {
+    const left = Math.max(0, Math.ceil((SPRINT.end - Date.now()) / 1000)), el = document.getElementById('stime');
+    if (el) el.textContent = left + 's';
+    if (left <= 0) { clearInterval(tickId); SPRINT.done = true; const best = SPRINT.score > S.sprint; if (best) S.sprint = SPRINT.score; SPRINT.best = best; SPRINT.xp = SPRINT.score * 2; addXP(SPRINT.xp); checkBadges(); save(); render(); }
+  }, 250);
+}
+function vSprint() {
+  const P = SPRINT;
+  if (P.done) return `<div class="run"><article class="qcard center"><span class="eyebrow">Number sprint</span><div class="bigscore">${P.score}</div><h1>${P.best ? 'New personal best.' : `Your best is ${S.sprint}.`}</h1><p class="muted">${P.wrong} wrong. +${P.xp} XP.</p><div class="row gap wrap centerrow"><button class="btn primary" data-act="sprint">Again</button><button class="btn" data-act="quit">Done</button></div></article></div>`;
+  return `<div class="run">
+    <div class="run-top mock"><button class="icon" data-act="quit" aria-label="Leave sprint">${I.cross}</button><span id="stime" class="timer">${Math.max(0, Math.ceil((P.end - Date.now()) / 1000))}s</span><span class="count"><b>${P.score}</b> right</span></div>
+    <article class="qcard center ${P.flash}"><p class="stem sprintq">${P.cur.q}</p>
+    <div class="opts two">${P.cur.o.map(o => `<button class="opt mid" data-act="sp" data-v="${o}"><span>${o}</span></button>`).join('')}</div></article>
+  </div>`;
+}
+
+/* ───────── Progress ───────── */
+function vProgress() {
+  const L = level(S.xp), T = totals(), acc = T.n ? Math.round(100 * T.c / T.n) : 0;
+  const days = []; for (let i = 34; i >= 0; i--) { const k = dayShift(-i), x = S.days[k] || 0; days.push(`<i class="h${x === 0 ? 0 : x < S.goal / 2 ? 1 : x < S.goal ? 2 : 3}" title="${k}: ${x} XP"></i>`); }
+  const active = Object.keys(S.days).length;
+  return `
+  <header class="page-head"><h1>Progress</h1><p class="muted">Level ${L} · ${rank(L)} · ${thr(L + 1) - S.xp} XP to level ${L + 1}</p></header>
+  <div class="grid4">
+    <div class="tile"><b>${S.xp}</b><span>total XP</span></div>
+    <div class="tile"><b>${streakNow()}</b><span>day streak (best ${S.best})</span></div>
+    <div class="tile"><b>${T.n}</b><span>questions answered</span></div>
+    <div class="tile"><b>${acc}%</b><span>accuracy</span></div>
+  </div>
+  <section class="card"><div class="row between"><h2>Last 5 weeks</h2><span class="pill">${active} active day${active === 1 ? '' : 's'}</span></div>
+    <div class="heat" role="img" aria-label="Activity over the last 35 days">${days.join('')}</div>
+    <p class="hint">Darker squares are days you hit your ${S.goal} XP goal.</p></section>
+  ${TRACKS.map(t => { const st = topicStats(t.id), n = st.reduce((a, s) => a + s.n, 0); const tot = st.reduce((a, s) => a + s.total, 0), done = st.reduce((a, s) => a + s.done, 0); return `
+  <details class="card fold" ${t.id === S.track ? 'open' : ''}><summary><span><b>${t.name}</b><small>${n ? `${done} of ${tot} mastered` : 'Not started'}</small></span>${bar(100 * done / tot)}</summary>
+    <div class="topics">${st.map(s => `<div class="topicrow"><span>${s.tp}</span>${bar(s.n ? 100 * s.c / s.n : 0, s.n && s.c / s.n < 0.5 ? 'warn' : '')}<span class="num">${s.n ? Math.round(100 * s.c / s.n) + '%' : 'not tried'}</span></div>`).join('')}</div>
+  </details>`; }).join('')}
+  <h3 class="section">Badges · ${Object.keys(S.badges).length} of ${BADGES.length}</h3>
+  <div class="badges">${BADGES.map(([id, name, desc]) => `<div class="badge ${S.badges[id] ? 'got' : ''}"><span class="medal">${S.badges[id] ? I.check : I.lock}</span><b>${name}</b><small>${desc}</small></div>`).join('')}</div>
+  <button class="btn" data-act="nav" data-to="account">Account, backup and settings</button>`;
+}
+
+
+/* ───────── Mark a real past paper ───────── */
+function vSheet() {
+  const H = SHEET, r = scoreMock(H.tr, H.m), b = band(H.tr, r.score, r.max);
+  return `<div class="run">
+    <div class="run-top"><button class="icon" data-act="quit" aria-label="Close">${I.cross}</button><h2>Mark a past paper</h2></div>
+    <article class="qcard">
+      <div class="chips" role="tablist" aria-label="Paper"><button class="chip" role="tab" aria-selected="${H.tr === 'imc'}" data-act="sheettr" data-id="imc">Intermediate</button><button class="chip" role="tab" aria-selected="${H.tr === 'smc'}" data-act="sheettr" data-id="smc">Senior</button></div>
+      <label class="field" for="sheet-label">Which paper?<input id="sheet-label" placeholder="For example 2025" maxlength="30" value="${esc(H.label)}"></label>
+      <p class="hint">Tap a question to cycle it: blank, right, wrong.</p>
+      <div class="qgrid sheet">${H.m.map((m, i) => `<button class="${m}" data-act="sheetq" data-i="${i}" aria-label="Question ${i + 1}: ${m === 'c' ? 'right' : m === 'w' ? 'wrong' : 'blank'}">${i + 1}</button>`).join('')}</div>
+      <div class="row between"><div><div class="bigscore small">${r.score}<small>/${r.max}</small></div><p class="muted">${r.c} right, ${r.w} wrong, ${r.b} blank · ${b}</p></div><button class="btn primary" data-act="sheetsave">Save result</button></div>
+      <p class="hint">Award ranges are a rough guide. UKMT publishes the real boundaries for each year.</p>
+    </article></div>`;
+}
+
+/* ───────── Account ───────── */
+const encodeState = () => btoa(unescape(encodeURIComponent(JSON.stringify(S))));
+function vAccount() {
+  const L = level(S.xp);
+  return `
+  <header class="page-head"><h1>Account</h1><p class="muted">Level ${L} · ${rank(L)} · ${S.xp} XP</p></header>
+  <section class="card settings">
+    <span class="eyebrow">Profile</span>
+    <label for="set-name">Your name<input id="set-name" maxlength="24" autocomplete="given-name" placeholder="What should we call you?" value="${esc(S.name)}"></label>
+    <label for="set-exam">Date of your paper<input type="date" id="set-exam" value="${S.exam}"></label>
+    <label for="set-goal">Daily goal<select id="set-goal">${[20, 30, 50, 80].map(g => `<option value="${g}" ${g === S.goal ? 'selected' : ''}>${g} XP${g === 20 ? ' (light)' : g === 80 ? ' (serious)' : ''}</option>`).join('')}</select></label>
+  </section>
+  <section class="card">
+    <span class="eyebrow">Sync</span>
+    <h2>${cloudOn ? `Signed in${cloudName ? ' as ' + esc(cloudName) : ''}` : 'Saved on this device'}</h2>
+    <p class="muted" id="sync-note">${cloudOn ? 'Your progress is saved to your Claude account and follows you to any device where you open this page signed in.' : 'Your progress is stored in this browser. To move it to another device, use a backup code below.'}</p>
+  </section>
+  <section class="card">
+    <span class="eyebrow">Backup code</span>
+    <h2>Move or protect your progress</h2>
+    <p class="muted">A backup code holds everything: XP, streak, answers, badges. Paste it on another device, or into the offline copy, to carry on where you left off.</p>
+    <button class="btn" data-act="backup">Create backup code</button>
+    ${BACKUP ? `<label class="field" for="backup-out">Your code<textarea id="backup-out" readonly rows="4">${encodeState()}</textarea></label>` : ''}
+    <label class="field" for="restore-in">Restore from a code<textarea id="restore-in" rows="3" placeholder="Paste a backup code here"></textarea></label>
+    <button class="btn" data-act="restore">Restore progress</button>
+  </section>
+  <section class="card">
+    <span class="eyebrow">Offline</span>
+    <h2>Works without a connection once it has loaded</h2>
+    <p class="muted">Every question, solution and flashcard is inside the page, so nothing needs the internet after it opens. For a copy that opens with no signal at all, save the offline file and open it from your device. Use a backup code to bring your progress across.</p>
+  </section>
+  <section class="card"><span class="eyebrow">Danger zone</span>
+    <button class="btn danger small" data-act="reset">${CONFIRM ? 'Tap again to erase everything' : 'Reset all progress'}</button>
+  </section>`;
+}
+
+/* ───────── Actions ───────── */
+const ACT = {
+  nav: d => setRoute(d.to),
+  track: d => { S.track = d.id; save(); render(); },
+  quick: () => startRun(pick(S.track, null, 6), { title: TR[S.track].short, again: () => ACT.quick() }),
+  topic: d => startRun(pick(S.track, d.tp, 6), { title: TR[S.track].short, again: () => ACT.topic(d) }),
+  mistakes: () => startRun(shuffle(mistakes(S.track)).slice(0, 8), { title: 'Fix my mistakes' }),
+  daily: () => startRun([dailyQ()], { title: 'Daily challenge', mult: 2, daily: true }),
+  ans: d => {
+    if (RUN.ok !== null) return; const q = RUN.qs[RUN.i], i = +d.i, ok = i === q.a; RUN.sel = i;
+    RUN.combo = ok ? RUN.combo + 1 : 0;
+    finishAnswer(q, ok, ok ? baseXP(q) * RUN.mult + (RUN.combo >= 5 ? 5 : RUN.combo >= 3 ? 2 : 0) : 0);
+  },
+  reveal: () => { RUN.reveal = true; render(); },
+  self: d => { const q = RUN.qs[RUN.i], v = +d.v; RUN.sel = v; finishAnswer(q, v === 2, [2, 8, 15][v]); },
+  next: () => {
+    if (RUN.i + 1 < RUN.qs.length) { RUN.i++; RUN.sel = null; RUN.ok = null; RUN.gain = 0; RUN.reveal = false; render(); window.scrollTo(0, 0); return; }
+    RUN.done = true;
+    if (RUN.daily) S.daily[dayKey() + S.track] = 1;
+    if (RUN.correct === RUN.qs.length && RUN.qs.length >= 4) { RUN.bonus = 10; RUN.xp += 10; S.perfect++; addXP(10); }
+    checkBadges(); save(); render(); window.scrollTo(0, 0);
+  },
+  again: () => { const f = RUN.again; f && f(); },
+  quit: () => { if (MODE === 'mockres') MOCK = null; leave(); },
+  mock: d => startMock(d.id),
+  resume: () => { go('mock'); startMockTimer(); },
+  mans: d => { const i = +d.i; MOCK.ans[MOCK.i] = MOCK.ans[MOCK.i] === i ? null : i; render(); },
+  mflag: () => { MOCK.flag[MOCK.i] = !MOCK.flag[MOCK.i]; render(); },
+  mgo: d => { const i = +d.i; if (i >= 0 && i < MOCK.qs.length) { MOCK.i = i; MOCK.confirm = false; render(); window.scrollTo(0, 0); } },
+  msubmit: () => { MOCK.confirm = true; render(); window.scrollTo(0, 0); },
+  mcancel: () => { MOCK.confirm = false; render(); },
+  mfinish: () => finishMock(),
+  deck: d => startDeck(d.id),
+  flip: () => { DECK.flip = !DECK.flip; render(); },
+  card: d => {
+    const c = DECK.cs[DECK.i], v = +d.v, old = S.cards[c.id] || 0;
+    if (v) { S.cards[c.id] = Math.min(3, old + 1); DECK.got++; if (old < 3) addXP(2); } else S.cards[c.id] = 0;
+    DECK.i++; DECK.flip = false; if (DECK.i >= DECK.cs.length) DECK.done = true;
+    checkBadges(); save(); render();
+  },
+  sprint: () => startSprint(),
+  sp: d => {
+    if (SPRINT.done) return; const ok = d.v === SPRINT.cur.a;
+    if (ok) SPRINT.score++; else { SPRINT.wrong++; SPRINT.end -= 2000; }
+    SPRINT.flash = ok ? 'flash-good' : 'flash-bad'; SPRINT.cur = genSprint(); render();
+  },
+  sheet: () => { SHEET = { tr: S.track === 'smc' ? 'smc' : 'imc', label: '', m: Array(25).fill('b') }; go('sheet'); },
+  sheettr: d => { SHEET.tr = d.id; render(); },
+  sheetq: d => { const i = +d.i; SHEET.m[i] = ({ b: 'c', c: 'w', w: 'b' })[SHEET.m[i]]; render(); },
+  sheetsave: () => {
+    const H = SHEET, r = scoreMock(H.tr, H.m);
+    if (r.b === 25) { toast('Mark at least one question first'); return; }
+    S.mocks.push({ name: `Real ${H.tr === 'imc' ? 'Intermediate' : 'Senior'} paper${H.label ? ' ' + H.label.trim() : ''}`, tr: H.tr, date: dayKey(), score: r.score, max: r.max, c: r.c, w: r.w, b: r.b, band: band(H.tr, r.score, r.max) });
+    if (S.mocks.length > 40) S.mocks.shift();
+    addXP(30); checkBadges(); save(); SHEET = null; setRoute('mocks'); toast('Result saved. +30 XP', 'good');
+  },
+  backup: () => {
+    BACKUP = true; render();
+    const out = document.getElementById('backup-out'); if (out) { out.focus(); out.select(); }
+    try { navigator.clipboard.writeText(encodeState()).then(() => toast('Backup code copied', 'good'), () => toast('Select the code and copy it')); } catch (e) { toast('Select the code and copy it'); }
+  },
+  restore: () => {
+    const raw = (document.getElementById('restore-in').value || '').replace(/\s+/g, ''); let r = null;
+    try { r = JSON.parse(decodeURIComponent(escape(atob(raw)))); } catch (e) { r = null; }
+    if (!r || r.v !== 1 || typeof r.xp !== 'number') { toast('That code is not valid. Copy the whole code and try again.'); return; }
+    S = Object.assign(blank(), r); BACKUP = false; save(); render(); toast('Progress restored', 'good');
+  },
+  reset: () => {
+    if (!CONFIRM) { CONFIRM = true; render(); return; }
+    CONFIRM = false; S = blank(); save(); toast('Progress erased'); render();
+  },
+};
+document.addEventListener('click', e => {
+  const link = e.target.closest('a[href^="#"]');
+  if (link) { e.preventDefault(); if (MODE !== 'mock') setRoute(link.getAttribute('href').slice(1)); return; }
+  const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+  if (b.dataset.act !== 'reset') CONFIRM = false;
+  if (!['backup', 'restore'].includes(b.dataset.act)) BACKUP = false;
+  const f = ACT[b.dataset.act]; if (!f) return;
+  try { f(b.dataset, b); } catch (err) { toast('Something went wrong. Try that again.'); try { console.error(err); } catch (e2) { /* ignore */ } }
+});
+document.addEventListener('submit', e => {
+  e.preventDefault();
+  if (e.target.dataset.form !== 'num' || RUN.ok !== null) return;
+  const raw = document.getElementById('numin').value.trim(); if (!/^\d+$/.test(raw)) { toast('Type a whole number'); return; }
+  const q = RUN.qs[RUN.i], v = parseInt(raw, 10), ok = v === q.a; RUN.sel = v; RUN.combo = ok ? RUN.combo + 1 : 0;
+  finishAnswer(q, ok, ok ? baseXP(q) + 3 : 0);
+});
+document.addEventListener('input', e => { if (e.target.id === 'sheet-label' && SHEET) SHEET.label = e.target.value; });
+document.addEventListener('change', e => {
+  if (e.target.id === 'set-exam') { S.exam = e.target.value; save(); toast(S.exam ? 'Paper date saved' : 'Paper date cleared'); }
+  if (e.target.id === 'set-name') { S.name = e.target.value.trim().slice(0, 24); save(); render(); }
+  if (e.target.id === 'set-goal') { S.goal = +e.target.value; save(); render(); }
+});
+
+/* ───────── Optional account sync ───────── */
+let cloudDoc = null, cloudOn = false, cloudBusy = false, cloudDirty = false, cloudTimer = 0;
+async function cloudInit() {
+  try {
+    if (!window.claude || !window.claude.use) return;
+    const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+    if (!db || !user) return;
+    const id = await user.id(); if (!id) return;
+    cloudDoc = db.doc('data/users/' + id + '/progress');
+    const snap = await cloudDoc.get(); let remote = null;
+    if (snap.exists) { try { remote = JSON.parse(snap.data().json); } catch (e) { remote = null; } }
+    cloudOn = true;
+    try { const ps = await user.profiles([id]); cloudName = (ps && ps[id] && ps[id].name) || ''; } catch (e) { cloudName = ''; }
+    if (remote && remote.v === 1 && (remote.updated || 0) > (S.updated || 0)) { S = Object.assign(blank(), remote); persistLocal(); if (!MODE) render(); }
+    else if (S.updated && (!remote || (remote.updated || 0) < S.updated)) cloudPush();
+    if (!MODE) render();
+  } catch (e) { cloudDoc = null; cloudOn = false; }
+}
+function cloudPush() { if (!cloudDoc) return; cloudDirty = true; clearTimeout(cloudTimer); cloudTimer = setTimeout(cloudFlush, 2500); }
+async function cloudFlush() {
+  if (cloudBusy || !cloudDirty || !cloudDoc) return;
+  cloudBusy = true; cloudDirty = false;
+  try { await cloudDoc.set({ json: JSON.stringify(S), updated: S.updated }); }
+  catch (e) { if (e && e.code !== 'unavailable') { cloudDoc = null; cloudOn = false; } }
+  cloudBusy = false; if (cloudDirty) cloudPush();
+}
+
+if (typeof document !== 'undefined' && app) { render(); cloudInit(); }
+
+
+</script>
+<script>
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
+</script>
+</body>
+</html>

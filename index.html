@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Podium">
@@ -282,6 +283,26 @@ body.focus #toasts{bottom:auto;top:58px}
 @media (min-width:820px){#toasts{bottom:24px}}
 .toast{max-width:420px;text-align:center}
 
+.fig .softa{fill:var(--accent-soft);fill-opacity:.6}
+.fig .z1{fill:var(--good-soft);stroke:var(--good)}.fig .z2{fill:var(--gold-soft);stroke:var(--gold)}.fig .z3{fill:var(--bad-soft);stroke:var(--bad)}
+.fig text.sm{font-size:11px;font-weight:500}.fig text.pr{fill:var(--accent)}
+
+/* v4: calmer home, paged lessons */
+.card.next .link{align-self:center;font-size:.92rem}
+.shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shortcut{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:16px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);text-align:left}
+.shortcut:hover{border-color:var(--accent)}
+.shortcut small{color:var(--muted);font-size:.84rem}
+.sc-ic{width:36px;height:36px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:6px}
+.course{font-size:.9rem;color:var(--muted);text-align:center}
+.course .link{font-weight:650}
+.qcard.lesson{min-height:300px;gap:16px}
+.idea-n{font-size:.8rem;font-weight:650;color:var(--accent)}
+.idea{font-size:1.2rem;line-height:1.5;max-width:60ch}
+.qcard.lesson .fig{max-width:300px}
+.dots i{width:6px;height:6px}
+@media (min-width:700px){.shortcuts{grid-template-columns:repeat(4,1fr)}}
+
 </style>
 </head>
 <body>
@@ -337,23 +358,23 @@ Q('i26','imc','Geometry',2,`A circle fits exactly inside a square of side 4 cm, 
 Q('i27','imc','Number',2,`What is the smallest integer greater than 1 that leaves a remainder of 1 when divided by each of 2, 3, 4, 5 and 6?`,['31','41','61','121','721'],2,`One less than the number is a multiple of 2, 3, 4, 5 and 6. Their lowest common multiple is 60, so the number is 61.`);
 Q('i28','imc','Counting & probability',2,`Two fair dice are rolled. What is the probability that the two scores add up to 8?`,['1/12','1/9','5/36','1/6','7/36'],2,`The pairs are (2,6), (3,5), (4,4), (5,3), (6,2): 5 outcomes out of 36.`);
 Q('i29','imc','Number',2,`What is the value of 2026² − 2025²?`,['1','2025','2026','4051','4052'],3,`Difference of two squares: (2026 − 2025)(2026 + 2025) = 1 × 4051 = 4051.`);
-Q('i30','imc','Logic & puzzles',2,`On an island, knights always tell the truth and knaves always lie. Three islanders meet. The first says “All three of us are knaves.” The second says “Exactly one of us is a knight.” How many of the three are knaves?`,['0','1','2','3','It is impossible to tell'],2,`The first cannot be a knight (a knight could not truthfully say that), so the first is a knave and not all three are knaves. If the second were a knave, the third would have to be the only knight, making the second’s statement true: contradiction. So the second is a knight, the only one, and there are 2 knaves.`);
+Q('i30','imc','Logic & puzzles',2,`Knights always tell the truth and knaves always lie. Of three islanders, the first says “We are all knaves.” The second says “Exactly one of us is a knight.” How many are knaves?`,['0','1','2','3','It is impossible to tell'],2,`The first cannot be a knight (a knight could not truthfully say that), so the first is a knave and not all three are knaves. If the second were a knave, the third would have to be the only knight, making the second’s statement true: contradiction. So the second is a knight, the only one, and there are 2 knaves.`);
 
 Q('i31','imc','Number',3,`How many positive integers less than 1000 are multiples of 6 but not multiples of 9?`,['55','100','105','110','111'],4,`Multiples of 6 below 1000: 166. Those also divisible by 9 are the multiples of 18: 55. So 166 − 55 = 111.`);
 Q('i32','imc','Geometry',3,`A right-angled triangle has shorter sides of length 6 and 8. What is the radius of the largest circle that fits inside the triangle?`,['1','1.5','2','2.4','3'],2,`The hypotenuse is 10. Area = 24 = ½ × <i>r</i> × perimeter = ½ × <i>r</i> × 24, so <i>r</i> = 2. Shortcut for right-angled triangles: <i>r</i> = (<i>a</i> + <i>b</i> − <i>c</i>) ÷ 2.`);
-Q('i33','imc','Algebra',3,`The positive integers <i>m</i> and <i>n</i> satisfy <i>mn</i> + <i>m</i> + <i>n</i> = 34. What is the value of <i>m</i> + <i>n</i>?`,['9','10','11','12','16'],1,`Add 1 to both sides: (<i>m</i> + 1)(<i>n</i> + 1) = 35 = 5 × 7 (1 × 35 would make one of them 0). So <i>m</i> and <i>n</i> are 4 and 6, with sum 10.`);
-Q('i34','imc','Counting & probability',3,`How many three-digit numbers have digits that strictly increase from left to right (such as 258)?`,['72','84','96','120','504'],1,`No digit can be 0. Choose any 3 different digits from 1 to 9; there is exactly one increasing order. That gives 9 × 8 × 7 ÷ 6 = 84.`);
+Q('i33','imc','Algebra',4,`The positive integers <i>m</i> and <i>n</i> satisfy <i>mn</i> + <i>m</i> + <i>n</i> = 34. What is the value of <i>m</i> + <i>n</i>?`,['9','10','11','12','16'],1,`Add 1 to both sides: (<i>m</i> + 1)(<i>n</i> + 1) = 35 = 5 × 7 (1 × 35 would make one of them 0). So <i>m</i> and <i>n</i> are 4 and 6, with sum 10.`);
+Q('i34','imc','Counting & probability',4,`How many three-digit numbers have digits that strictly increase from left to right (such as 258)?`,['72','84','96','120','504'],1,`No digit can be 0. Choose any 3 different digits from 1 to 9; there is exactly one increasing order. That gives 9 × 8 × 7 ÷ 6 = 84.`);
 Q('i35','imc','Number',3,`The number 2<sup>12</sup> × 5<sup>8</sup> is written out in full. How many digits does it have?`,['8','9','10','12','20'],2,`2<sup>12</sup> × 5<sup>8</sup> = 2⁴ × 10⁸ = 16 × 10⁸ = 1 600 000 000, which has 10 digits.`);
 Q('i36','imc','Geometry',3,`What is the area of a regular hexagon with sides of length 2?`,['6√3','12','8√3','12√3','24'],0,`A regular hexagon is six equilateral triangles. Each has area (√3/4) × 2² = √3, so the total is 6√3.`);
-Q('i37','imc','Ratio & percentages',3,`A tap fills a bath in 12 minutes. With the tap off, the plughole empties the full bath in 20 minutes. Starting empty, with the tap on and the plug out, how many minutes does the bath take to fill?`,['8','16','24','30','32'],3,`Each minute the tap adds 1/12 of a bath and the plughole removes 1/20. Net: 1/12 − 1/20 = 1/30 per minute, so 30 minutes.`);
+Q('i37','imc','Ratio & percentages',3,`A tap fills a bath in 12 minutes. The plughole empties the full bath in 20 minutes. With the tap on and the plug out, how many minutes does the empty bath take to fill?`,['8','16','24','30','32'],3,`Each minute the tap adds 1/12 of a bath and the plughole removes 1/20. Net: 1/12 − 1/20 = 1/30 per minute, so 30 minutes.`);
 Q('i38','imc','Number',3,`How many zeros are there at the end of 50! (the product of all the integers from 1 to 50)?`,['5','10','11','12','25'],3,`Count factors of 5: there are 10 multiples of 5, and 25 and 50 each give one extra. 10 + 2 = 12.`);
 Q('i39','imc','Algebra',3,`The number <i>x</i> satisfies <i>x</i> + 1/<i>x</i> = 3. What is the value of <i>x</i>² + 1/<i>x</i>²?`,['7','8','9','10','11'],0,`Square both sides: <i>x</i>² + 2 + 1/<i>x</i>² = 9, so <i>x</i>² + 1/<i>x</i>² = 7.`);
 Q('i40','imc','Counting & probability',3,`A bag contains 3 red counters and 5 blue counters. Two counters are taken at random without replacement. What is the probability that they are different colours?`,['15/64','3/8','15/32','1/2','15/28'],4,`Red then blue: 3/8 × 5/7 = 15/56. Blue then red: 5/8 × 3/7 = 15/56. Total 30/56 = 15/28.`);
 Q('i41','imc','Geometry',3,`A circle passes through all four vertices of a square of side 2. What is the area of the region inside the circle but outside the square?`,['4 − π','π − 2','2π − 2','4π − 4','2π − 4'],4,`The diameter is the diagonal, 2√2, so the radius is √2 and the circle has area 2π. Subtract the square: 2π − 4.`);
-Q('i42','imc','Counting & probability',3,`The digits 1, 2, 3, 4 and 5 are each used once to make a five-digit number. How many of these numbers are multiples of 4?`,['6','12','16','18','24'],4,`A number is a multiple of 4 when its last two digits are. The possible endings are 12, 24, 32 and 52. For each, the other three digits can be arranged in 3! = 6 ways: 4 × 6 = 24.`);
+Q('i42','imc','Counting & probability',4,`The digits 1, 2, 3, 4 and 5 are each used once to make a five-digit number. How many of these numbers are multiples of 4?`,['6','12','16','18','24'],4,`A number is a multiple of 4 when its last two digits are. The possible endings are 12, 24, 32 and 52. For each, the other three digits can be arranged in 3! = 6 ways: 4 × 6 = 24.`);
 Q('i43','imc','Number',3,`What is the sum of all the positive factors of 100?`,['117','186','216','217','248'],3,`100 = 2² × 5². The sum of factors is (1 + 2 + 4)(1 + 5 + 25) = 7 × 31 = 217.`);
-Q('i44','imc','Algebra',3,`In a sequence, each term after the second is the sum of the two terms before it. The third term is 7 and the sixth term is 31. What is the seventh term?`,['43','45','48','50','55'],3,`Call the first two terms <i>a</i>, <i>b</i>. The terms are <i>a</i>, <i>b</i>, <i>a</i>+<i>b</i>, <i>a</i>+2<i>b</i>, 2<i>a</i>+3<i>b</i>, 3<i>a</i>+5<i>b</i>. From <i>a</i>+<i>b</i> = 7 and 3<i>a</i>+5<i>b</i> = 31 we get <i>b</i> = 5, <i>a</i> = 2. The fifth term is 19, so the seventh is 19 + 31 = 50.`);
-Q('i45','imc','Geometry',3,`A triangle has sides of length 13, 14 and 15. What is its area?`,['84','90','91','97.5','105'],0,`Drop the height onto the side of length 14: it splits the triangle into 5-12-13 and 9-12-15 right-angled triangles (5 + 9 = 14). The height is 12, so the area is ½ × 14 × 12 = 84.`);
+Q('i44','imc','Algebra',4,`In a sequence, each term after the second is the sum of the two terms before it. The third term is 7 and the sixth term is 31. What is the seventh term?`,['43','45','48','50','55'],3,`Call the first two terms <i>a</i>, <i>b</i>. The terms are <i>a</i>, <i>b</i>, <i>a</i>+<i>b</i>, <i>a</i>+2<i>b</i>, 2<i>a</i>+3<i>b</i>, 3<i>a</i>+5<i>b</i>. From <i>a</i>+<i>b</i> = 7 and 3<i>a</i>+5<i>b</i> = 31 we get <i>b</i> = 5, <i>a</i> = 2. The fifth term is 19, so the seventh is 19 + 31 = 50.`);
+Q('i45','imc','Geometry',4,`A triangle has sides of length 13, 14 and 15. What is its area?`,['84','90','91','97.5','105'],0,`Drop the height onto the side of length 14: it splits the triangle into 5-12-13 and 9-12-15 right-angled triangles (5 + 9 = 14). The height is 12, so the area is ½ × 14 × 12 = 84.`);
 
 /* ───────────── Senior Mathematical Challenge ───────────── */
 Q('s1','smc','Number',1,`What is the value of 2<sup>10</sup> − 2<sup>9</sup> − 2<sup>8</sup>?`,['0','2<sup>7</sup>','2<sup>8</sup>','2<sup>9</sup>','2<sup>10</sup>'],2,`2<sup>10</sup> − 2<sup>9</sup> = 2<sup>9</sup>, and 2<sup>9</sup> − 2<sup>8</sup> = 2<sup>8</sup>.`);
@@ -502,12 +523,12 @@ Q('i58','imc','Geometry',2,`What is the angle between the hands of a clock at ha
 Q('i59','imc','Counting & probability',2,`A two-digit number (from 10 to 99) is chosen at random. What is the probability that it is a multiple of 7?`,['1/9','2/15','1/7','13/90','7/45'],3,`There are 90 two-digit numbers. The multiples of 7 run from 14 = 7 × 2 to 98 = 7 × 14, which is 13 numbers. The probability is 13/90.`);
 Q('i60','imc','Logic & puzzles',2,`Five friends ran a race. Amy finished ahead of Bo but behind Cy. Di finished ahead of Cy. Ed finished behind Bo. Who finished third?`,['Amy','Bo','Cy','Di','Ed'],0,`Write the facts as an order. Di is ahead of Cy. Cy is ahead of Amy. Amy is ahead of Bo. Bo is ahead of Ed. So the order is Di, Cy, Amy, Bo, Ed, and Amy is third.`);
 Q('i61','imc','Number',3,`The sum of two prime numbers is 99. What is their product?`,['98','170','186','190','194'],4,`An odd total needs one even and one odd number. The only even prime is 2. So the primes are 2 and 97 (97 is prime). Their product is 2 × 97 = 194.`);
-Q('i62','imc','Geometry',3,`Two circles of radius 4 and radius 9 touch each other externally. A straight line touches both circles, at the points <i>P</i> and <i>Q</i>. What is the length of <i>PQ</i>?`,['√97','10','12','√153','13'],2,`Join the centres: that distance is 4 + 9 = 13. The radii to <i>P</i> and <i>Q</i> are both perpendicular to the tangent, so they are parallel. Draw a line from the smaller centre parallel to <i>PQ</i>: it makes a right-angled triangle with hypotenuse 13 and one side 9 − 4 = 5. So <i>PQ</i> = √(13² − 5²) = √144 = 12.`);
+Q('i62','imc','Geometry',4,`Two circles of radius 4 and radius 9 touch each other externally. A straight line touches both circles, at the points <i>P</i> and <i>Q</i>. What is the length of <i>PQ</i>?`,['√97','10','12','√153','13'],2,`Join the centres: that distance is 4 + 9 = 13. The radii to <i>P</i> and <i>Q</i> are both perpendicular to the tangent, so they are parallel. Draw a line from the smaller centre parallel to <i>PQ</i>: it makes a right-angled triangle with hypotenuse 13 and one side 9 − 4 = 5. So <i>PQ</i> = √(13² − 5²) = √144 = 12.`);
 Q('i63','imc','Algebra',3,`Given that <i>x</i>² − <i>y</i>² = 45 and <i>x</i> − <i>y</i> = 3, what is the value of <i>x</i>?`,['6','7.5','8','9','12'],3,`Factorise: (<i>x</i> − <i>y</i>)(<i>x</i> + <i>y</i>) = 45. Since <i>x</i> − <i>y</i> = 3, we get <i>x</i> + <i>y</i> = 15. Add the two equations: 2<i>x</i> = 18, so <i>x</i> = 9.`);
-Q('i64','imc','Counting & probability',3,`A grid of 3 by 3 squares is drawn. An ant walks along the grid lines from the bottom-left corner to the top-right corner, moving only right or up. How many different routes can it take?`,['9','12','18','20','27'],3,`Every route is 6 moves long: 3 to the right and 3 up, in some order. Choose which 3 of the 6 moves are “up”. That is 6 × 5 × 4 ÷ 6 = 20 routes.`);
+Q('i64','imc','Counting & probability',4,`A grid of 3 by 3 squares is drawn. An ant walks along the grid lines from the bottom-left corner to the top-right corner, moving only right or up. How many different routes can it take?`,['9','12','18','20','27'],3,`Every route is 6 moves long: 3 to the right and 3 up, in some order. Choose which 3 of the 6 moves are “up”. That is 6 × 5 × 4 ÷ 6 = 20 routes.`);
 Q('i65','imc','Number',3,`How many of the integers from 1 to 100 inclusive have exactly three positive factors?`,['4','5','6','8','10'],0,`Factors come in pairs, so only square numbers have an odd number of factors. Exactly three factors (1, <i>p</i> and <i>p</i>²) means the number is the square of a prime. Up to 100 these are 4, 9, 25 and 49: four numbers.`);
 Q('i66','imc','Ratio & percentages',3,`A 20-litre mixture is 30% fruit juice and the rest is water. How many litres of water must be added so that the mixture is 20% fruit juice?`,['5','8','10','12','15'],2,`The juice is 30% of 20 = 6 litres, and adding water does not change it. For 6 litres to be 20% of the mixture, the total must be 6 ÷ 0.2 = 30 litres. So add 30 − 20 = 10 litres.`);
-Q('i67','imc','Logic & puzzles',3,`A card has five statements on it. For each <i>k</i> from 1 to 5, statement <i>k</i> says “Exactly <i>k</i> of the statements on this card are false.” How many of the statements are true?`,['0','1','2','3','4'],1,`The statements contradict each other, so at most one is true. If none were true, all five would be false, which would make statement 5 true: contradiction. So exactly one is true and four are false. That matches statement 4, which is the true one.`);
+Q('i67','imc','Logic & puzzles',4,`A card has five statements on it. For each <i>k</i> from 1 to 5, statement <i>k</i> says “Exactly <i>k</i> of the statements on this card are false.” How many of the statements are true?`,['0','1','2','3','4'],1,`The statements contradict each other, so at most one is true. If none were true, all five would be false, which would make statement 5 true: contradiction. So exactly one is true and four are false. That matches statement 4, which is the true one.`);
 
 /* ───────────── More Senior questions ───────────── */
 Q('s29','smc','Algebra',1,`The mean of three numbers is 7. The mean of five other numbers is 15. What is the mean of all eight numbers?`,['8','9','10','11','12'],4,`Use totals. The three numbers total 21 and the five total 75. All eight total 96. The mean is 96 ÷ 8 = 12.`);
@@ -520,6 +541,50 @@ Q('s37','smc','Algebra',2,`The third term of an arithmetic sequence is 10 and th
 Q('s31','smc','Algebra',3,`How many integers <i>x</i> satisfy (<i>x</i>² − 5<i>x</i> + 5)<sup><i>x</i>² − 9<i>x</i> + 20</sup> = 1?`,['2','3','4','5','6'],3,`A power equals 1 in three ways. Base 1: <i>x</i>² − 5<i>x</i> + 4 = 0 gives <i>x</i> = 1, 4. Exponent 0 with non-zero base: <i>x</i>² − 9<i>x</i> + 20 = 0 gives <i>x</i> = 4, 5. Base −1 with an even exponent: <i>x</i>² − 5<i>x</i> + 6 = 0 gives <i>x</i> = 2, 3, and the exponents are 6 and 2, both even. The solutions are 1, 2, 3, 4, 5: five integers.`);
 Q('s36','smc','Counting & probability',3,`In how many ways can the letters of the word BANANA be arranged so that the two Ns are not next to each other?`,['20','30','40','48','60'],2,`All arrangements: 6! ÷ (3! × 2!) = 60. Now count those with the Ns together by gluing them into one block: 5 objects with A repeated three times give 5! ÷ 3! = 20. Subtract: 60 − 20 = 40.`);
 Q('s38','smc','Geometry',3,`A triangle has sides of length 5, 5 and 6. What is the radius of its inscribed circle?`,['1.5','1.6','2','2.4','2.5'],0,`Split the isosceles triangle down the middle into two 3-4-5 triangles, so the height is 4 and the area is ½ × 6 × 4 = 12. The perimeter is 16. Use area = ½ × <i>r</i> × perimeter: 12 = 8<i>r</i>, so <i>r</i> = 1.5.`);
+
+
+/* ───────────── Paper-level Intermediate questions (short stems, diagrams, harder) ───────────── */
+Q('n1','imc','Geometry',2,`<i>ABCD</i> is a square and <i>ABE</i> is an equilateral triangle outside the square. What is the size of angle <i>DEC</i>?`,['15°','20°','30°','45°','60°'],2,`Angle <i>DAE</i> = 90° + 60° = 150°. Since <i>AE</i> = <i>AB</i> = <i>AD</i>, triangle <i>ADE</i> is isosceles, so angle <i>AED</i> = (180° − 150°) ÷ 2 = 15°. By symmetry angle <i>BEC</i> = 15°. Angle <i>AEB</i> = 60°, so angle <i>DEC</i> = 60° − 15° − 15° = 30°.`);
+Q('n2','imc','Algebra',2,`The number <i>n</i> is an integer. Which of these is always odd?`,['<i>n</i>² + <i>n</i> + 1','<i>n</i>² + 1','3<i>n</i> + 1','<i>n</i>³','2<i>n</i> + 4'],0,`<i>n</i>² + <i>n</i> = <i>n</i>(<i>n</i> + 1) is a product of consecutive integers. One of them is even, so the product is even. Adding 1 makes it odd. Each other option is even for some <i>n</i>: try <i>n</i> = 1 or <i>n</i> = 2.`);
+Q('n3','imc','Number',2,`What is the value of 0.333… + 0.666… + 0.1666…?`,['1','7/6','6/5','5/4','4/3'],1,`Write each as a fraction: 1/3, 2/3 and 1/6. The first two add to 1. So the total is 1 + 1/6 = 7/6.`);
+Q('n5','imc','Ratio & percentages',2,`Ali spends a third of his money, then a quarter of what is left, then £6. He has £12 left. How much did he start with?`,['£30','£36','£40','£42','£48'],1,`Work backwards. Before spending £6 he had £18. That £18 was three quarters of the amount before, which was £24. That £24 was two thirds of the start, which was £36.`);
+Q('n6','imc','Geometry',2,`The midpoints of the sides of a square are joined to make a second square. The midpoints of its sides are joined to make a third. What fraction of the original square is shaded?`,['1/16','1/8','1/6','1/5','1/4'],4,`Joining the midpoints of a square gives a square of half the area. Doing it twice halves the area twice. So the shaded square is ½ × ½ = 1/4 of the original.`);
+Q('n7','imc','Number',2,`What is the value of √(45² − 36²)?`,['27','36','45','54','81'],0,`Use the difference of two squares: 45² − 36² = (45 − 36)(45 + 36) = 9 × 81. The square root of 9 × 81 is 3 × 9 = 27.`);
+Q('n8','imc','Number',2,`What is the value of 1³ + 2³ + 3³ + … + 10³?`,['385','1000','2025','3025','5050'],3,`The sum of the first <i>n</i> cubes equals the square of the sum of the first <i>n</i> integers. 1 + 2 + … + 10 = 55. So the answer is 55² = 3025.`);
+Q('n10','imc','Ratio & percentages',2,`A bag holds red and blue counters in the ratio 2 : 3. After 6 red counters are added, the ratio is 4 : 3. How many blue counters are there?`,['6','9','12','15','18'],1,`The blue counters do not change, and they are 3 parts both times. So the red counters go from 2 parts to 4 parts. Those 2 extra parts are the 6 added counters, so 1 part is 3. Blue is 3 parts: 9.`);
+Q('n11','imc','Counting & probability',2,`How many rectangles of any size, including squares, can be found in this 2 by 3 grid?`,['6','11','12','18','36'],3,`A rectangle is fixed by choosing 2 of the 3 horizontal lines and 2 of the 4 vertical lines. That is 3 ways and 6 ways. 3 × 6 = 18.`);
+Q('n12','imc','Number',2,`<i>A</i> and <i>B</i> are digits with <i>A</i> &lt; <i>B</i>. The two-digit numbers <i>AB</i> and <i>BA</i> add up to 121. How many possible values of <i>AB</i> are there?`,['4','5','6','8','9'],0,`<i>AB</i> + <i>BA</i> = 11(<i>A</i> + <i>B</i>), so <i>A</i> + <i>B</i> = 11. With <i>A</i> &lt; <i>B</i> the pairs are (2, 9), (3, 8), (4, 7) and (5, 6). That is 4 values.`);
+Q('n19','imc','Algebra',2,`Three teas and two coffees cost £9.10. Two teas and three coffees cost £9.90. What is the cost of one tea and one coffee?`,['£3.40','£3.50','£3.60','£3.70','£3.80'],4,`Add the two orders: five teas and five coffees cost £19.00. Divide by 5: one tea and one coffee cost £3.80.`);
+
+Q('n4','imc','Algebra',3,`The mean of the five numbers 4, 9, 5, 12 and <i>x</i> is equal to their median. How many possible values of <i>x</i> are there?`,['0','1','2','3','4'],3,`The mean is (30 + <i>x</i>) ÷ 5. If <i>x</i> ≤ 5 the median is 5, giving <i>x</i> = −5, which fits. If <i>x</i> is between 5 and 9 the median is <i>x</i>, giving <i>x</i> = 7.5, which fits. If <i>x</i> ≥ 9 the median is 9, giving <i>x</i> = 15, which fits. So there are 3 values.`);
+Q('n9','imc','Geometry',3,`<i>PQRS</i> is a rectangle with <i>PQ</i> = 8 and <i>QR</i> = 6. <i>M</i> is the midpoint of <i>QR</i> and <i>N</i> is the midpoint of <i>RS</i>. What is the area of triangle <i>PMN</i>?`,['9','12','15','16','18'],4,`Subtract the three corner triangles from the rectangle. The rectangle has area 48. Triangle <i>PQM</i> has area ½ × 8 × 3 = 12. Triangle <i>MRN</i> has area ½ × 3 × 4 = 6. Triangle <i>NSP</i> has area ½ × 4 × 6 = 12. So the shaded triangle has area 48 − 30 = 18.`);
+Q('n13','imc','Number',3,`Stamps cost 3p and 7p. In how many ways can exactly £1 be spent using at least one stamp of each kind?`,['2','3','4','5','6'],3,`We need 3<i>a</i> + 7<i>b</i> = 100. Then 100 − 7<i>b</i> must be a multiple of 3, which happens when <i>b</i> = 1, 4, 7, 10, 13. These give <i>a</i> = 31, 24, 17, 10, 3. All are positive, so there are 5 ways.`);
+Q('n14','imc','Ratio & percentages',3,`Drink <i>A</i> is 20% orange juice and drink <i>B</i> is 50% orange juice. They are mixed to make 30 litres that is 40% orange juice. How many litres of <i>A</i> are used?`,['5','10','12','15','20'],1,`40% is twice as far from 20% as it is from 50%. So the mix needs twice as much <i>B</i> as <i>A</i>. Splitting 30 litres in the ratio 1 : 2 gives 10 litres of <i>A</i>.`);
+Q('n16','imc','Geometry',3,`In triangle <i>ABC</i>, <i>AB</i> = <i>AC</i>. The point <i>D</i> lies on <i>AC</i> so that <i>AD</i> = <i>BD</i> = <i>BC</i>. What is the size of angle <i>BAC</i>?`,['30°','36°','40°','45°','54°'],1,`Let angle <i>BAC</i> = <i>x</i>. Since <i>AD</i> = <i>BD</i>, angle <i>ABD</i> = <i>x</i>, so the exterior angle <i>BDC</i> = 2<i>x</i>. Since <i>BD</i> = <i>BC</i>, angle <i>BCD</i> = 2<i>x</i>. Since <i>AB</i> = <i>AC</i>, angle <i>ABC</i> = 2<i>x</i> too. The angles of triangle <i>ABC</i> give <i>x</i> + 2<i>x</i> + 2<i>x</i> = 180°, so <i>x</i> = 36°.`);
+Q('n17','imc','Number',3,`What is the remainder when 2<sup>2026</sup> is divided by 9?`,['1','2','4','5','7'],4,`Powers of 2 leave remainders 2, 4, 8, 7, 5, 1 when divided by 9, then repeat every 6. Since 2026 = 6 × 337 + 4, the remainder is the fourth in the cycle. That is 7.`);
+Q('n21','imc','Number',3,`Two positive integers have product 144 and highest common factor 4. What is their sum?`,['24','26','30','40','51'],3,`Write the numbers as 4<i>a</i> and 4<i>b</i>, where <i>a</i> and <i>b</i> share no factor. Then 16<i>ab</i> = 144, so <i>ab</i> = 9. The only pair with no common factor is 1 and 9. The numbers are 4 and 36, with sum 40.`);
+Q('n23','imc','Number',3,`How many prime numbers are exactly 4 less than a square number?`,['1','2','3','4','5'],0,`Such a prime is <i>n</i>² − 4 = (<i>n</i> − 2)(<i>n</i> + 2). A prime has only the factors 1 and itself, so <i>n</i> − 2 = 1. That gives <i>n</i> = 3 and the prime 5. There is only 1.`);
+Q('n24','imc','Geometry',3,`A right-angled triangle has hypotenuse 10. The other two sides add up to 14. What is the area of the triangle?`,['24','25','28','35','48'],0,`Call the shorter sides <i>a</i> and <i>b</i>. Then <i>a</i> + <i>b</i> = 14 and <i>a</i>² + <i>b</i>² = 100. Squaring the first: <i>a</i>² + 2<i>ab</i> + <i>b</i>² = 196, so 2<i>ab</i> = 96. The area is ½<i>ab</i> = 24.`);
+Q('n26','imc','Algebra',3,`What is the value of (<i>x</i>² − 9) ÷ (<i>x</i>² − 5<i>x</i> + 6) when <i>x</i> = 2026?`,['1','2029/2028','2029/2024','2026/2023','2023/2024'],2,`Factorise top and bottom: (<i>x</i> − 3)(<i>x</i> + 3) over (<i>x</i> − 3)(<i>x</i> − 2). Cancel <i>x</i> − 3 to get (<i>x</i> + 3) ÷ (<i>x</i> − 2). With <i>x</i> = 2026 that is 2029/2024.`);
+Q('n27','imc','Geometry',3,`<i>ABCDE</i> is a regular pentagon and <i>ABPQ</i> is a square outside it. What is the size of angle <i>AQE</i>?`,['9°','12°','15°','18°','24°'],0,`The angles at <i>A</i> are 108° in the pentagon and 90° in the square. So angle <i>EAQ</i> = 360° − 108° − 90° = 162°. Since <i>AE</i> = <i>AB</i> = <i>AQ</i>, triangle <i>AEQ</i> is isosceles. So angle <i>AQE</i> = (180° − 162°) ÷ 2 = 9°.`);
+Q('n28','imc','Geometry',3,`The diagram shows a regular octagon. The shaded rectangle joins two opposite sides. What fraction of the octagon is shaded?`,['1/4','1/3','√2/4','1/2','2/3'],3,`Let the side be 1. Cut the octagon from a square of side 1 + √2 by removing four corner triangles with total area 1. Its area is (1 + √2)² − 1 = 2 + 2√2. The rectangle is 1 by 1 + √2, with area 1 + √2. That is exactly half.`);
+Q('n29','imc','Algebra',3,`Three numbers are taken in pairs. The means of the three pairs are 10, 13 and 15. What is the mean of the three numbers?`,['11⅔','12','12⅓','12⅔','13'],3,`The pair totals are 20, 26 and 30. Adding them counts every number twice, so the three numbers total 76 ÷ 2 = 38. Their mean is 38 ÷ 3 = 12⅔.`);
+Q('n30','imc','Geometry',3,`An 8 by 6 rectangle is cut along a diagonal. The two pieces are joined along their sides of length 6 to make a triangle. What is the ratio of the perimeter of the triangle to the perimeter of the rectangle?`,['8 : 7','5 : 4','9 : 7','4 : 3','3 : 2'],2,`The diagonal is 10, from the 6-8-10 triple. Joining along the sides of length 6 gives a triangle with sides 10, 10 and 16. Its perimeter is 36. The rectangle has perimeter 28. The ratio is 36 : 28 = 9 : 7.`);
+Q('n31','imc','Counting & probability',3,`Three of these seven squares are to be shaded so that no two shaded squares are next to each other. In how many ways can this be done?`,['10','15','20','21','35'],0,`Place the 4 unshaded squares in a row first. They leave 5 gaps, counting both ends. Each shaded square goes in a different gap. Choosing 3 gaps from 5 gives 10 ways.`);
+Q('n34','imc','Geometry',3,`Which of these cannot be the number of diagonals of a polygon?`,['9','14','20','27','32'],4,`A polygon with <i>n</i> sides has <i>n</i>(<i>n</i> − 3) ÷ 2 diagonals. For <i>n</i> = 6, 7, 8, 9, 10 this gives 9, 14, 20, 27, 35. The value jumps from 27 to 35, so 32 is impossible.`);
+Q('n35','imc','Geometry',3,`A square is drawn inside a quarter circle of radius 4. One corner is at the centre of the circle and the opposite corner is on the arc. What is the area of the square?`,['2√2','4','4√2','8','16'],3,`The diagonal of the square runs from the centre to the arc, so it is a radius. The diagonal is 4. The area of a square is half the diagonal squared: ½ × 16 = 8.`);
+Q('n36','imc','Ratio & percentages',3,`How many minutes after 3 o’clock do the hands of a clock first point in the same direction?`,['15','16','16 4/11','16½','17'],2,`At 3 o’clock the hour hand is 90° ahead. The minute hand turns 6° per minute and the hour hand 0.5° per minute. So the gap closes at 5.5° per minute. The time is 90 ÷ 5.5 = 180/11 = 16 4/11 minutes.`);
+Q('n38','imc','Algebra',3,`Given that <i>a</i> + <i>b</i> = 5 and <i>ab</i> = 3, what is the value of <i>a</i>³ + <i>b</i>³?`,['35','44','62','71','80'],4,`Cube the sum: (<i>a</i> + <i>b</i>)³ = <i>a</i>³ + <i>b</i>³ + 3<i>ab</i>(<i>a</i> + <i>b</i>). So 125 = <i>a</i>³ + <i>b</i>³ + 3 × 3 × 5. That gives <i>a</i>³ + <i>b</i>³ = 125 − 45 = 80.`);
+Q('n39','imc','Number',3,`All the integers from 1 to 99 are written down. What is the sum of all the digits written?`,['900','945','990','1000','4950'],0,`Write every number with two digits, from 00 to 99. Each digit 0 to 9 appears 10 times in the units place and 10 times in the tens place. The digits 0 to 9 add to 45. So the total is 45 × 10 × 2 = 900.`);
+Q('n40','imc','Geometry',3,`A regular pentagon is drawn inside a regular hexagon, sharing the side <i>AB</i>. <i>C</i> is the next vertex of the hexagon after <i>B</i>, and <i>P</i> is the next vertex of the pentagon after <i>B</i>. What is the size of angle <i>BCP</i>?`,['72°','78°','81°','84°','87°'],3,`The interior angles are 120° for the hexagon and 108° for the pentagon. So angle <i>PBC</i> = 120° − 108° = 12°. Since <i>BP</i> = <i>BC</i>, triangle <i>BCP</i> is isosceles. So angle <i>BCP</i> = (180° − 12°) ÷ 2 = 84°.`);
+
+Q('n15','imc','Geometry',4,`Two circles of radius 5 are drawn inside a 16 by 10 rectangle. Each circle touches three sides of the rectangle. How far apart are the two points where the circles cross?`,['6','5√2','8','9','10'],2,`Each centre is 5 from its short side, so the centres are 16 − 10 = 6 apart. The crossing points are symmetric about the line of centres, 3 along it from each centre. Each is at height √(5² − 3²) = 4 from that line. So they are 8 apart.`);
+Q('n18','imc','Geometry',4,`The point <i>P</i> is inside rectangle <i>ABCD</i>. <i>PA</i> = 2, <i>PB</i> = 7 and <i>PC</i> = 9. What is the length of <i>PD</i>?`,['4','5','6','√38','8'],2,`Draw lines through <i>P</i> parallel to the sides, at distances <i>a</i>, <i>b</i> from two opposite sides and <i>c</i>, <i>d</i> from the other two. Then <i>PA</i>² + <i>PC</i>² and <i>PB</i>² + <i>PD</i>² both equal <i>a</i>² + <i>b</i>² + <i>c</i>² + <i>d</i>². So 4 + 81 = 49 + <i>PD</i>². That gives <i>PD</i>² = 36 and <i>PD</i> = 6.`);
+Q('n20','imc','Geometry',4,`<i>ABCD</i> is a rectangle with <i>AB</i> = 12 and <i>BC</i> = 8. <i>M</i> is the midpoint of <i>AB</i>. The lines <i>AC</i> and <i>DM</i> cross at <i>X</i>. What is the area of triangle <i>AXM</i>?`,['6','8','9','12','16'],1,`Triangles <i>AXM</i> and <i>CXD</i> are similar, because <i>AM</i> is parallel to <i>DC</i>. Since <i>AM</i> = 6 and <i>DC</i> = 12, the scale factor is 1 : 2. So the heights from <i>X</i> split the width 8 in the ratio 1 : 2, and <i>X</i> is 8/3 above <i>AB</i>. The area is ½ × 6 × 8/3 = 8.`);
+Q('n22','imc','Counting & probability',4,`Two fair dice are rolled and the product of the scores is even. What is the probability that the sum of the scores is also even?`,['1/4','1/3','3/8','1/2','2/3'],1,`The product is odd only when both scores are odd: 9 of the 36 outcomes. So 27 outcomes have an even product. For the sum to be even as well, both scores must be even: 9 outcomes. The probability is 9/27 = 1/3.`);
+Q('n25','imc','Geometry',4,`A right-angled triangle has shorter sides 6 and 8. Semicircles are drawn on all three sides as shown. What is the total area of the two shaded regions?`,['12','24','25π/2 − 24','12π','48'],1,`The two small semicircles have areas 9π/2 and 8π, a total of 25π/2. The large semicircle has radius 5 and area 25π/2, the same. The shaded regions are the two small semicircles plus the triangle, minus the large semicircle. That leaves the area of the triangle: ½ × 6 × 8 = 24.`);
+Q('n32','imc','Geometry',4,`Two balls of radius 3 and 12 rest on a flat table, touching each other. How far apart are the points where they touch the table?`,['9','6√3','12','3√17','15'],2,`The centres are 3 + 12 = 15 apart. Their heights above the table differ by 12 − 3 = 9. The horizontal distance between them is √(15² − 9²) = √144 = 12. The contact points are directly below the centres, so they are 12 apart.`);
+Q('n33','imc','Number',4,`A three-digit number is equal to 12 times the sum of its digits. What is its units digit?`,['0','2','4','6','8'],4,`Let the digits be <i>a</i>, <i>b</i>, <i>c</i>. Then 100<i>a</i> + 10<i>b</i> + <i>c</i> = 12(<i>a</i> + <i>b</i> + <i>c</i>), which simplifies to 88<i>a</i> = 2<i>b</i> + 11<i>c</i>. So 2<i>b</i> is a multiple of 11, which forces <i>b</i> = 0. Then 8<i>a</i> = <i>c</i>, so <i>a</i> = 1 and <i>c</i> = 8. The number is 108 and its units digit is 8.`);
 
 
 // Things to remember: flashcard decks and paper guides.
@@ -678,6 +743,10 @@ const GUIDES = {
     ['Marking', 'Q1–15: 5 marks. Q16–20: 6 marks, minus 1 if wrong. Q21–25: 6 marks, minus 2 if wrong. Maximum 135.'],
     ['Awards', 'About the top half get a certificate, split gold, silver and bronze in the ratio 1 : 2 : 3.'],
     ['What next', 'The highest scorers are invited to an Olympiad (Cayley, Hamilton or Maclaurin). The next group sit the Grey or Pink Kangaroo.'],
+    ['Question style', 'Short stems, usually 15 to 40 words. Around 10 of the 25 questions come with a diagram, and diagrams are never to scale.'],
+    ['Answer options', 'Five options, usually in ascending order: whole numbers, fractions, surds, expressions with π, ratios and sometimes names. Wrong options are the answers you get from common slips.'],
+    ['Favourite ideas', 'The year number, remainders and last digits, angle chasing in regular polygons, shaded areas, changing ratios and mixtures, working backwards, truth-teller logic, counting with restrictions.'],
+    ['Why Q16–25 are hard', 'You must combine several facts, the useful structure is hidden, and there is often a search over whole-number cases. The working is short once you see it.'],
   ] },
   smc: { title: 'Senior Mathematical Challenge', rows: [
     ['Who', 'Year 13 or below in England and Wales, S6 or below in Scotland. Mostly sixth-formers.'],
@@ -1065,6 +1134,57 @@ const FIGS = (() => {
   return F;
 })();
 const fig = q => FIGS[q.id] || '';
+// Second set: paper-style question diagrams and lesson diagrams.
+const LFIGS = {};
+(() => {
+  const r1 = n => Math.round(n * 10) / 10;
+  const S = (body, w = 220, h = 150) => `<svg class="fig" viewBox="0 0 ${w} ${h}" role="img" aria-label="Diagram">${body}</svg>`;
+  const L = (a, b, c = '') => `<line x1="${r1(a[0])}" y1="${r1(a[1])}" x2="${r1(b[0])}" y2="${r1(b[1])}" class="${c}"/>`;
+  const P = (pts, c = '') => `<polygon points="${pts.map(p => r1(p[0]) + ',' + r1(p[1])).join(' ')}" class="${c}"/>`;
+  const C = (o, r, c = '') => `<circle cx="${r1(o[0])}" cy="${r1(o[1])}" r="${r1(r)}" class="${c}"/>`;
+  const T = (p, t, a = 'middle', c = '') => `<text x="${r1(p[0])}" y="${r1(p[1])}" text-anchor="${a}" class="${c}">${t}</text>`;
+  const D = o => `<circle cx="${r1(o[0])}" cy="${r1(o[1])}" r="2.4" class="dot"/>`;
+  const R = (x, y, w, h, c = '') => `<rect x="${r1(x)}" y="${r1(y)}" width="${r1(w)}" height="${r1(h)}" class="${c}"/>`;
+  const pol = (o, r, deg) => [o[0] + r * Math.cos(deg * Math.PI / 180), o[1] + r * Math.sin(deg * Math.PI / 180)];
+  // Regular n-gon built on the directed edge A→B, turning by `turn` (+1 or −1) each step.
+  const reg = (A, B, n, turn) => { const pts = [A, B], ext = turn * 2 * Math.PI / n; let ang = Math.atan2(B[1] - A[1], B[0] - A[0]), cur = B; const len = Math.hypot(B[0] - A[0], B[1] - A[1]); for (let i = 2; i < n; i++) { ang += ext; cur = [cur[0] + len * Math.cos(ang), cur[1] + len * Math.sin(ang)]; pts.push(cur); } return pts; };
+  // Half disc on diameter PQ, on the side away from `ref`.
+  const semi = (p, q, ref) => { const m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2], r = Math.hypot(q[0] - p[0], q[1] - p[1]) / 2, a0 = Math.atan2(p[1] - m[1], p[0] - m[0]); const mk = s => Array.from({ length: 25 }, (_, i) => [m[0] + r * Math.cos(a0 + s * Math.PI * i / 24), m[1] + r * Math.sin(a0 + s * Math.PI * i / 24)]); const a = mk(1), b = mk(-1), far = pts => Math.hypot(pts[12][0] - ref[0], pts[12][1] - ref[1]); return far(a) > far(b) ? a : b; };
+  const F = FIGS;
+  { const A = [70, 82], B = [150, 82], Cc = [150, 162], Dd = [70, 162], E = [110, 82 - 40 * Math.sqrt(3)]; F.n1 = S(P([A, B, Cc, Dd]) + P([A, B, E], 'soft') + L(E, Dd, 'dash') + L(E, Cc, 'dash') + T([60, 80], 'A', 'end') + T([160, 80], 'B', 'start') + T([160, 172], 'C', 'start') + T([60, 172], 'D', 'end') + T([110, E[1] - 5], 'E'), 220, 178); }
+  F.n6 = S(P([[50, 10], [170, 10], [170, 130], [50, 130]]) + P([[110, 10], [170, 70], [110, 130], [50, 70]]) + P([[140, 40], [140, 100], [80, 100], [80, 40]], 'soft'), 220, 140);
+  { const p = [30, 135], q = [190, 135], r = [190, 15], s = [30, 15], M = [190, 75], N = [110, 15]; F.n9 = S(P([p, q, r, s]) + P([p, M, N], 'soft') + T([22, 146], 'P', 'end') + T([198, 146], 'Q', 'start') + T([198, 14], 'R', 'start') + T([22, 14], 'S', 'end') + T([198, 79], 'M', 'start') + T([110, 10], 'N') + T([110, 149], '8') , 220, 152); }
+  F.n11 = S([0, 1, 2].map(i => [0, 1].map(j => R(50 + i * 40, 30 + j * 40, 40, 40, 'soft')).join('')).join(''), 220, 140);
+  F.n15 = S(R(22, 20, 176, 110) + C([77, 75], 55, 'softa') + C([143, 75], 55, 'softa') + T([110, 146], '16') + T([14, 79], '10', 'end'), 220, 150);
+  { const A = [110, 10], B = [64.5, 150], Cc = [155.5, 150], k = 91 / Math.hypot(45.5, 140), Dd = [A[0] + k * 45.5, A[1] + k * 140]; F.n16 = S(P([A, B, Cc], 'soft') + L(B, Dd) + T([110, 6], 'A') + T([56, 156], 'B', 'end') + T([164, 156], 'C', 'start') + T([Dd[0] + 8, Dd[1] + 2], 'D', 'start'), 220, 162); }
+  { const A = [30, 135], B = [190, 135], Cc = [190, 20], Dd = [30, 20], Pp = [84, 96]; F.n18 = S(P([A, B, Cc, Dd], 'soft') + [A, B, Cc, Dd].map(v => L(Pp, v)).join('') + D(Pp) + T([22, 146], 'A', 'end') + T([198, 146], 'B', 'start') + T([198, 18], 'C', 'start') + T([22, 18], 'D', 'end') + T([88, 88], 'P', 'start') + T([46, 104], '2') + T([146, 108], '7') + T([128, 48], '9') + T([70, 54], '?'), 220, 152); }
+  { const A = [20, 135], B = [200, 135], Cc = [200, 15], Dd = [20, 15], M = [110, 135], Xx = [80, 95]; F.n20 = S(P([A, B, Cc, Dd]) + P([A, Xx, M], 'soft') + L(A, Cc) + L(Dd, M) + T([14, 147], 'A', 'end') + T([206, 147], 'B', 'start') + T([206, 13], 'C', 'start') + T([14, 13], 'D', 'end') + T([110, 149], 'M') + T([86, 88], 'X', 'start'), 220, 152); }
+  { const A = [35, 125], B = [185, 125], Cc = [89, 53]; F.n25 = S(P(semi(A, Cc, B), 'soft') + P(semi(B, Cc, A), 'soft') + P(semi(A, B, [110, 300]), 'paper') + P([A, B, Cc]) + T([58, 96], '6', 'end') + T([146, 86], '8', 'start'), 220, 140); }
+  { const A = [80, 92], B = [140, 92], pent = reg(B, A, 5, 1), E = pent[2], Pq = [140, 152], Qq = [80, 152]; F.n27 = S(P(pent, 'soft') + P([A, B, Pq, Qq]) + L(E, Qq, 'dash') + T([72, 96], 'A', 'end') + T([148, 96], 'B', 'start') + T([E[0] - 8, E[1]], 'E', 'end') + T([72, 162], 'Q', 'end') + T([148, 162], 'P', 'start'), 220, 168); }
+  { const o = [110, 75], v = [0, 1, 2, 3, 4, 5, 6, 7].map(k => pol(o, 66, 22.5 + 45 * k)); F.n28 = S(P(v) + P([v[1], v[2], v[5], v[6]], 'soft'), 220, 150); }
+  F.n30 = S(R(38, 20, 144, 108, 'soft') + L([38, 128], [182, 20], 'dash') + T([110, 144], '8') + T([30, 78], '6', 'end'), 220, 150);
+  F.n31 = S([0, 1, 2, 3, 4, 5, 6].map(i => R(19 + i * 26, 30, 26, 26)).join(''), 220, 86);
+  F.n32 = S(L([10, 130], [210, 130]) + C([150, 70], 60, 'soft') + C([90, 115], 15, 'soft') + D([150, 130]) + D([90, 130]) + T([120, 146], '?'), 220, 150);
+  { const O = [40, 135], k = 100 / Math.SQRT2, arc = Array.from({ length: 25 }, (_, i) => pol(O, 100, -90 * i / 24)); F.n35 = S(P([O, ...arc]) + P([O, [O[0] + k, O[1]], [O[0] + k, O[1] - k], [O[0], O[1] - k]], 'soft') + T([150, 149], '4', 'end'), 220, 152); }
+  { const A = [80, 145], B = [140, 145], hex = reg(A, B, 6, -1), pen = reg(A, B, 5, -1), Cc = hex[2], Pp = pen[2]; F.n40 = S(P(hex) + P(pen, 'soft') + L(Cc, Pp, 'dash') + T([74, 157], 'A', 'end') + T([146, 157], 'B', 'start') + T([Cc[0] + 7, Cc[1] + 4], 'C', 'start') + T([Pp[0] - 4, Pp[1] + 16], 'P', 'end'), 220, 160); }
+
+  /* Lesson diagrams */
+  const G = LFIGS;
+  G.tac = S(Array.from({ length: 25 }, (_, i) => R(10 + i * 9.6, 14, 8.6, 30, i < 15 ? 'z1' : i < 20 ? 'z2' : 'z3')).join('') + T([130, 70], 'Q1–15: 5 marks, no penalty') + T([130, 90], 'Q16–20: 6 marks, −1 if wrong') + T([130, 110], 'Q21–25: 6 marks, −2 if wrong'), 260, 122);
+  G.div = S(['7', '3', '5', '8'].map((d, i) => R(20 + i * 30, 20, 26, 30, 'soft') + T([33 + i * 30, 41], d)).join('') + T([150, 41], '→ 23 → 5', 'start') + T([110, 80], 'digit sum, then digit sum again', 'middle', 'sm'), 220, 92);
+  G.pct = S(R(15, 30, 160, 30, 'soft') + R(175, 30, 24, 30, 'z2') + T([95, 50], '100%  (old price)') + T([187, 22], '+15%') + L([15, 74], [199, 74]) + L([15, 70], [15, 78]) + L([199, 70], [199, 78]) + T([107, 92], 'new price = old × 1.15'), 220, 100);
+  { const o = [110, 78], v = [0, 1, 2, 3, 4, 5].map(k => pol(o, 46, 60 * k)); G.ang = S(P(v, 'soft') + v.map((p, i) => { const q = v[(i + 1) % 6], d = [q[0] - p[0], q[1] - p[1]], n = Math.hypot(d[0], d[1]); return L(q, [q[0] + d[0] / n * 24, q[1] + d[1] / n * 24], 'dash'); }).join('') + T([110, 82], '120°') + T([186, 96], '60°') + T([110, 148], 'six exterior angles of 60° make 360°', 'middle', 'sm'), 220, 154); }
+  G.fac = S(T([110, 18], '72') + L([104, 24], [78, 44]) + L([116, 24], [142, 44]) + T([74, 60], '8') + T([146, 60], '9') + L([68, 66], [52, 86]) + L([80, 66], [96, 86]) + L([140, 66], [128, 86]) + L([152, 66], [164, 86]) + T([48, 102], '2') + T([98, 102], '4') + T([126, 102], '3', 'middle', 'pr') + T([166, 102], '3', 'middle', 'pr') + L([92, 108], [82, 124]) + L([104, 108], [114, 124]) + T([80, 140], '2', 'middle', 'pr') + T([116, 140], '2', 'middle', 'pr') + T([48, 118], '', 'middle') + T([110, 160], '72 = 2³ × 3²', 'middle'), 220, 166);
+  { const o = [110, 70], pts = [-90, 0, 90, 180].map(d => pol(o, 44, d)), lab = ['3', '9', '7', '1']; G.last = S(C(o, 44, 'dash') + pts.map((p, i) => C(p, 15, 'soft') + T([p[0], p[1] + 5], lab[i])).join('') + T([110, 66], '× 3', 'middle', 'sm') + T([110, 82], 'each step', 'middle', 'sm') + T([110, 146], 'last digits of 3¹, 3², 3³, 3⁴, then repeat', 'middle', 'sm'), 220, 152); }
+  G.rate = S(R(15, 14, 190, 20) + R(15, 14, 190 / 6, 20, 'soft') + T([212, 29], '', 'start') + T([110, 50], 'Ali: 1/6 each hour', 'middle', 'sm') + R(15, 62, 190, 20) + R(15, 62, 190 / 3, 20, 'soft') + T([110, 98], 'Bea: 1/3 each hour', 'middle', 'sm') + R(15, 110, 190, 20) + R(15, 110, 95, 20, 'z2') + T([110, 146], 'together: 1/2 each hour', 'middle', 'sm'), 220, 152);
+  { const o = [110, 75], v = [45, 135, 225, 315].map(d => pol(o, 60, d)); G.area = S(C(o, 60) + P(v, 'soft') + L(v[1], v[3], 'dash') + T([110, 152], 'the diagonal of the square is a diameter', 'middle', 'sm'), 220, 160); }
+  G.alg = S(R(40, 15, 120, 120, 'soft') + R(110, 85, 50, 50, 'paper') + T([100, 10], 'a') + T([32, 80], 'a', 'end') + T([135, 148], 'b') + T([168, 114], 'b', 'start') + T([78, 80], 'a² − b²'), 220, 154);
+  G.count = S(['9', '9', '8'].map((d, i) => R(45 + i * 46, 24, 38, 44, 'soft') + T([64 + i * 46, 52], d)).join('') + T([64, 86], 'not 0', 'middle', 'sm') + T([110, 102], 'not the first', 'middle', 'sm') + T([156, 86], 'not either', 'middle', 'sm') + T([110, 130], '9 × 9 × 8 = 648'), 220, 138);
+  G.prob = S(Array.from({ length: 36 }, (_, k) => { const i = k % 6, j = Math.floor(k / 6); return R(56 + i * 18, 12 + j * 18, 18, 18, i === 5 || j === 5 ? 'z2' : 'soft'); }).join('') + T([110, 138], '11 of the 36 outcomes have a six', 'middle', 'sm'), 220, 144);
+  { const X = [40, 120], Y = [180, 120], Z = [180, 40]; G.gtrig = S(P([X, Y, Z], 'soft') + T([100, 72], 'hypotenuse', 'end') + T([110, 138], 'adjacent') + T([186, 84], 'opposite', 'start', 'sm') + T([70, 114], 'θ'), 240, 146); }
+  { const o = [110, 78], A = pol(o, 60, 150), B = pol(o, 60, 30), Cc = pol(o, 60, 270); G.gcirc = S(C(o, 60) + L(o, A) + L(o, B) + L(Cc, A) + L(Cc, B) + D(o) + T([110, 100], '2x') + T([110, 44], 'x'), 220, 150); }
+})();
+const lfig = id => LFIGS[id] || '';
 
 'use strict';
 /* ───────── Data helpers ───────── */
@@ -1239,7 +1359,7 @@ function band(tr, score, max) { const B = BANDS[tr]; const scaled = score * B.fu
 
 /* ───────── UI plumbing ───────── */
 const app = document.getElementById('app');
-let CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
+let HOMECH = false, CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
 const ROUTES = ['home', 'learn', 'practice', 'mocks', 'progress', 'account'];
 const readHash = () => { try { let h = String(location.hash || '').slice(1); if (h === 'remember') h = 'learn'; return ROUTES.includes(h) ? h : ''; } catch (e) { return ''; } };
 let ROUTE = readHash() || 'home';
@@ -1279,7 +1399,7 @@ window.addEventListener('hashchange', () => { const h = readHash(); if (!h || h 
 const trackChips = () => `<div class="chips" role="tablist" aria-label="Track">${TRACKS.map(t => `<button class="chip" role="tab" aria-selected="${t.id === S.track}" data-act="track" data-id="${t.id}">${t.short}</button>`).join('')}</div>`;
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const bar = (p, cls = '') => `<span class="bar ${cls}"><i style="width:${Math.max(0, Math.min(100, p))}%"></i></span>`;
-const dots = d => `<span class="dots" aria-label="Difficulty ${d} of 3">${[1, 2, 3].map(i => `<i class="${i <= d ? 'on' : ''}"></i>`).join('')}</span>`;
+const dots = d => `<span class="dots" aria-label="Difficulty ${d} of 4">${[1, 2, 3, 4].map(i => `<i class="${i <= d ? 'on' : ''}"></i>`).join('')}</span>`;
 
 /* ───────── Home ───────── */
 function dailyQ() { const pool = QUESTIONS.filter(q => q.tr === S.track && q.o); return pool[Math.floor(seeded(dayKey() + S.track)() * pool.length)]; }
@@ -1306,60 +1426,45 @@ function mockResumeCard() {
   return `<section class="card accent"><span class="eyebrow">Paper in progress</span><h2>${MOCK.def.name}</h2><p class="muted">${left > 0 ? `${fmt(left)} left. The clock is still running.` : 'Time is up. See how you did.'}</p><button class="btn primary" data-act="resume">${left > 0 ? 'Resume paper' : 'See result'}</button></section>`;
 }
 function vHome() {
-  const L = level(S.xp), t = dayKey(), today = S.days[t] || 0, tr = TR[S.track], w = weakest(S.track), st = streakNow();
+  const L = level(S.xp), t = dayKey(), today = S.days[t] || 0, tr = TR[S.track], st = streakNow();
   const into = S.xp - thr(L), need = thr(L + 1) - thr(L), nl = nextLesson(S.track), C = 2 * Math.PI * 26;
   const ls = LESSONS.filter(l => l.tr === S.track), lsDone = ls.filter(l => S.lessons[l.id]).length;
-  let cd = `<button class="link" data-act="nav" data-to="account">Set your paper date</button>`;
-  if (S.exam) { const d = Math.ceil((new Date(S.exam + 'T09:00') - Date.now()) / 864e5); cd = d > 0 ? `<b>${d}</b> day${d === 1 ? '' : 's'} to your paper.` : d === 0 ? '<b>Today</b> is the day. Good luck.' : 'Your paper date has passed.'; }
-  const dq = dailyQ(), dDone = S.daily[t + S.track], hello = S.name ? esc(S.name) + ', ' : '';
+  const ts = topicStats(S.track), all = ts.reduce((a, x) => a + x.total, 0), done = ts.reduce((a, x) => a + x.done, 0);
+  let cd = '';
+  if (S.exam) { const d = Math.ceil((new Date(S.exam + 'T09:00') - Date.now()) / 864e5); cd = d > 0 ? ` · <b>${d}</b> day${d === 1 ? '' : 's'} to go` : d === 0 ? ' · paper today' : ''; }
+  const hello = S.name ? esc(S.name) + ', ' : '';
   const head = st >= 2 ? `${hello}${st} days in a row.` : today >= S.goal ? `${hello}${S.name ? 'g' : 'G'}oal done for today.` : `${hello}${S.name ? 'r' : 'R'}eady when you are.`;
   return `
   <section class="hero">
     <div class="hero-row">
       <div class="ring" role="img" aria-label="Level ${L}"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" class="ring-bg"/><circle cx="32" cy="32" r="26" class="ring-fg" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - into / need)).toFixed(1)}" transform="rotate(-90 32 32)"/></svg><b>${L}</b></div>
-      <div class="hero-txt"><span class="eyebrow">${rank(L)} · ${need - into} XP to level ${L + 1}</span><h1>${head}</h1><p class="muted">${tr.name}. ${cd}</p></div>
+      <div class="hero-txt"><h1>${head}</h1><p class="muted">${tr.name}${cd}</p></div>
     </div>
     <div class="hero-stats"><span class="hs flame">${I.flame}<b>${st}</b> day streak</span><span class="hs bolt">${I.bolt}<b>${today}</b> / ${S.goal} XP today</span></div>
     ${bar(100 * today / S.goal, 'big')}
   </section>
   ${mockResumeCard()}
   <section class="card next">
-    <span class="eyebrow">Next up</span>
-    ${nl ? `<h2>${nl.title}</h2><p class="muted">Lesson ${lsDone + 1} of ${ls.length} · ${nl.sum}</p>
-    <div class="row gap wrap"><button class="btn primary" data-act="lesson" data-id="${nl.id}">Start lesson ${I.arrow}</button><button class="btn" data-act="quick">Quick 6 questions</button></div>`
-    : `<h2>Mixed practice</h2><p class="muted">Every ${tr.short} lesson is done. Keep sharp with a mixed set.</p><button class="btn primary" data-act="quick">Start 6 questions ${I.arrow}</button>`}
+    <span class="eyebrow">Continue</span>
+    ${nl ? `<h2>${nl.title}</h2><p class="muted">Lesson ${lsDone + 1} of ${ls.length} · about 3 minutes</p>
+    <button class="btn primary wide" data-act="lesson" data-id="${nl.id}">Start lesson ${I.arrow}</button>
+    <button class="link" data-act="quick">or answer 6 quick questions</button>`
+    : `<h2>Mixed practice</h2><p class="muted">Every ${tr.short} lesson is done. Keep sharp with a mixed set.</p><button class="btn primary wide" data-act="quick">Start 6 questions ${I.arrow}</button>`}
   </section>
-  ${trackChips()}
   ${questCard()}
-  <section class="card"><div class="row between"><h2>Your ${tr.short} path</h2><span class="pill">${lsDone}/${ls.length} lessons</span></div>
-    <ol class="path">${ls.map((l, i) => `<li class="${S.lessons[l.id] ? 'done' : nl && nl.id === l.id ? 'cur' : ''}"><button data-act="lesson" data-id="${l.id}"><span class="node">${S.lessons[l.id] ? I.check : i + 1}</span><span class="path-t"><b>${l.title}</b><small>${l.sum}</small></span></button></li>`).join('')}
-    ${BANDS[S.track] ? `<li><button data-act="nav" data-to="mocks"><span class="node">${I.mocks}</span><span class="path-t"><b>Timed mock paper</b><small>Put it all together under the clock</small></span></button></li>` : ''}</ol>
-  </section>
-  <div class="cards2">
-    <article class="card ${dDone ? 'done' : ''}">
-      <span class="eyebrow">Daily challenge · double XP</span>
-      <h2>${dDone ? 'Done for today' : `One ${tr.short} question`}</h2>
-      <p class="muted">${dDone ? 'A new one arrives tomorrow.' : `${dq.tp}. Get it right for ${2 * baseXP(dq)} XP.`}</p>
-      ${dDone ? '' : `<button class="btn" data-act="daily">Take it on</button>`}
-    </article>
-    <article class="card">
-      <span class="eyebrow">Number sprint · 60 seconds</span>
-      <h2>Squares, primes, fractions</h2>
-      <p class="muted">The facts that save time on the paper. Best so far: <b>${S.sprint}</b>.</p>
-      <button class="btn" data-act="sprint">Start sprint</button>
-    </article>
-    ${w ? `<article class="card">
-      <span class="eyebrow">Weakest topic</span>
-      <h2>${w.tp}</h2>
-      <p class="muted">${w.why}.</p>
-      <button class="btn" data-act="topic" data-tp="${w.tp}">Practise it</button>
-    </article>` : ''}
-  </div>`;
+  <div class="shortcuts">
+    <button class="shortcut" data-act="golearn"><span class="sc-ic">${I.remember}</span><b>Lessons</b><small>${lsDone} of ${ls.length} done</small></button>
+    <button class="shortcut" data-act="nav" data-to="practice"><span class="sc-ic">${I.practice}</span><b>Practice</b><small>${done} of ${all} mastered</small></button>
+    ${BANDS[S.track] ? `<button class="shortcut" data-act="nav" data-to="mocks"><span class="sc-ic">${I.mocks}</span><b>Mock paper</b><small>Timed, real marking</small></button>` : ''}
+    <button class="shortcut" data-act="gofacts"><span class="sc-ic">${I.check}</span><b>Remember</b><small>Key facts, searchable</small></button>
+  </div>
+  <p class="course">Course: <b>${tr.name}</b> · <button class="link" data-act="homech">${HOMECH ? 'Close' : 'Change'}</button></p>
+  ${HOMECH ? trackChips() : ''}`;
 }
 
 /* ───────── Practice ───────── */
-function pick(tr, tp, n) {
-  const pool = QUESTIONS.filter(q => q.tr === tr && (!tp || q.tp === tp));
+function pick(tr, tp, n, minD = 1) {
+  const pool = QUESTIONS.filter(q => q.tr === tr && (!tp || q.tp === tp) && q.d >= minD);
   const cls = q => { const r = S.q[q.id]; return !r ? 0 : !r.last ? 1 : 2; };
   return shuffle(pool).sort((a, b) => cls(a) - cls(b) || (S.q[a.id] ? S.q[a.id].t : 0) - (S.q[b.id] ? S.q[b.id].t : 0)).slice(0, n).sort((a, b) => a.d - b.d);
 }
@@ -1374,6 +1479,7 @@ function vPractice() {
     ${bar(100 * done / all, 'big')}
     <div class="row gap wrap">
       <button class="btn primary" data-act="quick">Mixed practice</button>
+      <button class="btn" data-act="hard">Hard questions only</button>
       ${miss ? `<button class="btn" data-act="mistakes">Fix my mistakes (${miss})</button>` : ''}
     </div>
   </section>
@@ -1382,10 +1488,12 @@ function vPractice() {
     <button class="rowbtn" data-act="topic" data-tp="${s.tp}">
       <span class="rowbtn-main"><b>${s.tp}</b><small>${s.done} of ${s.total} mastered${s.n ? ` · ${Math.round(100 * s.c / s.n)}% accuracy` : ''}</small>${bar(100 * s.done / s.total)}</span>
       <span class="rowbtn-go">${s.done === s.total ? I.check : I.arrow}</span>
-    </button>`).join('')}</div>`;
+    </button>`).join('')}</div>
+  <h3 class="section">Warm-up</h3>
+  <button class="rowbtn" data-act="sprint"><span class="rowbtn-main"><b>60-second number sprint</b><small>Squares, primes and fractions against the clock · best ${S.sprint}</small></span><span class="rowbtn-go">${I.arrow}</span></button>`;
 }
 
-const baseXP = q => [0, 10, 12, 15][q.d];
+const baseXP = q => [0, 10, 12, 15, 20][q.d];
 function startRun(qs, o = {}) {
   if (!qs.length) { toast('Nothing to practise here yet'); return; }
   RUN = Object.assign({ qs, i: 0, sel: null, ok: null, step: 1, hint: false, gain: 0, correct: 0, xp: 0, combo: 0, done: false, mult: 1, title: 'Practice', reveal: false }, o);
@@ -1442,17 +1550,17 @@ function vRunDone() {
 
 /* ───────── Mocks ───────── */
 const MOCKS = [
-  { id: 'imc', tr: 'imc', n: 25, mins: 60, name: 'Intermediate full paper', d: [8, 9, 8] },
-  { id: 'imc-mini', tr: 'imc', n: 10, mins: 24, name: 'Intermediate mini paper', d: [4, 3, 3] },
-  { id: 'smc', tr: 'smc', n: 25, mins: 90, name: 'Senior full paper', d: [8, 9, 8] },
-  { id: 'smc-mini', tr: 'smc', n: 10, mins: 36, name: 'Senior mini paper', d: [4, 3, 3] },
+  { id: 'imc', tr: 'imc', n: 25, mins: 60, name: 'Intermediate full paper', d: [5, 8, 7, 5] },
+  { id: 'imc-mini', tr: 'imc', n: 10, mins: 24, name: 'Intermediate mini paper', d: [2, 3, 3, 2] },
+  { id: 'smc', tr: 'smc', n: 25, mins: 90, name: 'Senior full paper', d: [8, 9, 8, 0] },
+  { id: 'smc-mini', tr: 'smc', n: 10, mins: 36, name: 'Senior mini paper', d: [4, 3, 3, 0] },
 ];
 function schemeText(m) {
   if (m.tr === 'smc') return `Start on ${m.n} marks. Plus 4 for each correct answer, minus 1 for each wrong one, 0 for a blank.`;
   const a = Math.round(m.n * 0.6), b = Math.round(m.n * 0.8);
   return `Q1–${a}: 5 marks. Q${a + 1}–${b}: 6 marks, minus 1 if wrong. Q${b + 1}–${m.n}: 6 marks, minus 2 if wrong.`;
 }
-function buildMock(def) { let qs = []; [1, 2, 3].forEach((d, i) => { qs = qs.concat(shuffle(QUESTIONS.filter(q => q.tr === def.tr && q.o && q.d === d)).slice(0, def.d[i])); }); return qs; }
+function buildMock(def) { let qs = []; [1, 2, 3, 4].forEach((d, i) => { qs = qs.concat(shuffle(QUESTIONS.filter(q => q.tr === def.tr && q.o && q.d === d)).slice(0, def.d[i])); }); return qs; }
 function vMocks() {
   const hist = S.mocks.slice().reverse();
   return `
@@ -1508,7 +1616,8 @@ function vMock() {
   const M = MOCK, q = M.qs[M.i], n = M.qs.length, [up, down] = scheme(M.def.tr, n, M.i), blanks = M.ans.filter(a => a === null).length;
   const left = Math.max(0, Math.round((M.end - Date.now()) / 1000));
   return `<div class="run">
-    <div class="run-top mock"><button class="icon" data-act="mleave" aria-label="Leave paper, clock keeps running">${I.cross}</button><span class="count"><b>Q${M.i + 1}</b> of ${n}</span><span id="mtime" class="timer ${left < 300 ? 'low' : ''}">${fmt(left)}</span><button class="btn small" data-act="msubmit">Submit</button></div>
+    <div class="run-top mock"><button class="btn small" data-act="mask">Quit</button><span class="count"><b>Q${M.i + 1}</b> of ${n}</span><span id="mtime" class="timer ${left < 300 ? 'low' : ''}">${fmt(left)}</span><button class="btn small" data-act="msubmit">Submit</button></div>
+    ${M.leave ? `<div class="fb"><div class="fb-head"><b>Leave this paper?</b></div><p>Save it to carry on later (the clock keeps running), or quit and throw it away.</p><div class="row gap wrap"><button class="btn primary" data-act="mcancel">Keep working</button><button class="btn" data-act="mleave">Save and leave</button><button class="btn danger" data-act="mquit">Quit paper</button></div></div>` : ''}
     ${M.confirm ? `<div class="fb"><div class="fb-head"><b>Hand in your paper?</b></div><p>${blanks ? `${blanks} question${blanks === 1 ? ' is' : 's are'} blank.` : 'Every question has an answer.'} You cannot change answers afterwards.</p><div class="row gap"><button class="btn primary" data-act="mfinish">Hand in</button><button class="btn" data-act="mcancel">Keep working</button></div></div>` : ''}
     <article class="qcard">
       <div class="qmeta"><span>${up} marks${down ? ` · lose ${-down} if wrong` : ' · no penalty'}</span><button class="flagbtn ${M.flag[M.i] ? 'on' : ''}" data-act="mflag" aria-pressed="${M.flag[M.i]}">${I.flag} Flag</button></div>
@@ -1584,16 +1693,25 @@ function vLearn() {
   ${trackChips()}
   ${body}`;
 }
+const LFIG_AT = { tac: 1, div: 'ex', pct: 0, ang: 2, fac: 1, last: 1, rate: 'ex', area: 'ex', alg: 0, count: 'ex', prob: 'ex', gtrig: 1, gcirc: 0 };
 function vLesson() {
-  const l = LES.l, all = LES.step >= l.exs.length;
-  return `<div class="run">
-    <div class="run-top"><button class="icon" data-act="quit" aria-label="Close lesson">${I.cross}</button><span class="count">${TR[l.tr].short} · ${LEVELS[l.lv]}</span></div>
-    <article class="qcard"><span class="eyebrow">Lesson</span><h1>${l.title}</h1><p class="muted">${l.sum}</p>
-      <ul class="ideas">${l.ideas.map(t => `<li>${t}</li>`).join('')}</ul></article>
-    <article class="qcard"><span class="eyebrow">Worked example · try it first</span><p class="stem">${l.exq}</p>
+  const l = LES.l, n = l.ideas.length, pg = LES.page, total = n + 1, all = LES.step >= l.exs.length;
+  const top = `<div class="run-top"><button class="icon" data-act="quit" aria-label="Close lesson">${I.cross}</button>${bar(100 * (pg + (pg === n && all ? 1 : 0)) / total, 'big')}<span class="count">${pg + 1}/${total}</span></div>`;
+  if (pg < n) return `<div class="run">${top}
+    <article class="qcard lesson">
+      ${pg === 0 ? `<span class="eyebrow">${TR[l.tr].short} lesson</span><h1>${l.title}</h1>` : `<span class="eyebrow">${l.title}</span>`}
+      <span class="idea-n">Idea ${pg + 1} of ${n}</span>
+      ${LFIG_AT[l.id] === pg ? lfig(l.id) : ''}
+      <p class="idea">${l.ideas[pg]}</p>
+    </article>
+    <div class="row gap">${pg ? `<button class="btn" data-act="lback">Back</button>` : ''}<button class="btn primary wide" data-act="lnext">${pg === n - 1 ? 'See a worked example' : 'Next'} ${I.arrow}</button></div>
+  </div>`;
+  return `<div class="run">${top}
+    <article class="qcard lesson"><span class="eyebrow">Worked example · try it first</span><p class="stem">${l.exq}</p>
+      ${LFIG_AT[l.id] === 'ex' ? lfig(l.id) : ''}
       ${LES.step ? stepsHtml(l.exs, LES.step) : ''}
-      ${all ? `<div class="tip"><b>Remember</b> ${l.tip}</div>` : `<button class="btn primary" data-act="lstep">${LES.step ? `Next step · ${LES.step} of ${l.exs.length}` : 'Show the first step'}</button>`}</article>
-    ${all ? `<div class="row gap wrap"><button class="btn primary" data-act="lfinish">${S.lessons[l.id] ? 'Done' : 'Finish lesson · +15 XP'}</button>${l.tp ? `<button class="btn" data-act="lpractise">Practise ${l.tp.toLowerCase()}</button>` : ''}</div>` : ''}
+      ${all ? `<div class="tip"><b>Remember</b> ${l.tip}</div>` : `<button class="btn primary wide" data-act="lstep">${LES.step ? `Next step · ${LES.step} of ${l.exs.length}` : 'Show the first step'}</button>`}</article>
+    ${all ? `<div class="row gap wrap"><button class="btn primary" data-act="lfinish">${S.lessons[l.id] ? 'Done' : 'Finish lesson · +15 XP'}</button>${l.tp ? `<button class="btn" data-act="lpractise">Practise ${l.tp.toLowerCase()}</button>` : ''}</div>` : `<button class="btn" data-act="lback">Back</button>`}
   </div>`;
 }
 function lessonDone(l) { if (S.lessons[l.id]) return; S.lessons[l.id] = dayKey(); quest().learn = 1; addXP(15); questCheck(); checkBadges(); save(); }
@@ -1730,7 +1848,7 @@ function vAccount() {
 /* ───────── Actions ───────── */
 const ACT = {
   nav: d => setRoute(d.to),
-  track: d => { S.track = d.id; save(); render(); },
+  track: d => { S.track = d.id; HOMECH = false; save(); render(); },
   quick: () => startRun(pick(S.track, null, 6), { title: TR[S.track].short, again: () => ACT.quick() }),
   topic: d => startRun(pick(S.track, d.tp, 6), { title: TR[S.track].short, again: () => ACT.topic(d) }),
   mistakes: () => startRun(shuffle(mistakes(S.track)).slice(0, 8), { title: 'Fix my mistakes' }),
@@ -1744,7 +1862,13 @@ const ACT = {
   hint: () => { RUN.hint = true; render(); },
   step: () => { RUN.step++; render(); },
   ltab: d => { LTAB = d.id; render(); },
-  lesson: d => { const l = LESSONS.find(x => x.id === d.id); if (!l) return; LES = { l, step: 0 }; go('lesson'); },
+  lesson: d => { const l = LESSONS.find(x => x.id === d.id); if (!l) return; LES = { l, page: 0, step: 0 }; go('lesson'); },
+  lnext: () => { LES.page++; render(); window.scrollTo(0, 0); },
+  lback: () => { if (LES.page > 0) LES.page--; render(); window.scrollTo(0, 0); },
+  golearn: () => { LTAB = 'lessons'; setRoute('learn'); },
+  gofacts: () => { LTAB = 'facts'; setRoute('learn'); },
+  homech: () => { HOMECH = !HOMECH; render(); },
+  hard: () => startRun(pick(S.track, null, 6, Math.min(3, Math.max(...QUESTIONS.filter(q => q.tr === S.track).map(q => q.d)))), { title: TR[S.track].short + ' · hard', again: () => ACT.hard() }),
   lstep: () => { LES.step++; render(); },
   lfinish: () => { lessonDone(LES.l); leave(); },
   lpractise: () => { const l = LES.l; lessonDone(l); S.track = l.tr; startRun(pick(l.tr, l.tp, 6), { title: TR[l.tr].short, again: () => ACT.topic({ tp: l.tp }) }); },
@@ -1762,12 +1886,14 @@ const ACT = {
   quit: () => { if (MODE === 'mockres') MOCK = null; leave(); },
   mock: d => startMock(d.id),
   resume: () => { if (Date.now() >= MOCK.end) { finishMock(); return; } go('mock'); startMockTimer(); },
-  mleave: () => { clearInterval(tickId); MODE = null; render(); window.scrollTo(0, 0); toast('Paper kept. The clock is still running.'); },
+  mleave: () => { clearInterval(tickId); MOCK.leave = false; MODE = null; render(); window.scrollTo(0, 0); toast('Paper kept. The clock is still running.'); },
   mans: d => { const i = +d.i; MOCK.ans[MOCK.i] = MOCK.ans[MOCK.i] === i ? null : i; saveMock(); render(); },
   mflag: () => { MOCK.flag[MOCK.i] = !MOCK.flag[MOCK.i]; saveMock(); render(); },
   mgo: d => { const i = +d.i; if (i >= 0 && i < MOCK.qs.length) { MOCK.i = i; MOCK.confirm = false; saveMock(); render(); window.scrollTo(0, 0); } },
-  msubmit: () => { MOCK.confirm = true; render(); window.scrollTo(0, 0); },
-  mcancel: () => { MOCK.confirm = false; render(); },
+  msubmit: () => { MOCK.confirm = true; MOCK.leave = false; render(); window.scrollTo(0, 0); },
+  mcancel: () => { MOCK.confirm = false; MOCK.leave = false; render(); },
+  mask: () => { MOCK.leave = true; MOCK.confirm = false; render(); window.scrollTo(0, 0); },
+  mquit: () => { clearInterval(tickId); MOCK = null; saveMock(); MODE = null; render(); window.scrollTo(0, 0); toast('Paper discarded'); },
   mfinish: () => finishMock(),
   deck: d => startDeck(d.id),
   flip: () => { DECK.flip = !DECK.flip; render(); },

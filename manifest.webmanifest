@@ -1,6 +1,6 @@
 {
- "name": "Podium Maths Trainer",
- "short_name": "Podium",
+ "name": "Podium Maths",
+ "short_name": "Podium Maths",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",

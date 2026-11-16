@@ -1,4 +1,4 @@
-# Podium for the App Store
+# Podium Maths for the App Store
 
 This folder wraps the web app (`../index.html`) in a native iOS shell using Capacitor.
 It has not been built yet: building needs a Mac with Xcode, which the web version does not.

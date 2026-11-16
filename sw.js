@@ -1,5 +1,5 @@
 // Podium offline support: stores a full copy of the app on the device.
-const CACHE = 'podium-v4';
+const CACHE = 'podium-v5';
 const SHELL = './';
 const fresh = () => fetch(new Request(SHELL, { cache: 'reload' }));
 self.addEventListener('install', e => {

@@ -303,6 +303,12 @@ body.focus #toasts{bottom:auto;top:58px}
 .dots i{width:6px;height:6px}
 @media (min-width:700px){.shortcuts{grid-template-columns:repeat(4,1fr)}}
 
+.fig .softe{fill:var(--accent-soft);fill-rule:evenodd}.fig .hand{stroke-width:3}
+
+.sc-ic.gold{background:var(--gold-soft);color:var(--gold)}.sc-ic.bad{background:var(--bad-soft);color:var(--bad)}
+.rowbtn .sc-ic{margin:0;flex:none}.rowbtn.dim{opacity:.6}
+.rowbtn:disabled{cursor:default}
+
 </style>
 </head>
 <body>
@@ -585,6 +591,15 @@ Q('n22','imc','Counting & probability',4,`Two fair dice are rolled and the produ
 Q('n25','imc','Geometry',4,`A right-angled triangle has shorter sides 6 and 8. Semicircles are drawn on all three sides as shown. What is the total area of the two shaded regions?`,['12','24','25π/2 − 24','12π','48'],1,`The two small semicircles have areas 9π/2 and 8π, a total of 25π/2. The large semicircle has radius 5 and area 25π/2, the same. The shaded regions are the two small semicircles plus the triangle, minus the large semicircle. That leaves the area of the triangle: ½ × 6 × 8 = 24.`);
 Q('n32','imc','Geometry',4,`Two balls of radius 3 and 12 rest on a flat table, touching each other. How far apart are the points where they touch the table?`,['9','6√3','12','3√17','15'],2,`The centres are 3 + 12 = 15 apart. Their heights above the table differ by 12 − 3 = 9. The horizontal distance between them is √(15² − 9²) = √144 = 12. The contact points are directly below the centres, so they are 12 apart.`);
 Q('n33','imc','Number',4,`A three-digit number is equal to 12 times the sum of its digits. What is its units digit?`,['0','2','4','6','8'],4,`Let the digits be <i>a</i>, <i>b</i>, <i>c</i>. Then 100<i>a</i> + 10<i>b</i> + <i>c</i> = 12(<i>a</i> + <i>b</i> + <i>c</i>), which simplifies to 88<i>a</i> = 2<i>b</i> + 11<i>c</i>. So 2<i>b</i> is a multiple of 11, which forces <i>b</i> = 0. Then 8<i>a</i> = <i>c</i>, so <i>a</i> = 1 and <i>c</i> = 8. The number is 108 and its units digit is 8.`);
+
+
+/* ───────────── More diagram questions ───────────── */
+Q('m1','imc','Geometry',3,`Two squares of side 4 overlap. A corner of one square is at the centre of the other. What is the area of the overlap?`,['2','2√2','4','4√2','8'],2,`Draw the two lines through the centre of the fixed square parallel to its sides. They cut it into four equal quarters. Rotating the second square about that centre moves a triangle out of one quarter and an identical triangle in. So the overlap always equals one quarter of the square: 16 ÷ 4 = 4.`);
+Q('m2','imc','Geometry',3,`One circle passes through the three vertices of an equilateral triangle. A second circle touches its three sides. What is the ratio of the area of the larger circle to the area of the smaller?`,['2 : 1','3 : 1','2√3 : 1','4 : 1','9 : 2'],3,`Both circles have the same centre, where the three medians meet. That point is two thirds of the way along each median from a vertex. So the radius to a vertex is twice the radius to a side. Areas scale with the square of the radius: 2² = 4, so the ratio is 4 : 1.`);
+Q('m3','imc','Geometry',2,`A 4 by 3 rectangle is cut from one corner of a square of side 10. What is the perimeter of the shape that is left?`,['33','36','40','43','47'],2,`Cutting the corner removes a horizontal length 4 and a vertical length 3 from the outside. The two new edges are exactly a horizontal 4 and a vertical 3. So the perimeter does not change: it is still 4 × 10 = 40.`);
+Q('m4','imc','Geometry',4,`Three circles of radius 1 each touch the other two. What is the area of the region enclosed between them?`,['√3 − π/2','π/2 − 1','2√3 − π','√3 − π/3','π − √3'],0,`Join the three centres to make an equilateral triangle of side 2. Its area is (√3/4) × 2² = √3. Inside the triangle each circle contributes a sector of angle 60°, which is one sixth of a circle. Three of these make half a circle, with area π/2. The enclosed region is √3 − π/2.`);
+Q('m5','imc','Geometry',3,`All five diagonals of a regular pentagon are drawn, making a five-pointed star. What is the size of the angle at each point of the star?`,['30°','36°','45°','54°','72°'],1,`Each interior angle of the pentagon is 108°. The two diagonals from a vertex split that angle into three equal parts, because the pentagon is regular and its vertices lie on a circle with equal arcs between them. 108° ÷ 3 = 36°.`);
+Q('m6','imc','Geometry',4,`A quarter circle of radius 2 is drawn in a square of side 2, centred at one corner. A small circle touches the quarter circle and the two sides of the square at the opposite corner. What is the radius of the small circle?`,['3 − 2√2','6 − 4√2','√2 − 1','1/2','2 − √2'],1,`Let the small radius be <i>r</i>. Its centre is <i>r</i> from each of two sides, so it is (2 − <i>r</i>)√2 from the centre of the quarter circle, measured along the diagonal. The circles touch, so that distance is 2 + <i>r</i>. Solving (2 − <i>r</i>)√2 = 2 + <i>r</i> gives <i>r</i> = (2√2 − 2) ÷ (√2 + 1). Multiplying top and bottom by √2 − 1 gives <i>r</i> = 6 − 4√2.`);
 
 
 // Things to remember: flashcard decks and paper guides.
@@ -1168,6 +1183,20 @@ const LFIGS = {};
   { const O = [40, 135], k = 100 / Math.SQRT2, arc = Array.from({ length: 25 }, (_, i) => pol(O, 100, -90 * i / 24)); F.n35 = S(P([O, ...arc]) + P([O, [O[0] + k, O[1]], [O[0] + k, O[1] - k], [O[0], O[1] - k]], 'soft') + T([150, 149], '4', 'end'), 220, 152); }
   { const A = [80, 145], B = [140, 145], hex = reg(A, B, 6, -1), pen = reg(A, B, 5, -1), Cc = hex[2], Pp = pen[2]; F.n40 = S(P(hex) + P(pen, 'soft') + L(Cc, Pp, 'dash') + T([74, 157], 'A', 'end') + T([146, 157], 'B', 'start') + T([Cc[0] + 7, Cc[1] + 4], 'C', 'start') + T([Pp[0] - 4, Pp[1] + 16], 'P', 'end'), 220, 160); }
 
+  { const sq = [[30, 30], [120, 30], [120, 120], [30, 120]], o = [75, 75], a = 25 * Math.PI / 180, rot = v => [o[0] + v[0] * Math.cos(a) - v[1] * Math.sin(a), o[1] + v[0] * Math.sin(a) + v[1] * Math.cos(a)]; F.m1 = S(P(sq, 'soft') + P([[0, 0], [90, 0], [90, 90], [0, 90]].map(rot), 'softa') + D(o), 220, 180); }
+  { const o = [110, 88], v = [-90, 30, 150].map(d => pol(o, 64, d)); F.m2 = S(C(o, 64) + P(v, 'soft') + C(o, 32, 'paper'), 220, 160); }
+  F.m3 = S(P([[45, 15], [129, 15], [129, 51], [165, 51], [165, 135], [45, 135]], 'soft') + P([[129, 15], [165, 15], [165, 51]].concat([[129, 51]]), 'dash') + T([147, 11], '3', 'middle', 'sm') + T([171, 37], '4', 'start', 'sm') + T([105, 149], '10'), 220, 152);
+  { const A = [70, 110], B = [150, 110], Cc = [110, 110 - 40 * Math.sqrt(3)]; F.m4 = S(P([A, B, Cc], 'soft') + C(A, 40, 'paper') + C(B, 40, 'paper') + C(Cc, 40, 'paper') + C(A, 40) + C(B, 40) + C(Cc, 40), 220, 156); }
+  { const o = [110, 82], v = [0, 1, 2, 3, 4].map(k => pol(o, 68, -90 + 72 * k)); F.m5 = S(P(v) + P([v[0], v[2], v[4], v[1], v[3]], 'softe'), 220, 160); }
+  { const r = 50 * (6 - 4 * Math.SQRT2), arc = Array.from({ length: 25 }, (_, i) => pol([40, 130], 100, -90 * i / 24)); F.m6 = S(R(40, 30, 100, 100) + P([[40, 130], ...arc], 'soft') + C([140 - r, 30 + r], r, 'softa') + T([90, 146], '2'), 220, 150); }
+  { const y = 135; F.i62 = S(L([10, y], [210, y]) + C([150, y - 72], 72, 'soft') + C([54, y - 32], 32, 'soft') + D([150, y]) + D([54, y]) + T([54, y + 14], 'P') + T([150, y + 14], 'Q'), 220, 152); }
+  F.i64 = S([0, 1, 2].map(i => [0, 1, 2].map(j => R(50 + i * 40, 15 + j * 40, 40, 40)).join('')).join('') + D([50, 135]) + D([170, 15]) + T([42, 146], 'start', 'end', 'sm') + T([178, 12], 'finish', 'start', 'sm'), 220, 150);
+  const clock = (h, m) => { const o = [110, 75], ha = (h % 12 + m / 60) * 30 - 90, ma = m * 6 - 90; return S(C(o, 62, 'soft') + Array.from({ length: 12 }, (_, k) => L(pol(o, 54, 30 * k), pol(o, 62, 30 * k))).join('') + L(o, pol(o, 34, ha), 'hand') + L(o, pol(o, 50, ma)) + D(o) + T([110, 30], '12', 'middle', 'sm') + T([158, 79], '3', 'middle', 'sm') + T([110, 128], '6', 'middle', 'sm') + T([62, 79], '9', 'middle', 'sm'), 220, 150); };
+  F.i58 = clock(4, 30); F.n36 = clock(3, 0);
+  { const A = [40, 125], B = [184, 125], Cc = [40, 17]; F.n24 = S(P([A, B, Cc], 'soft') + `<polyline points="49,125 49,116 40,116"/>` + T([118, 62], '10', 'start'), 220, 140); }
+  { const v = [[40, 122], [182, 132], [166, 42], [72, 24]]; F.i48 = S(P(v, 'soft') + T([62, 112], '80°') + T([160, 122], '?') + T([150, 60], '110°') + T([82, 46], '95°'), 220, 146); }
+  F.i55 = S(P([[60, 55], [140, 55], [140, 135], [60, 135]], 'soft') + P([[60, 55], [95, 25], [175, 25], [140, 55]]) + P([[140, 55], [175, 25], [175, 105], [140, 135]]), 220, 146);
+
   /* Lesson diagrams */
   const G = LFIGS;
   G.tac = S(Array.from({ length: 25 }, (_, i) => R(10 + i * 9.6, 14, 8.6, 30, i < 15 ? 'z1' : i < 20 ? 'z2' : 'z3')).join('') + T([130, 70], 'Q1–15: 5 marks, no penalty') + T([130, 90], 'Q16–20: 6 marks, −1 if wrong') + T([130, 110], 'Q21–25: 6 marks, −2 if wrong'), 260, 122);
@@ -1219,7 +1248,7 @@ const I = {
 
 /* ───────── State ───────── */
 const KEY = 'podium.v1';
-const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, lessons: {}, quest: null, questAll: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
+const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, lessons: {}, quest: null, questAll: 0, bank: null, bankCleared: 0, qd: { last: '', n: 0 }, duels: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
 let S = loadState();
 function loadState() {
   try { const r = JSON.parse(localStorage.getItem(KEY)); if (r && r.v === 1) { const s = Object.assign(blank(), r); if (s.xp > 0) s.onboarded = true; return s; } } catch (e) { /* storage unavailable */ }
@@ -1250,6 +1279,7 @@ function addXP(n) {
 function record(q, ok) {
   const r = S.q[q.id] || (S.q[q.id] = { n: 0, c: 0, last: 0, t: 0 });
   r.n++; if (ok) r.c++; r.last = ok ? 1 : 0; r.t = Date.now();
+  if (!ok && q.o) S.bank[q.id] = { due: dayShift(1), wins: 0 };
   const qu = quest(); qu.ans++; qu.cur = ok ? qu.cur + 1 : 0; qu.row = Math.max(qu.row, qu.cur); questCheck();
 }
 const totals = () => { let n = 0, c = 0; for (const k in S.q) { n += S.q[k].n; c += S.q[k].c; } return { n, c }; };
@@ -1262,6 +1292,16 @@ function topicStats(tr) {
   return [...m.values()];
 }
 const mistakes = tr => QUESTIONS.filter(q => q.tr === tr && S.q[q.id] && !S.q[q.id].last);
+/* Mistake Bank: wrong answers come back the next day, then three days later. Two right in a row clears one. */
+function bankInit() { if (S.bank) return; S.bank = {}; for (const q of QUESTIONS) if (q.o && S.q[q.id] && !S.q[q.id].last) S.bank[q.id] = { due: dayKey(), wins: 0 }; }
+const bankList = () => Object.keys(S.bank).filter(id => BYID[id]).map(id => BYID[id]);
+const bankDue = () => { const t = dayKey(); return bankList().filter(q => S.bank[q.id].due <= t); };
+function bankResult(q, ok) {
+  const b = S.bank[q.id]; if (!b) return;
+  if (!ok) { b.wins = 0; b.due = dayShift(1); return; }
+  b.wins++;
+  if (b.wins >= 2) { delete S.bank[q.id]; S.bankCleared++; toast('Cleared from your Mistake Bank', 'good'); } else b.due = dayShift(3);
+}
 const cardsLearned = dk => CARDS.filter(c => (!dk || c.dk === dk) && (S.cards[c.id] || 0) >= 2).length;
 
 /* ───────── Badges ───────── */
@@ -1284,6 +1324,9 @@ const BADGES = [
   ['lvl8', 'Gold rank', 'Reach level 8', () => level(S.xp) >= 8],
   ['les1', 'First lesson', 'Finish a lesson', () => Object.keys(S.lessons).length >= 1],
   ['les8', 'Well taught', 'Finish 8 lessons', () => Object.keys(S.lessons).length >= 8],
+  ['bank', 'Debt collector', 'Clear 10 questions from your Mistake Bank', () => S.bankCleared >= 10],
+  ['duel', 'Challenger', 'Finish a duel', () => S.duels >= 1],
+  ['qd7', 'Daily grinder', 'Question of the day 7 days running', () => S.qd.n >= 7],
   ['quest', 'Quest complete', 'Finish all three daily quests in a day', () => S.questAll >= 1],
 ];
 function checkBadges() {
@@ -1346,9 +1389,9 @@ function scheme(tr, n, pos) {
   const a = Math.round(n * 0.6), b = Math.round(n * 0.8);
   return pos < a ? [5, 0] : pos < b ? [6, -1] : [6, -2];
 }
-function scoreMock(tr, marks) { // marks: array of 'c' | 'w' | 'b'
+function scoreMock(tr, marks, last) { // marks: array of 'c' | 'w' | 'b'; last = the final ten questions of a 25-question paper
   const n = marks.length; let score = tr === 'smc' ? n : 0, max = score, c = 0, w = 0, b = 0, lost = 0;
-  marks.forEach((m, i) => { const [up, down] = scheme(tr, n, i); max += up; if (m === 'c') { score += up; c++; } else if (m === 'w') { score += down; lost -= down; w++; } else b++; });
+  marks.forEach((m, i) => { const [up, down] = last ? scheme(tr, 25, 15 + i) : scheme(tr, n, i); max += up; if (m === 'c') { score += up; c++; } else if (m === 'w') { score += down; lost -= down; w++; } else b++; });
   return { score, max, c, w, b, lost };
 }
 const BANDS = {
@@ -1359,7 +1402,7 @@ function band(tr, score, max) { const B = BANDS[tr]; const scaled = score * B.fu
 
 /* ───────── UI plumbing ───────── */
 const app = document.getElementById('app');
-let HOMECH = false, CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
+let DUEL = null, HOMECH = false, CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
 const ROUTES = ['home', 'learn', 'practice', 'mocks', 'progress', 'account'];
 const readHash = () => { try { let h = String(location.hash || '').slice(1); if (h === 'remember') h = 'learn'; return ROUTES.includes(h) ? h : ''; } catch (e) { return ''; } };
 let ROUTE = readHash() || 'home';
@@ -1388,12 +1431,12 @@ function render() {
   document.querySelectorAll('nav a').forEach(a => a.setAttribute('aria-current', a.getAttribute('href') === '#' + r ? 'page' : 'false'));
   document.getElementById('chip-streak').textContent = streakNow();
   document.getElementById('chip-xp').textContent = S.xp;
-  app.innerHTML = setup ? vSetup() : MODE === 'lesson' ? vLesson() : MODE === 'run' ? vRun() : MODE === 'mock' ? vMock() : MODE === 'mockres' ? vMockResult() : MODE === 'cards' ? vCards() : MODE === 'sprint' ? vSprint() : MODE === 'sheet' ? vSheet()
+  app.innerHTML = setup ? vSetup() : MODE === 'lesson' ? vLesson() : MODE === 'run' ? vRun() : MODE === 'mock' ? vMock() : MODE === 'mockres' ? vMockResult() : MODE === 'cards' ? vCards() : MODE === 'sprint' ? vSprint() : MODE === 'sheet' ? vSheet() : MODE === 'duel' ? vDuel()
     : ({ home: vHome, practice: vPractice, mocks: vMocks, learn: vLearn, progress: vProgress, account: vAccount })[r]();
   const me = document.getElementById('me-btn'); if (me) me.textContent = (S.name || cloudName || '?').trim().charAt(0).toUpperCase() || '?';
 }
 function go(mode) { MODE = mode; render(); window.scrollTo(0, 0); }
-function leave() { clearInterval(tickId); MODE = null; RUN = null; DECK = null; SPRINT = null; SHEET = null; LES = null; render(); window.scrollTo(0, 0); }
+function leave() { clearInterval(tickId); MODE = null; RUN = null; DECK = null; SPRINT = null; SHEET = null; LES = null; DUEL = null; render(); window.scrollTo(0, 0); }
 window.addEventListener('hashchange', () => { const h = readHash(); if (!h || h === ROUTE) return; setRoute(h); });
 
 const trackChips = () => `<div class="chips" role="tablist" aria-label="Track">${TRACKS.map(t => `<button class="chip" role="tab" aria-selected="${t.id === S.track}" data-act="track" data-id="${t.id}">${t.short}</button>`).join('')}</div>`;
@@ -1402,7 +1445,7 @@ const bar = (p, cls = '') => `<span class="bar ${cls}"><i style="width:${Math.ma
 const dots = d => `<span class="dots" aria-label="Difficulty ${d} of 4">${[1, 2, 3, 4].map(i => `<i class="${i <= d ? 'on' : ''}"></i>`).join('')}</span>`;
 
 /* ───────── Home ───────── */
-function dailyQ() { const pool = QUESTIONS.filter(q => q.tr === S.track && q.o); return pool[Math.floor(seeded(dayKey() + S.track)() * pool.length)]; }
+function dailyQ() { let pool = QUESTIONS.filter(q => q.tr === S.track && q.o && q.d >= 3); if (pool.length < 5) pool = QUESTIONS.filter(q => q.tr === S.track && q.o); return pool[Math.floor(seeded(dayKey() + S.track)() * pool.length)]; }
 function weakest(tr) {
   const st = topicStats(tr); const tried = st.filter(s => s.n >= 2).sort((a, b) => a.c / a.n - b.c / b.n)[0];
   if (tried && tried.c / tried.n < 0.8) return { ...tried, why: `${Math.round(100 * tried.c / tried.n)}% correct so far` };
@@ -1451,6 +1494,10 @@ function vHome() {
     <button class="link" data-act="quick">or answer 6 quick questions</button>`
     : `<h2>Mixed practice</h2><p class="muted">Every ${tr.short} lesson is done. Keep sharp with a mixed set.</p><button class="btn primary wide" data-act="quick">Start 6 questions ${I.arrow}</button>`}
   </section>
+  <div class="list">
+    <button class="rowbtn ${S.daily[t + S.track] ? 'dim' : ''}" data-act="daily" ${S.daily[t + S.track] ? 'disabled' : ''}><span class="sc-ic gold">${I.bolt}</span><span class="rowbtn-main"><b>Question of the day</b><small>${S.daily[t + S.track] ? 'Done. A new one arrives tomorrow.' : 'One hard question · double XP'}${S.qd.n && S.qd.last >= dayShift(-1) ? ` · ${S.qd.n} day${S.qd.n === 1 ? '' : 's'} running` : ''}</small></span><span class="rowbtn-go">${S.daily[t + S.track] ? I.check : I.arrow}</span></button>
+    ${bankDue().length ? `<button class="rowbtn" data-act="bank"><span class="sc-ic bad">${I.cross}</span><span class="rowbtn-main"><b>Mistake Bank</b><small>${bankDue().length} question${bankDue().length === 1 ? '' : 's'} due back today</small></span><span class="rowbtn-go">${I.arrow}</span></button>` : ''}
+  </div>
   ${questCard()}
   <div class="shortcuts">
     <button class="shortcut" data-act="golearn"><span class="sc-ic">${I.remember}</span><b>Lessons</b><small>${lsDone} of ${ls.length} done</small></button>
@@ -1469,7 +1516,7 @@ function pick(tr, tp, n, minD = 1) {
   return shuffle(pool).sort((a, b) => cls(a) - cls(b) || (S.q[a.id] ? S.q[a.id].t : 0) - (S.q[b.id] ? S.q[b.id].t : 0)).slice(0, n).sort((a, b) => a.d - b.d);
 }
 function vPractice() {
-  const tr = TR[S.track], st = topicStats(S.track), miss = mistakes(S.track).length;
+  const tr = TR[S.track], st = topicStats(S.track);
   const all = st.reduce((a, s) => a + s.total, 0), done = st.reduce((a, s) => a + s.done, 0);
   return `
   <header class="page-head"><h1>Practice</h1><p class="muted">Instant feedback and a worked solution after every question.</p></header>
@@ -1480,8 +1527,20 @@ function vPractice() {
     <div class="row gap wrap">
       <button class="btn primary" data-act="quick">Mixed practice</button>
       <button class="btn" data-act="hard">Hard questions only</button>
-      ${miss ? `<button class="btn" data-act="mistakes">Fix my mistakes (${miss})</button>` : ''}
+
     </div>
+  </section>
+  <section class="card">
+    <div class="row between"><h2>Mistake Bank</h2><span class="pill ${bankList().length ? '' : 'good'}">${bankList().length} inside</span></div>
+    <p class="muted">Every question you get wrong goes in here. It comes back the next day, then three days later. Two right answers in a row clears it.</p>
+    ${bankDue().length ? `<button class="btn primary" data-act="bank">Review ${bankDue().length} due today</button>` : bankList().length ? `<button class="btn" data-act="bankall">Nothing due today. Review early</button>` : ''}
+  </section>
+  <section class="card">
+    <h2>Duel a friend</h2>
+    <p class="muted">Five questions, marked like the paper: 5 for right, minus 2 for wrong, 0 for blank. Play, then send your code. Your friend plays the same five and sees who won.</p>
+    <button class="btn primary" data-act="duel">Start a duel</button>
+    <label class="field" for="duel-in">Got a code from a friend?<input id="duel-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste the duel code"></label>
+    <button class="btn" data-act="duelcode">Play their five</button>
   </section>
   <h3 class="section">Topics</h3>
   <div class="list">${st.map(s => `
@@ -1500,7 +1559,9 @@ function startRun(qs, o = {}) {
   go('run');
 }
 function finishAnswer(q, ok, gain) {
-  record(q, ok); RUN.ok = ok; RUN.gain = gain; RUN.xp += gain; if (ok) RUN.correct++;
+  const banked = RUN.bank && S.bank[q.id] ? Object.assign({}, S.bank[q.id]) : null;
+  record(q, ok); if (banked) { S.bank[q.id] = banked; bankResult(q, ok); }
+  RUN.ok = ok; RUN.gain = gain; RUN.xp += gain; if (ok) RUN.correct++;
   addXP(gain); checkBadges(); save(); render();
   const fb = document.getElementById('fb'); if (fb) fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
@@ -1552,15 +1613,26 @@ function vRunDone() {
 const MOCKS = [
   { id: 'imc', tr: 'imc', n: 25, mins: 60, name: 'Intermediate full paper', d: [5, 8, 7, 5] },
   { id: 'imc-mini', tr: 'imc', n: 10, mins: 24, name: 'Intermediate mini paper', d: [2, 3, 3, 2] },
+  { id: 'imc-last', tr: 'imc', n: 10, mins: 25, name: 'Intermediate last ten', d: [0, 0, 5, 5], last: true },
   { id: 'smc', tr: 'smc', n: 25, mins: 90, name: 'Senior full paper', d: [8, 9, 8, 0] },
   { id: 'smc-mini', tr: 'smc', n: 10, mins: 36, name: 'Senior mini paper', d: [4, 3, 3, 0] },
 ];
 function schemeText(m) {
+  if (m.last) return 'Only the hard end: Q16–20 (6 marks, minus 1 if wrong) and Q21–25 (6 marks, minus 2 if wrong). This is where medals are decided.';
   if (m.tr === 'smc') return `Start on ${m.n} marks. Plus 4 for each correct answer, minus 1 for each wrong one, 0 for a blank.`;
   const a = Math.round(m.n * 0.6), b = Math.round(m.n * 0.8);
   return `Q1–${a}: 5 marks. Q${a + 1}–${b}: 6 marks, minus 1 if wrong. Q${b + 1}–${m.n}: 6 marks, minus 2 if wrong.`;
 }
-function buildMock(def) { let qs = []; [1, 2, 3, 4].forEach((d, i) => { qs = qs.concat(shuffle(QUESTIONS.filter(q => q.tr === def.tr && q.o && q.d === d)).slice(0, def.d[i])); }); return qs; }
+function buildMock(def) { // about 40% of each tier comes with a diagram, like the real paper
+  const has = q => typeof FIGS !== 'undefined' && !!FIGS[q.id]; let qs = [];
+  [1, 2, 3, 4].forEach((d, i) => {
+    const n = def.d[i]; if (!n) return;
+    const pool = shuffle(QUESTIONS.filter(q => q.tr === def.tr && q.o && q.d === d)), want = Math.round(n * 0.4);
+    const withFig = pool.filter(has).slice(0, want), rest = pool.filter(q => !withFig.includes(q));
+    qs = qs.concat(shuffle(withFig.concat(rest.slice(0, n - withFig.length))));
+  });
+  return qs;
+}
 function vMocks() {
   const hist = S.mocks.slice().reverse();
   return `
@@ -1613,7 +1685,7 @@ function startMockTimer() {
   }, 1000);
 }
 function vMock() {
-  const M = MOCK, q = M.qs[M.i], n = M.qs.length, [up, down] = scheme(M.def.tr, n, M.i), blanks = M.ans.filter(a => a === null).length;
+  const M = MOCK, q = M.qs[M.i], n = M.qs.length, [up, down] = M.def.last ? scheme(M.def.tr, 25, 15 + M.i) : scheme(M.def.tr, n, M.i), blanks = M.ans.filter(a => a === null).length;
   const left = Math.max(0, Math.round((M.end - Date.now()) / 1000));
   return `<div class="run">
     <div class="run-top mock"><button class="btn small" data-act="mask">Quit</button><span class="count"><b>Q${M.i + 1}</b> of ${n}</span><span id="mtime" class="timer ${left < 300 ? 'low' : ''}">${fmt(left)}</span><button class="btn small" data-act="msubmit">Submit</button></div>
@@ -1632,7 +1704,7 @@ function vMock() {
 function finishMock() {
   clearInterval(tickId);
   const M = MOCK, tr = M.def.tr, marks = M.ans.map((a, i) => a === null ? 'b' : a === M.qs[i].a ? 'c' : 'w');
-  const r = scoreMock(tr, marks); r.band = band(tr, r.score, r.max); r.marks = marks;
+  const r = scoreMock(tr, marks, M.def.last); r.band = M.def.last ? 'Hard end only' : band(tr, r.score, r.max); r.marks = marks;
   M.qs.forEach((q, i) => { if (marks[i] !== 'b') record(q, marks[i] === 'c'); });
   r.xp = 20 + r.c * 4; M.result = r; M.done = true; saveMock();
   S.mocks.push({ name: M.def.name, tr, date: dayKey(), score: r.score, max: r.max, c: r.c, w: r.w, b: r.b, band: r.band });
@@ -1647,7 +1719,7 @@ function vMockResult() {
       <div class="bigscore">${r.score}<small>/${r.max}</small></div>
       <h1>${r.band}</h1>
       <p class="muted">${r.c} right, ${r.w} wrong, ${r.b} blank. ${r.lost ? `Wrong answers cost you <b>${r.lost}</b> mark${r.lost === 1 ? '' : 's'}.` : 'No marks lost to penalties.'} +${r.xp} XP.</p>
-      <p class="hint">Award ranges are a rough guide scaled from recent years. The real boundaries move every year.</p>
+      <p class="hint">${M.def.last ? 'No award estimate for this one: it is only the hardest ten questions.' : 'Award ranges are a rough guide scaled from recent years. The real boundaries move every year.'} Wrong answers have gone into your Mistake Bank.</p>
       <button class="btn primary" data-act="quit">Done</button>
     </article>
     <h3 class="section">Review every question</h3>
@@ -1809,6 +1881,32 @@ function vSheet() {
     </article></div>`;
 }
 
+/* ───────── Duels by code (no server needed) ───────── */
+const enc = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/=+$/, '');
+const dec = t => { try { return JSON.parse(decodeURIComponent(escape(atob(t.trim())))); } catch (e) { return null; } };
+function duelQs(tr, seed) { const pool = QUESTIONS.filter(q => q.tr === tr && q.o && q.d >= 2 && q.d <= 3).sort((a, b) => (a.id < b.id ? -1 : 1)); return shuffle(pool, seeded('duel' + seed)).slice(0, 5).sort((a, b) => a.d - b.d); }
+function startDuel(tr, seed, rival) { const qs = duelQs(tr, seed); if (qs.length < 5) { toast('Duels need the Intermediate or Senior course'); return; } DUEL = { tr, seed, qs, i: 0, ans: [], rival: rival || null, done: false }; go('duel'); }
+const duelScore = D => D.qs.reduce((a, q, i) => a + (D.ans[i] === null ? 0 : D.ans[i] === q.a ? 5 : -2), 0);
+function vDuel() {
+  const D = DUEL;
+  if (!D.done) { const q = D.qs[D.i]; return `<div class="run">
+    <div class="run-top"><button class="icon" data-act="quit" aria-label="Leave duel">${I.cross}</button>${bar(100 * D.i / 5, 'big')}<span class="count">${D.i + 1}/5</span></div>
+    <article class="qcard"><div class="qmeta"><span>Duel${D.rival ? ' against ' + esc(D.rival.n || 'a friend') : ''} · +5 right, −2 wrong, 0 blank</span>${dots(q.d)}</div>
+      <p class="stem">${q.q}</p>${fig(q)}
+      <div class="opts">${q.o.map((o, i) => `<button class="opt" data-act="duelans" data-i="${i}"><span class="loz">${LETTERS[i]}</span><span>${o}</span></button>`).join('')}</div>
+      <button class="btn" data-act="duelans" data-i="-1">Leave blank</button></article></div>`; }
+  const mine = duelScore(D), r = D.rival, code = enc({ t: D.tr, s: D.seed, p: mine, n: S.name || '' });
+  const verdict = !r ? 'Now send it' : mine > r.p ? 'You win' : mine < r.p ? `${esc(r.n || 'Your friend')} wins` : 'A draw';
+  return `<div class="run"><article class="qcard center">
+    <span class="eyebrow">Duel</span><div class="bigscore">${mine}<small>/25</small></div><h1>${verdict}</h1>
+    ${r ? `<p class="muted">${esc(r.n || 'Your friend')} scored <b>${r.p}</b>. You scored <b>${mine}</b>.</p>` : `<p class="muted">Send this code to a friend. They paste it into Duel a friend, play the same five questions, and see who won.</p>
+    <label class="field" for="duel-out">Your duel code<textarea id="duel-out" readonly rows="3">${code}</textarea></label><button class="btn primary" data-act="duelcopy">Copy code</button>`}
+    <button class="btn" data-act="quit">Done</button></article>
+    <h3 class="section">The five questions</h3>
+    <div class="list">${D.qs.map((q, i) => { const m = D.ans[i] === null ? 'b' : D.ans[i] === q.a ? 'c' : 'w'; return `<details class="review ${m}"><summary><span class="num">${i + 1}</span><span class="rv-t">${q.tp}</span><span class="pill ${m === 'c' ? 'good' : m === 'w' ? 'bad' : ''}">${m === 'c' ? '+5' : m === 'w' ? '−2' : '0'}</span></summary>
+      <div class="rv-body"><p class="stem">${q.q}</p>${fig(q)}<p><b>Answer: ${LETTERS[q.a]}</b> (${q.o[q.a]})</p>${stepsHtml(steps(q), 99)}</div></details>`; }).join('')}</div></div>`;
+}
+
 /* ───────── Account ───────── */
 const encodeState = () => btoa(unescape(encodeURIComponent(JSON.stringify(S))));
 function vAccount() {
@@ -1851,7 +1949,16 @@ const ACT = {
   track: d => { S.track = d.id; HOMECH = false; save(); render(); },
   quick: () => startRun(pick(S.track, null, 6), { title: TR[S.track].short, again: () => ACT.quick() }),
   topic: d => startRun(pick(S.track, d.tp, 6), { title: TR[S.track].short, again: () => ACT.topic(d) }),
-  mistakes: () => startRun(shuffle(mistakes(S.track)).slice(0, 8), { title: 'Fix my mistakes' }),
+  bank: () => startRun(shuffle(bankDue()).slice(0, 8), { title: 'Mistake Bank', bank: true }),
+  bankall: () => startRun(shuffle(bankList()).slice(0, 8), { title: 'Mistake Bank', bank: true }),
+  duel: () => startDuel(BANDS[S.track] ? S.track : 'imc', Math.random().toString(36).slice(2, 8)),
+  duelcode: () => { const r = dec(document.getElementById('duel-in').value || ''); if (!r || !r.s || !BANDS[r.t] || typeof r.p !== 'number') { toast('That code is not valid. Copy the whole code and try again.'); return; } startDuel(r.t, String(r.s), { p: r.p, n: String(r.n || '').slice(0, 24) }); },
+  duelans: d => {
+    const D = DUEL, i = +d.i; D.ans[D.i] = i < 0 ? null : i; const q = D.qs[D.i]; if (i >= 0) record(q, i === q.a);
+    if (++D.i >= 5) { D.done = true; S.duels++; const mine = duelScore(D); addXP(10 + 3 * D.qs.filter((x, k) => D.ans[k] === x.a).length + (D.rival && mine > D.rival.p ? 10 : 0)); if (D.rival && mine > D.rival.p) confetti(); checkBadges(); }
+    save(); render(); window.scrollTo(0, 0);
+  },
+  duelcopy: () => { const out = document.getElementById('duel-out'); if (out) { out.focus(); out.select(); } try { navigator.clipboard.writeText(out.value).then(() => toast('Duel code copied', 'good'), () => toast('Select the code and copy it')); } catch (e) { toast('Select the code and copy it'); } },
   daily: () => startRun([dailyQ()], { title: 'Daily challenge', mult: 2, daily: true }),
   ans: d => {
     if (RUN.ok !== null) return; const q = RUN.qs[RUN.i], i = +d.i, ok = i === q.a; RUN.sel = i;
@@ -1878,7 +1985,7 @@ const ACT = {
   next: () => {
     if (RUN.i + 1 < RUN.qs.length) { RUN.i++; RUN.sel = null; RUN.ok = null; RUN.gain = 0; RUN.reveal = false; RUN.step = 1; RUN.hint = false; render(); window.scrollTo(0, 0); return; }
     RUN.done = true;
-    if (RUN.daily) S.daily[dayKey() + S.track] = 1;
+    if (RUN.daily && !S.daily[dayKey() + S.track]) { S.daily[dayKey() + S.track] = 1; if (S.qd.last !== dayKey()) { S.qd.n = S.qd.last === dayShift(-1) ? S.qd.n + 1 : 1; S.qd.last = dayKey(); } }
     if (RUN.correct === RUN.qs.length && RUN.qs.length >= 4) { RUN.bonus = 10; RUN.xp += 10; S.perfect++; addXP(10); confetti(); }
     checkBadges(); save(); render(); window.scrollTo(0, 0);
   },
@@ -1928,11 +2035,11 @@ const ACT = {
     const raw = (document.getElementById('restore-in').value || '').replace(/\s+/g, ''); let r = null;
     try { r = JSON.parse(decodeURIComponent(escape(atob(raw)))); } catch (e) { r = null; }
     if (!r || r.v !== 1 || typeof r.xp !== 'number') { toast('That code is not valid. Copy the whole code and try again.'); return; }
-    S = Object.assign(blank(), r); BACKUP = false; save(); render(); toast('Progress restored', 'good');
+    S = Object.assign(blank(), r); bankInit(); BACKUP = false; save(); render(); toast('Progress restored', 'good');
   },
   reset: () => {
     if (!CONFIRM) { CONFIRM = true; render(); return; }
-    CONFIRM = false; S = blank(); save(); toast('Progress erased'); render();
+    CONFIRM = false; S = blank(); bankInit(); save(); toast('Progress erased'); render();
   },
 };
 document.addEventListener('click', e => {
@@ -1975,7 +2082,7 @@ async function cloudInit() {
     if (snap.exists) { try { remote = JSON.parse(snap.data().json); } catch (e) { remote = null; } }
     cloudOn = true;
     try { const ps = await user.profiles([id]); cloudName = (ps && ps[id] && ps[id].name) || ''; } catch (e) { cloudName = ''; }
-    if (remote && remote.v === 1 && (remote.updated || 0) > (S.updated || 0)) { S = Object.assign(blank(), remote); persistLocal(); if (!MODE) render(); }
+    if (remote && remote.v === 1 && (remote.updated || 0) > (S.updated || 0)) { S = Object.assign(blank(), remote); bankInit(); persistLocal(); if (!MODE) render(); }
     else if (S.updated && (!remote || (remote.updated || 0) < S.updated)) cloudPush();
     if (!MODE) render();
   } catch (e) { cloudDoc = null; cloudOn = false; }
@@ -1989,7 +2096,7 @@ async function cloudFlush() {
   cloudBusy = false; if (cloudDirty) cloudPush();
 }
 
-if (typeof document !== 'undefined' && app) { loadMock(); render(); cloudInit(); }
+if (typeof document !== 'undefined' && app) { bankInit(); loadMock(); render(); cloudInit(); }
 
 
 </script>

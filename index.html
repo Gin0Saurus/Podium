@@ -485,6 +485,105 @@ nav a[aria-current="page"] svg{animation:navpop .45s var(--spring);fill:color-mi
 
 @media (prefers-reduced-motion:reduce){.nav-pill,.ring-fg,.switch i{transition:none!important}}
 
+/* ───────── v7: design refresh ───────── */
+:root{
+  --bg:#f2f4f9;--surface:#ffffff;--surface2:#f5f7fb;--ink:#0d1530;--muted:#5d6785;--line:#e2e7f1;
+  --accent:#3152ff;--accent-ink:#ffffff;--accent-soft:#e7ecff;
+  --good:#0e9a6a;--good-soft:#dcf5ea;--bad:#dc3d43;--bad-soft:#fde7e7;--gold:#c98500;--gold-soft:#fff3d4;--flame:#ff6a2b;
+  --navy:#0e1638;--r:18px;
+  --lift:0 1px 2px rgba(13,21,48,.04),0 8px 24px rgba(13,21,48,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#080c18;--surface:#111729;--surface2:#171f35;--ink:#eef2fb;--muted:#95a2c2;--line:#222b44;
+  --accent:#6f87ff;--accent-ink:#0a0f1f;--accent-soft:#1b2550;--good:#3fd29b;--good-soft:#0f3328;--bad:#ff7b7f;--bad-soft:#3e1d20;--gold:#ffc53d;--gold-soft:#3a2d0c;--flame:#ff8a4a;
+  --navy:#0d1433;--lift:0 0 0 1px var(--line)}}
+:root[data-theme="dark"]{
+  --bg:#080c18;--surface:#111729;--surface2:#171f35;--ink:#eef2fb;--muted:#95a2c2;--line:#222b44;
+  --accent:#6f87ff;--accent-ink:#0a0f1f;--accent-soft:#1b2550;--good:#3fd29b;--good-soft:#0f3328;--bad:#ff7b7f;--bad-soft:#3e1d20;--gold:#ffc53d;--gold-soft:#3a2d0c;--flame:#ff8a4a;
+  --navy:#0d1433;--lift:0 0 0 1px var(--line)}
+body{background:var(--bg)}
+h1{font-weight:800;letter-spacing:-.02em}
+.page-head{padding-top:6px}
+.page-head h1{font-size:2.1rem;line-height:1.05}
+.page-head .muted{font-size:.95rem}
+.section{font:700 .78rem var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 2px -4px}
+
+/* surfaces: no hard borders, soft lift */
+.card,.qcard,.tile,.deck,.rowbtn,.rowstat,.badge,.review,.shortcut,.paper-row,.tile-btn,.flash{border:0;box-shadow:var(--lift);border-radius:var(--r)}
+.card.next{border:0;box-shadow:var(--lift),inset 0 0 0 2px var(--accent-soft)}
+.top{background:var(--bg);border-bottom:0}
+.top-in{padding-top:12px;padding-bottom:10px}
+
+/* hero: night-time podium */
+.hero{border:0;border-radius:24px;color:#fff;background:
+  radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--accent) 70%,transparent) 0%,transparent 55%),
+  radial-gradient(80% 70% at 0% 100%,rgba(255,197,61,.18) 0%,transparent 60%),var(--navy);
+  box-shadow:0 18px 40px -12px rgba(14,22,56,.45);padding:22px 22px 20px}
+.hero .muted,.hero .hs{color:rgba(255,255,255,.72)}.hero .hs b{color:#fff}
+.hero .ring-bg{stroke:rgba(255,255,255,.14)}.hero .ring-fg{stroke:var(--gold);stroke-linecap:round}
+.hero .ring b{color:#fff}
+.hero .bar{background:rgba(255,255,255,.14)}.hero .bar i{background:linear-gradient(90deg,var(--gold),#ffdf8a)}
+.hero h1{color:#fff;font-size:1.65rem}
+
+/* buttons */
+.btn{border-radius:14px;font-weight:700;padding:12px 18px}
+.btn.primary{background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 88%,#fff),var(--accent));box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,#000),0 10px 22px -10px var(--accent)}
+.btn.primary:active{box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 60%,#000);transform:translateY(3px)}
+.btn:not(.primary){border:0;background:var(--surface);box-shadow:var(--lift),0 2px 0 var(--line)}
+.btn.danger{box-shadow:inset 0 0 0 2px var(--bad)}
+.icon{color:var(--ink)}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile-btn{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:16px;background:var(--surface);text-align:left;min-height:118px}
+.tile-btn b{font:700 1.05rem var(--display);margin-top:auto}.tile-btn small{color:var(--muted);font-size:.82rem}
+.tile-btn:disabled{opacity:.55}
+.tile-btn:active:not(:disabled){transform:scale(.97)}
+.badge-n{position:absolute;top:12px;right:12px;min-width:24px;height:24px;padding:0 7px;border-radius:99px;background:var(--bad);color:#fff;font:800 .8rem/24px var(--body);text-align:center;animation:pop .5s var(--spring)}
+.sc-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:none}
+.sc-ic svg{width:21px;height:21px}
+.sc-ic.green,.t-green .sc-ic{background:var(--good-soft);color:var(--good)}
+.sc-ic.orange,.t-orange .sc-ic{background:color-mix(in srgb,var(--flame) 16%,var(--surface));color:var(--flame)}
+.sc-ic.red,.t-red .sc-ic{background:var(--bad-soft);color:var(--bad)}
+.sc-ic.violet{background:color-mix(in srgb,#8b5cf6 16%,var(--surface));color:#8b5cf6}
+.sc-ic.gold{background:var(--gold-soft);color:var(--gold)}
+.paper-row{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--surface);text-align:left;width:100%}
+.paper-row:active{transform:scale(.98)}
+.rowbtn{background:var(--surface)}
+.shortcut{background:var(--surface)}
+.shortcut b{font-family:var(--display)}
+
+/* tab bar floats */
+@media (max-width:819px){
+  nav{left:12px;right:12px;bottom:calc(10px + var(--safe-b));padding:6px;border:1px solid color-mix(in srgb,var(--line) 70%,transparent);border-radius:24px;
+    background:color-mix(in srgb,var(--surface) 82%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);box-shadow:0 12px 32px -8px rgba(13,21,48,.25)}
+  nav a{padding:8px 2px}
+  .nav-pill{border-radius:18px}
+  body{padding-bottom:calc(104px + var(--safe-b))}
+  #toasts{bottom:calc(100px + var(--safe-b))}
+}
+
+/* questions */
+.qcard{padding:22px}
+.stem{font-size:1.16rem;line-height:1.55}
+.opt{border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:13px 14px;font-size:1.04rem;background:var(--surface)}
+.opt:active:not(:disabled){border-bottom-width:2px;margin-top:2px}
+.loz{border-radius:8px;width:30px;height:26px}
+.opt:not(:disabled):hover{background:var(--surface2);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.fb{border:0;border-radius:var(--r);box-shadow:var(--lift)}
+.fb.good{box-shadow:inset 0 0 0 2px var(--good)}.fb.bad{box-shadow:inset 0 0 0 2px var(--bad)}
+.run-top .bar{height:12px}
+.run-top .bar i{background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 60%,#7ce0ff))}
+.chip{border:0;box-shadow:var(--lift)}
+.chip[aria-selected="true"]{box-shadow:none}
+.pill{border:0;background:var(--surface2)}
+.ideas li{border-left:0;background:var(--surface2);border-radius:14px;position:relative;padding-left:16px}
+.ideas li::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:4px;border-radius:4px;background:var(--accent)}
+.seg{border:0;box-shadow:var(--lift)}
+.empty{border:0;background:var(--surface2);border-radius:var(--r)}
+
+.fig .accent-stroke{stroke:var(--accent);stroke-width:2}
+
 </style>
 </head>
 <body>
@@ -1341,7 +1440,7 @@ const FIGS = (() => {
   delete F.i17;
   return F;
 })();
-const fig = q => FIGS[q.id] || '';
+const fig = q => q.fig || FIGS[q.id] || '';
 // Second set: paper-style question diagrams and lesson diagrams.
 const LFIGS = {};
 (() => {
@@ -1413,6 +1512,405 @@ const LFIGS = {};
 })();
 const lfig = id => LFIGS[id] || '';
 
+/* ───────── Question generators ─────────
+   Each template is one idea from the papers, written as a recipe. The numbers,
+   contexts and wording change every time, the answer is computed rather than
+   typed, and the wrong options come from the slips students actually make.
+   A generated question's id ("G.template.seed") rebuilds it exactly. */
+const GEN = [];
+const GT = (id, tr, tp, d, make) => GEN.push({ id, tr, tp, d, make });
+
+const gcd = (a, b) => (b ? gcd(b, a % b) : Math.abs(a));
+const rint = (r, a, b) => a + Math.floor(r() * (b - a + 1));
+const rpick = (r, arr) => arr[Math.floor(r() * arr.length)];
+const rshuf = (r, a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const choose = (n, k) => { let x = 1; for (let i = 1; i <= k; i++) x = x * (n - k + i) / i; return Math.round(x); };
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const NUMW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+const pounds = p => (p % 100 === 0 ? `£${p / 100}` : `£${(p / 100).toFixed(2)}`);
+
+/* Option helpers. An item is { k: sort key, t: text }. */
+const Nm = (x, u = '') => ({ k: x, t: `${x < 0 ? '−' : ''}${Math.abs(x)}${u}` });
+const Fr = (n, d) => { const g = gcd(n, d); n /= g; d /= g; const sg = n < 0 ? '−' : ''; return { k: n / d, t: d === 1 ? `${sg}${Math.abs(n)}` : `${sg}${Math.abs(n)}/${d}` }; };
+function opts(r, ans, cands, { sort = true, fill = null } = {}) {
+  const seen = new Set([ans.t]), out = [ans];
+  for (const c of cands) { if (out.length >= 5) break; if (!c || c.t === undefined || /NaN|undefined|Infinity/.test(c.t) || seen.has(c.t)) continue; seen.add(c.t); out.push(c); }
+  for (let k = 1; out.length < 5 && k < 60; k++) for (const s of [1, -1]) {
+    if (out.length >= 5) break;
+    const c = fill ? fill(k * s) : (typeof ans.k === 'number' && Number.isInteger(ans.k) ? Nm(ans.k + k * s, ans.t.replace(/^[−-]?[\d.]+/, '')) : null);
+    if (c && !seen.has(c.t) && !(typeof c.k === 'number' && c.k <= 0 && ans.k > 0)) { seen.add(c.t); out.push(c); }
+  }
+  const arr = sort ? out.slice().sort((x, y) => x.k - y.k) : rshuf(r, out);
+  return { o: arr.map(x => x.t), a: arr.indexOf(ans) };
+}
+
+/* Small drawing kit for generated diagrams. */
+const gr = n => Math.round(n * 10) / 10;
+const gS = (body, w = 220, h = 150) => `<svg class="fig" viewBox="0 0 ${w} ${h}" role="img" aria-label="Diagram for this question">${body}</svg>`;
+const gL = (a, b, c = '') => `<line x1="${gr(a[0])}" y1="${gr(a[1])}" x2="${gr(b[0])}" y2="${gr(b[1])}" class="${c}"/>`;
+const gP = (pts, c = '') => `<polygon points="${pts.map(p => gr(p[0]) + ',' + gr(p[1])).join(' ')}" class="${c}"/>`;
+const gC = (o, rad, c = '') => `<circle cx="${gr(o[0])}" cy="${gr(o[1])}" r="${gr(rad)}" class="${c}"/>`;
+const gT = (p, t, a = 'middle', c = '') => `<text x="${gr(p[0])}" y="${gr(p[1])}" text-anchor="${a}" class="${c}">${t}</text>`;
+const gR = (x, y, w, h, c = '') => `<rect x="${gr(x)}" y="${gr(y)}" width="${gr(w)}" height="${gr(h)}" class="${c}"/>`;
+const gD = o => `<circle cx="${gr(o[0])}" cy="${gr(o[1])}" r="2.4" class="dot"/>`;
+const gpol = (o, rad, deg) => [o[0] + rad * Math.cos(deg * Math.PI / 180), o[1] + rad * Math.sin(deg * Math.PI / 180)];
+const greg = (A, B, n, turn) => { const pts = [A, B], ext = turn * 2 * Math.PI / n, len = Math.hypot(B[0] - A[0], B[1] - A[1]); let ang = Math.atan2(B[1] - A[1], B[0] - A[0]), cur = B; for (let i = 2; i < n; i++) { ang += ext; cur = [cur[0] + len * Math.cos(ang), cur[1] + len * Math.sin(ang)]; pts.push(cur); } return pts; };
+const POLY = { 3: 'equilateral triangle', 4: 'square', 5: 'regular pentagon', 6: 'regular hexagon', 8: 'regular octagon', 9: 'regular nonagon', 10: 'regular decagon', 12: 'regular dodecagon' };
+const intAng = n => 180 - 360 / n;
+
+/* ═════════ Intermediate templates ═════════ */
+GT('yr', 'imc', 'Number', 1, r => {
+  const A = rpick(r, [2026, 2027, 2028, 1919, 2121, 3031]), d = rpick(r, [101, 202, 303, 1111]);
+  const ans = Nm(A + d);
+  return { q: `What is the value of ${A} − ${A + d} + ${A + 2 * d}?`, ...opts(r, ans, [Nm(A), Nm(A + 2 * d), Nm(A - d), Nm(A + 3 * d)]),
+    s: `Work from the left. ${A} − ${A + d} = −${d}. Then −${d} + ${A + 2 * d} = ${A + d}.` };
+});
+GT('nm', 'imc', 'Number', 1, r => {
+  const [p, q] = rpick(r, [[3, 4], [3, 5], [4, 5], [5, 7], [6, 7], [4, 9]]);
+  const good = []; while (good.length < 4) { const x = rint(r, 3, 33) * (good.length % 2 ? p : q); if (x > 12 && x < 200 && !good.includes(x)) good.push(x); }
+  let odd; do { odd = rint(r, 13, 199); } while (odd % p === 0 || odd % q === 0 || good.includes(odd));
+  const ans = Nm(odd);
+  return { q: `Which of these numbers is neither a multiple of ${p} nor a multiple of ${q}?`, ...opts(r, ans, good.map(x => Nm(x))),
+    s: `Check each option. ${good.map(x => `${x} = ${x % p === 0 ? p : q} × ${x % p === 0 ? x / p : x / q}`).join(', ')}. That leaves ${odd}, which is not a multiple of either.` };
+});
+GT('day', 'imc', 'Logic & puzzles', 1, r => {
+  const D = rint(r, 0, 6), N = rpick(r, [rint(r, 40, 99), rint(r, 100, 400), 1000]), ans = DAYS[(D + N) % 7];
+  const others = rshuf(r, DAYS.filter(x => x !== ans)).slice(0, 4), set = [ans, ...others].sort((a, b) => DAYS.indexOf(a) - DAYS.indexOf(b));
+  return { q: `Today is ${DAYS[D]}. What day of the week will it be ${N} days from today?`, o: set, a: set.indexOf(ans),
+    s: `Days repeat every 7. ${N} = 7 × ${Math.floor(N / 7)} + ${N % 7}, so after ${N} days it is ${N % 7} day${N % 7 === 1 ? '' : 's'} on from ${DAYS[D]}. That is ${ans}.` };
+});
+GT('frc', 'imc', 'Ratio & percentages', 1, r => {
+  const F = [[1, 2, 'half'], [1, 3, 'a third'], [2, 3, 'two thirds'], [1, 4, 'a quarter'], [3, 4, 'three quarters'], [2, 5, 'two fifths'], [3, 5, 'three fifths']];
+  const f1 = rpick(r, F); let f2; do { f2 = rpick(r, F); } while (f2 === f1);
+  const num = f1[0] * f2[0], den = f1[1] * f2[1], g = gcd(num, den), k = rint(r, 2, 9), N = k * den / g, M = k * num / g;
+  const ans = Nm(N);
+  return { q: `${f1[2][0].toUpperCase() + f1[2].slice(1)} of ${f2[2]} of a number is ${M}. What is the number?`, ...opts(r, ans, [Nm(M * f1[1]), Nm(M * f2[1]), Nm(2 * N), Nm(N / 2), Nm(M * den)]),
+    s: `${f1[2][0].toUpperCase() + f1[2].slice(1)} of ${f2[2]} is ${f1[0]}/${f1[1]} × ${f2[0]}/${f2[1]} = ${num / g}/${den / g}. So ${num / g}/${den / g} of the number is ${M}. The number is ${M} ÷ ${num / g} × ${den / g} = ${N}.` };
+});
+GT('ang', 'imc', 'Geometry', 2, r => {
+  const n = rpick(r, [8, 9, 10, 12, 15, 18, 20, 24, 30, 36, 40, 45]), I = 180 - 360 / n;
+  if (r() < 0.5) {
+    const ans = Nm(n);
+    return { q: `Each interior angle of a regular polygon is ${I}°. How many sides does the polygon have?`, ...opts(r, ans, [Nm(Math.round(360 / I) || n + 7), Nm(n - 2), Nm(n + 2), Nm(2 * n), Nm(n / 2)]),
+      s: `Each exterior angle is 180° − ${I}° = ${360 / n}°. The exterior angles add up to 360°. So there are 360 ÷ ${360 / n} = ${n} sides.` };
+  }
+  const T = (n - 2) * 180, ans = Nm(n);
+  return { q: `The interior angles of a polygon add up to ${T}°. How many sides does it have?`, ...opts(r, ans, [Nm(T / 180), Nm(n + 2), Nm(n - 1), Nm(n + 1)]),
+    s: `A polygon with <i>n</i> sides splits into <i>n</i> − 2 triangles, so its angles add to (<i>n</i> − 2) × 180°. Here <i>n</i> − 2 = ${T} ÷ 180 = ${n - 2}. So <i>n</i> = ${n}.` };
+});
+GT('pp', 'imc', 'Geometry', 2, r => {
+  let m, n; do { m = rpick(r, [4, 5, 6, 8, 9, 10, 12]); n = rpick(r, [3, 4, 5, 6, 8, 10]); } while (m === n || intAng(m) + intAng(n) >= 330 || intAng(m) + intAng(n) <= 180);
+  const x = 360 - intAng(m) - intAng(n), ans = Nm(x, '°');
+  const A = [100, 80], B = [100, 130], p1 = greg(A, B, m, 1), p2 = greg(A, B, n, -1);
+  const all = p1.concat(p2), xs = all.map(p => p[0]), ys = all.map(p => p[1]), sc = Math.min(1, 150 / (Math.max(...xs) - Math.min(...xs)), 130 / (Math.max(...ys) - Math.min(...ys)));
+  const tf = p => [110 + (p[0] - (Math.max(...xs) + Math.min(...xs)) / 2) * sc, 78 + (p[1] - (Math.max(...ys) + Math.min(...ys)) / 2) * sc];
+  const a2 = tf(A), b2 = tf(B), dir = [(a2[0] - b2[0]), (a2[1] - b2[1])], dl = Math.hypot(...dir);
+  const e1 = tf(p1[p1.length - 1]), e2 = tf(p2[p2.length - 1]), ang = p => Math.atan2(p[1] - a2[1], p[0] - a2[0]), R0 = 11;
+  const s1 = [a2[0] + R0 * Math.cos(ang(e1)), a2[1] + R0 * Math.sin(ang(e1))], s2 = [a2[0] + R0 * Math.cos(ang(e2)), a2[1] + R0 * Math.sin(ang(e2))];
+  const mid = Math.atan2(dir[1], dir[0]), cross = (Math.cos(ang(e1)) * Math.sin(mid) - Math.sin(ang(e1)) * Math.cos(mid)) > 0 ? 1 : 0;
+  const arc = `<path d="M${gr(s1[0])},${gr(s1[1])} A${R0},${R0} 0 0 ${cross} ${gr(s2[0])},${gr(s2[1])}" fill="none" class="accent-stroke"/>`;
+  const fig = gS(gP(p1.map(tf), 'soft') + gP(p2.map(tf), 'softa') + arc + gT([a2[0] + dir[0] / dl * 22, a2[1] + dir[1] / dl * 22 + 4], '<tspan font-style="italic">x</tspan>'), 220, 156);
+  return { q: `A ${POLY[m]} and a ${POLY[n]} share an edge, as shown. What is the size of the angle marked <i>x</i>?`, ...opts(r, ans, [Nm(intAng(m) + intAng(n) - 180, '°'), Nm(180 - x > 0 ? 180 - x : x + 30, '°'), Nm(Math.abs(intAng(m) - intAng(n)) || x + 12, '°'), Nm(x + 12, '°'), Nm(x - 18, '°')]),
+    fig, s: `Each interior angle of a regular <i>n</i>-sided polygon is 180° − 360°/<i>n</i>. So the angles are ${intAng(m)}° and ${intAng(n)}°. The angles round a point add to 360°. So <i>x</i> = 360° − ${intAng(m)}° − ${intAng(n)}° = ${x}°.` };
+});
+GT('rat', 'imc', 'Ratio & percentages', 2, r => {
+  let a, b, t; do { a = rint(r, 1, 5); b = rint(r, 2, 7); t = rint(r, 1, 4); } while (gcd(a, b) !== 1 || gcd(a + t, b) !== 1 || a === b);
+  const u = rint(r, 2, 9), k = t * u, col = rpick(r, [['red', 'blue'], ['green', 'yellow'], ['black', 'white']]);
+  const ans = Nm(b * u);
+  return { q: `A bag holds ${col[0]} and ${col[1]} counters in the ratio ${a} : ${b}. After ${k} more ${col[0]} counters are added, the ratio is ${a + t} : ${b}. How many ${col[1]} counters are there?`, ...opts(r, ans, [Nm(a * u), Nm((a + t) * u), Nm((a + b) * u), Nm(u), Nm(k * b)]),
+    s: `The ${col[1]} counters do not change, and they are ${b} parts both times. So the ${col[0]} counters go from ${a} parts to ${a + t} parts. Those ${t} extra part${t === 1 ? ' is' : 's are'} the ${k} added counters, so 1 part is ${u}. The ${col[1]} counters are ${b} parts: ${b * u}.` };
+});
+GT('mean', 'imc', 'Algebra', 1, r => {
+  const n = rint(r, 4, 9), m = rint(r, 8, 30), dl = rpick(r, [1, 2, 3, -1, -2]), m2 = m + dl, x = (n + 1) * m2 - n * m;
+  if (x <= 0) return null;
+  const ans = Nm(x);
+  return { q: `The mean of ${n} numbers is ${m}. When one more number is included, the mean becomes ${m2}. What is the extra number?`, ...opts(r, ans, [Nm(m2), Nm(m2 + dl), Nm(n * dl), Nm(x + n), Nm(x - n)]),
+    s: `Work with totals. The ${n} numbers total ${n} × ${m} = ${n * m}. The ${n + 1} numbers total ${n + 1} × ${m2} = ${(n + 1) * m2}. So the extra number is ${(n + 1) * m2} − ${n * m} = ${x}.` };
+});
+GT('pch', 'imc', 'Ratio & percentages', 2, r => {
+  const [p, q] = rpick(r, [[25, 20], [20, 20], [50, 50], [10, 10], [20, 25], [40, 25], [60, 25], [25, 40], [30, 30], [50, 20]]);
+  const ch = Math.round(((1 + p / 100) * (1 - q / 100) - 1) * 10000) / 100;
+  const tx = c => ({ k: c, t: c === 0 ? 'no change' : `${Math.abs(c)}% ${c > 0 ? 'increase' : 'decrease'}` });
+  const ans = tx(ch);
+  return { q: `The price of a jacket is increased by ${p}%. The new price is then reduced by ${q}%. What is the overall change in price?`, ...opts(r, ans, [tx(p - q), tx(q - p), tx(ch - 5), tx(ch + 5), tx(-(p * q) / 100), tx(ch + 1)]),
+    s: `A ${p}% increase multiplies the price by ${1 + p / 100}. A ${q}% decrease multiplies it by ${1 - q / 100}. Overall: ${1 + p / 100} × ${1 - q / 100} = ${Math.round((1 + p / 100) * (1 - q / 100) * 10000) / 10000}. So the change is ${ans.t}.` };
+});
+GT('rev', 'imc', 'Ratio & percentages', 1, r => {
+  const p = rpick(r, [10, 20, 25, 40]), up = r() < 0.5, O = rpick(r, [40, 60, 80, 120, 160, 200, 240]), P = O * (up ? 100 + p : 100 - p) / 100;
+  if (!Number.isInteger(P)) return null;
+  const wrong = up ? P - P * p / 100 : P + P * p / 100, gbp = v => ({ k: v, t: `£${v}` });
+  return { q: `A game ${up ? 'went up' : 'was reduced'} by ${p}% and now costs £${P}. What did it cost before?`, ...opts(r, gbp(O), [gbp(wrong), gbp(P), gbp(O + 10), gbp(O - 10), gbp(O + 5)], { fill: k => gbp(O + 5 * k) }),
+    s: `£${P} is ${up ? 100 + p : 100 - p}% of the old price. So the old price is ${P} ÷ ${(up ? 100 + p : 100 - p) / 100} = £${O}. ${up ? 'Subtracting' : 'Adding'} ${p}% of £${P} gives £${wrong}, which is the classic trap.` };
+});
+GT('cons', 'imc', 'Algebra', 2, r => {
+  const k = rpick(r, [5, 7, 9]), st = rpick(r, [1, 2, 2]), mid = rint(r, 12, 60) * (st === 2 ? 2 : 1) + (st === 2 && r() < 0.5 ? 1 : 0), S = k * mid, big = mid + (k - 1) / 2 * st;
+  const kind = st === 1 ? 'consecutive integers' : mid % 2 ? 'consecutive odd numbers' : 'consecutive even numbers', ans = Nm(big);
+  return { q: `The sum of ${NUMW[k]} ${kind} is ${S}. What is the largest of them?`, ...opts(r, ans, [Nm(mid), Nm(mid - (k - 1) / 2 * st), Nm(big + st), Nm(big - st), Nm(mid + k)]),
+    s: `The middle number is the mean: ${S} ÷ ${k} = ${mid}. There are ${(k - 1) / 2} numbers above it, going up in ${st}s. So the largest is ${mid} + ${(k - 1) / 2 * st} = ${big}.` };
+});
+GT('lcm', 'imc', 'Number', 2, r => {
+  const set = rpick(r, [[2, 3, 4, 5], [3, 4, 5], [4, 5, 6], [2, 3, 4, 5, 6], [3, 5, 7], [4, 6, 9], [5, 6, 8]]), L = set.reduce((a, b) => a * b / gcd(a, b)), rem = rint(r, 1, Math.min(...set) - 1);
+  const ans = Nm(L + rem), prod = set.reduce((a, b) => a * b);
+  return { q: `What is the smallest whole number greater than ${rem} that leaves a remainder of ${rem} when divided by each of ${set.slice(0, -1).join(', ')} and ${set[set.length - 1]}?`, ...opts(r, ans, [Nm(prod + rem), Nm(L), Nm(L - rem), Nm(2 * L + rem), Nm(L + rem + 1)]),
+    s: `Take ${rem} away and the number must be a multiple of every divisor. The lowest common multiple of ${set.join(', ')} is ${L}. So the number is ${L} + ${rem} = ${L + rem}.` };
+});
+GT('fac', 'imc', 'Number', 2, r => {
+  let a, b, c, N; do { a = rint(r, 1, 5); b = rint(r, 0, 3); c = rint(r, 0, 2); N = 2 ** a * 3 ** b * 5 ** c; } while (N > 1000 || N < 30 || b + c === 0);
+  const cnt = (a + 1) * (b + 1) * (c + 1), pf = [[2, a], [3, b], [5, c]].filter(x => x[1]).map(x => x[1] > 1 ? `${x[0]}<sup>${x[1]}</sup>` : `${x[0]}`).join(' × ');
+  const ans = Nm(cnt);
+  return { q: `How many positive factors does ${N} have?`, ...opts(r, ans, [Nm(a + b + c), Nm(cnt - 2), Nm(cnt + 2), Nm(a * Math.max(1, b) * Math.max(1, c)), Nm(cnt / 2)]),
+    s: `Write ${N} as a product of primes: ${N} = ${pf}. A factor uses each prime any number of times up to its power. So the count is ${[[a], [b], [c]].filter((x, i) => [a, b, c][i]).map(x => `(${x[0]} + 1)`).join('')} = ${cnt}.` };
+});
+GT('dsq', 'imc', 'Number', 2, r => {
+  const [p, q, h] = rpick(r, [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [20, 21, 29], [9, 40, 41]]), k = rint(r, 1, Math.floor(99 / h)), a = p * k, b = q * k, c = h * k;
+  const ans = Nm(a);
+  return { q: `What is the value of √(${c}² − ${b}²)?`, ...opts(r, ans, [Nm(c - b), Nm(b), Nm(a + c - b), Nm(a + k), Nm(a - k)]),
+    s: `Use the difference of two squares: ${c}² − ${b}² = (${c} − ${b})(${c} + ${b}) = ${c - b} × ${c + b} = ${(c - b) * (c + b)}. That is ${a}², so the square root is ${a}.` };
+});
+GT('ld', 'imc', 'Number', 2, r => {
+  const b = rpick(r, [2, 3, 7, 8, 12, 13, 17, 18, 22, 23, 27]), e = rpick(r, [2026, 2027, 2028, 2029, rint(r, 100, 999)]);
+  const cyc = []; let x = b % 10; for (let i = 0; i < 4; i++) { cyc.push(x); x = (x * b) % 10; }
+  const d = cyc[(e - 1) % 4], ans = Nm(d), others = [1, 2, 3, 4, 6, 7, 8, 9].filter(v => v !== d);
+  return { q: `What is the last digit of ${b}<sup>${e}</sup>?`, ...opts(r, ans, rshuf(r, cyc.filter(v => v !== d).concat(others)).map(v => Nm(v))),
+    s: `Only last digits matter. The last digits of powers of ${b} go ${cyc.join(', ')} and then repeat every 4. ${e} leaves remainder ${e % 4} when divided by 4, so the last digit is the ${['fourth', 'first', 'second', 'third'][e % 4]} in the cycle: ${d}.` };
+});
+const clockFig = (h, m) => { const o = [110, 75], ha = (h % 12 + m / 60) * 30 - 90, ma = m * 6 - 90; return gS(gC(o, 62, 'soft') + Array.from({ length: 12 }, (_, k) => gL(gpol(o, 54, 30 * k), gpol(o, 62, 30 * k))).join('') + gL(o, gpol(o, 34, ha), 'hand') + gL(o, gpol(o, 50, ma)) + gD(o) + gT([110, 30], '12', 'middle', 'sm') + gT([158, 79], '3', 'middle', 'sm') + gT([110, 128], '6', 'middle', 'sm') + gT([62, 79], '9', 'middle', 'sm'), 220, 150); };
+GT('clk', 'imc', 'Geometry', 2, r => {
+  let h, m, ang; do { h = rint(r, 1, 11); m = rpick(r, [10, 20, 30, 40, 50, 15, 45]); ang = Math.abs(30 * h - 5.5 * m); if (ang > 180) ang = 360 - ang; } while (!Number.isInteger(ang) || ang === 0);
+  let naive = Math.abs(30 * h - 6 * m); if (naive > 180) naive = 360 - naive;
+  const ans = Nm(ang, '°');
+  return { q: `What is the smaller angle between the hands of a clock at ${h}:${String(m).padStart(2, '0')}?`, fig: clockFig(h, m), ...opts(r, ans, [Nm(naive, '°'), Nm(180 - ang || ang + 30, '°'), Nm(ang + 15, '°'), Nm(Math.abs(ang - 15) || ang + 20, '°')]),
+    s: `The minute hand is ${6 * m}° round from 12. The hour hand moves 30° per hour and 0.5° per minute, so it is at ${30 * h} + ${m / 2} = ${30 * h + m / 2}°. The difference is ${Math.abs(30 * h + m / 2 - 6 * m)}°${Math.abs(30 * h + m / 2 - 6 * m) > 180 ? `, and the smaller angle is 360° − that = ${ang}°` : ''}. Forgetting that the hour hand moves gives ${naive}°.` };
+});
+GT('spd', 'imc', 'Ratio & percentages', 2, r => {
+  const who = rpick(r, [['Zoe', 'cycles', [[12, 8], [10, 15], [20, 30], [10, 40]]], ['Raj', 'jogs', [[12, 8], [6, 12], [10, 15]]], ['Mia', 'walks', [[6, 4], [3, 6], [4, 12]]], ['Sam', 'drives', [[30, 20], [60, 40], [40, 60], [20, 30]]]]);
+  const [u, v] = rpick(r, who[2]), nice = Math.round(2 * u * v / (u + v) * 10) / 10, D = u * v / gcd(u, v), ans = Nm(nice);
+  return { q: `${who[0]} ${who[1]} to the park at ${u} km/h and back along the same route at ${v} km/h. What is the average speed for the whole trip, in km/h?`, ...opts(r, ans, [Nm((u + v) / 2), Nm(Math.round((nice + 1) * 10) / 10), Nm(Math.round((nice - 1) * 10) / 10), Nm(Math.round((nice + 0.5) * 10) / 10)], { fill: k => Nm(Math.round((nice + k * 0.4) * 10) / 10) }),
+    s: `Pick a distance that suits both speeds, say ${D} km each way. Out takes ${D / u} hour${D / u === 1 ? '' : 's'} and back takes ${D / v} hour${D / v === 1 ? '' : 's'}. That is ${2 * D} km in ${D / u + D / v} hours, so ${nice} km/h. It is never just the mean of the two speeds.` };
+});
+GT('wb', 'imc', 'Ratio & percentages', 2, r => {
+  const a = rpick(r, [2, 3, 4, 5]), b = rpick(r, [2, 3, 4, 5]), c = rpick(r, [2, 3, 4, 5, 6, 8, 10]), S = a * b * rint(r, 2, 6) * (r() < 0.5 ? 1 : 2);
+  const s1 = S - S / a, s2 = s1 - s1 / b, L = s2 - c; if (L <= 0 || !Number.isInteger(s2)) return null;
+  const nm = rpick(r, ['Ali', 'Bea', 'Cai', 'Dev', 'Eve']), fw = x => ['', '', 'half', 'a third', 'a quarter', 'a fifth'][x];
+  const ans = { k: S, t: `£${S}` };
+  return { q: `${nm} spends ${fw(a)} of their money, then ${fw(b)} of what is left, then £${c}. They have £${L} left. How much did they start with?`, ...opts(r, ans, [{ k: (L + c) * a, t: `£${(L + c) * a}` }, { k: (L + c) * b, t: `£${(L + c) * b}` }, { k: L + c, t: `£${L + c}` }, { k: S + a * b, t: `£${S + a * b}` }, { k: S - a * b, t: `£${S - a * b}` }], { fill: k => ({ k: S + 2 * k, t: `£${S + 2 * k}` }) }),
+    s: `Work backwards. Before the £${c} they had £${s2}. That was ${b - 1}/${b} of the amount before, which was £${s1}. That was ${a - 1}/${a} of the start, which was £${S}.` };
+});
+GT('rect', 'imc', 'Counting & probability', 2, r => {
+  let m = rint(r, 2, 4), n = rint(r, 1, 4); if (m === n && m === 2) n = 3;
+  const cnt = choose(m + 1, 2) * choose(n + 1, 2), w = 160 / Math.max(m, n * 1.3), x0 = 110 - m * w / 2, y0 = 75 - n * w / 2;
+  let body = ''; for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) body += gR(x0 + i * w, y0 + j * w, w, w, 'soft');
+  const ans = Nm(cnt);
+  return { q: `How many rectangles of any size, including squares, can be found in this ${n} by ${m} grid?`, fig: gS(body, 220, 150), ...opts(r, ans, [Nm(m * n), Nm((m + 1) * (n + 1)), Nm(choose(m + 1, 2) + choose(n + 1, 2)), Nm(cnt - m * n), Nm(cnt + m)]),
+    s: `A rectangle is fixed by choosing 2 of the ${n + 1} horizontal lines and 2 of the ${m + 1} vertical lines. That is ${choose(n + 1, 2)} ways and ${choose(m + 1, 2)} ways. So there are ${choose(n + 1, 2)} × ${choose(m + 1, 2)} = ${cnt} rectangles.` };
+});
+GT('dice', 'imc', 'Counting & probability', 2, r => {
+  const s = rint(r, 3, 11), ways = []; for (let a = 1; a <= 6; a++) for (let b = 1; b <= 6; b++) if (a + b === s) ways.push(`(${a}, ${b})`);
+  const ans = Fr(ways.length, 36), other = x => Fr(6 - Math.abs(x - 7), 36);
+  return { q: `Two fair dice are rolled. What is the probability that the scores add up to ${s}?`, ...opts(r, ans, [Fr(1, s), other(s === 7 ? 6 : 7), Fr(ways.length, 12), Fr(ways.length + 1, 36), Fr(Math.max(1, ways.length - 1), 36), Fr(ways.length, 21)]),
+    s: `There are 6 × 6 = 36 equally likely outcomes. The ones that add to ${s} are ${ways.join(', ')}: that is ${ways.length}. The probability is ${ways.length}/36${gcd(ways.length, 36) > 1 ? ` = ${ans.t}` : ''}.` };
+});
+GT('dsum', 'imc', 'Counting & probability', 3, r => {
+  const s = rint(r, 4, 8), three = r() < 0.6, lo = three ? 100 : 10, hi = three ? 999 : 99;
+  let cnt = 0, zero = 0; for (let n = 0; n <= hi; n++) { const ds = String(n).split('').reduce((a, c) => a + +c, 0); if (ds === s) { if (n >= lo) cnt++; zero++; } }
+  const ans = Nm(cnt);
+  return { q: `How many ${three ? 'three' : 'two'}-digit numbers have digits that add up to ${s}?`, ...opts(r, ans, [Nm(zero), Nm(cnt + s), Nm(cnt - 1), Nm(cnt + 1), Nm(s + 1)]),
+    s: three ? `Let the digits be <i>a</i>, <i>b</i>, <i>c</i> with <i>a</i> at least 1. Write <i>a</i> = 1 + <i>a</i>′, so <i>a</i>′ + <i>b</i> + <i>c</i> = ${s - 1}. Sharing ${s - 1} between three digits can be done in ${s + 1} × ${s} ÷ 2 = ${cnt} ways.` : `The tens digit can be 1 to ${s}, and then the units digit is fixed. That gives ${cnt} numbers.` };
+});
+GT('age', 'imc', 'Algebra', 2, r => {
+  let k, m, B, t; do { k = rint(r, 3, 5); m = rint(r, 2, k - 1); B = rint(r, 3, 14); t = B * (k - m) / (m - 1); } while (!Number.isInteger(t) || t < 2 || t > 30);
+  const n = rpick(r, [['Ann', 'Ben'], ['Kai', 'Lola'], ['Mum', 'Theo'], ['Priya', 'Sam']]), A = k * B, ans = Nm(A);
+  return { q: `${n[0]} is ${NUMW[k]} times as old as ${n[1]}. In ${t} years, ${n[0]} will be ${NUMW[m] === 'two' ? 'twice' : NUMW[m] + ' times'} as old as ${n[1]}. How old is ${n[0]} now?`, ...opts(r, ans, [Nm(B), Nm(A + t), Nm(B + t), Nm(A - t), Nm(A + B)]),
+    s: `Let ${n[1]} be <i>b</i>, so ${n[0]} is ${k}<i>b</i>. In ${t} years: ${k}<i>b</i> + ${t} = ${m}(<i>b</i> + ${t}). That gives ${k - m}<i>b</i> = ${(m - 1) * t}, so <i>b</i> = ${B}. So ${n[0]} is ${A}.` };
+});
+GT('buy', 'imc', 'Algebra', 2, r => {
+  const it = rpick(r, [['teas', 'coffees', 'tea', 'coffee'], ['pens', 'rulers', 'pen', 'ruler'], ['apples', 'pears', 'apple', 'pear']]);
+  let a, b; do { a = rint(r, 2, 5); b = rint(r, 1, 5); } while (a === b);
+  const x = rint(r, 8, 60) * 5, y = rint(r, 8, 60) * 5, P = a * x + b * y, Q = b * x + a * y, ans = { k: x + y, t: pounds(x + y) };
+  return { q: `${NUMW[a][0].toUpperCase() + NUMW[a].slice(1)} ${it[0]} and ${NUMW[b]} ${b === 1 ? it[1].slice(0, -1) : it[1]} cost ${pounds(P)}. ${NUMW[b][0].toUpperCase() + NUMW[b].slice(1)} ${b === 1 ? it[0].slice(0, -1) : it[0]} and ${NUMW[a]} ${it[1]} cost ${pounds(Q)}. What is the cost of one ${it[2]} and one ${it[3]}?`, ...opts(r, ans, [{ k: Math.abs(P - Q), t: pounds(Math.abs(P - Q)) }, { k: x, t: pounds(x) }, { k: y, t: pounds(y) }, { k: x + y + 10, t: pounds(x + y + 10) }, { k: x + y - 10, t: pounds(x + y - 10) }], { fill: k => ({ k: x + y + 5 * k, t: pounds(x + y + 5 * k) }) }),
+    s: `Add the two orders: ${a + b} ${it[0]} and ${a + b} ${it[1]} cost ${pounds(P)} + ${pounds(Q)} = ${pounds(P + Q)}. Divide by ${a + b}: one of each costs ${pounds(x + y)}. There is no need to find the prices separately.` };
+});
+GT('cube', 'imc', 'Geometry', 2, r => {
+  const s = rint(r, 2, 9);
+  if (r() < 0.5) { const ans = Nm(6 * s * s, ' cm²'); return { q: `A cube has volume ${s ** 3} cm³. What is its total surface area?`, ...opts(r, ans, [Nm(s * s, ' cm²'), Nm(4 * s * s, ' cm²'), Nm(6 * s, ' cm²'), Nm(s ** 3, ' cm²'), Nm(12 * s, ' cm²')]), s: `The side is the cube root of ${s ** 3}, which is ${s} cm. Each face is ${s} × ${s} = ${s * s} cm². A cube has 6 faces: 6 × ${s * s} = ${6 * s * s} cm².` }; }
+  const ans = Nm(s ** 3, ' cm³'); return { q: `A cube has total surface area ${6 * s * s} cm². What is its volume?`, ...opts(r, ans, [Nm(s * s, ' cm³'), Nm(6 * s * s, ' cm³'), Nm((s + 1) ** 3, ' cm³'), Nm(4 * s ** 3, ' cm³'), Nm(s ** 3 / 2 | 0 || 1, ' cm³')]), s: `Each of the 6 faces has area ${6 * s * s} ÷ 6 = ${s * s} cm², so the side is ${s} cm. The volume is ${s}³ = ${s ** 3} cm³.` };
+});
+GT('hsa', 'imc', 'Geometry', 3, r => {
+  const [p, q, h] = rpick(r, [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [20, 21, 29]]), k = rint(r, 1, Math.floor(40 / h)), a = p * k, b = q * k, c = h * k;
+  const area = a * b / 2, ans = Nm(area), sc = Math.min(140 / b, 110 / a), X = [40, 130], Y = [40 + b * sc, 130], Z = [40, 130 - a * sc];
+  return { q: `A right-angled triangle has hypotenuse ${c}. Its two shorter sides add up to ${a + b}. What is its area?`, fig: gS(gP([X, Y, Z], 'soft') + `<polyline points="49,130 49,121 40,121"/>` + gT([(Y[0] + Z[0]) / 2 + 6, (Y[1] + Z[1]) / 2 - 4], `${c}`, 'start'), 220, 140),
+    ...opts(r, ans, [Nm(a * b), Nm(c * (a + b) / 2), Nm(((a + b) ** 2 - c * c) / 2), Nm(c * c / 4), Nm(area + c)]),
+    s: `Call the shorter sides <i>a</i> and <i>b</i>. Then <i>a</i> + <i>b</i> = ${a + b} and <i>a</i>² + <i>b</i>² = ${c * c}. Squaring the first gives <i>a</i>² + 2<i>ab</i> + <i>b</i>² = ${(a + b) ** 2}, so 2<i>ab</i> = ${(a + b) ** 2 - c * c}. The area is ½<i>ab</i> = ${area}.` };
+});
+GT('zer', 'imc', 'Number', 3, r => {
+  const n = rint(r, 30, 140); let z = 0; for (let p = 5; p <= n; p *= 5) z += Math.floor(n / p);
+  const ans = Nm(z);
+  return { q: `How many zeros are there at the end of ${n}! (the product of all the whole numbers from 1 to ${n})?`, ...opts(r, ans, [Nm(Math.floor(n / 5)), Nm(Math.floor(n / 10)), Nm(z + 1), Nm(z - 1), Nm(Math.floor(n / 10) + Math.floor(n / 100))]),
+    s: `Each zero needs a 2 and a 5, and there are plenty of 2s, so count the 5s. ${n} ÷ 5 gives ${Math.floor(n / 5)} multiples of 5${n >= 25 ? `, and ${Math.floor(n / 25)} multiple${Math.floor(n / 25) === 1 ? '' : 's'} of 25 give${Math.floor(n / 25) === 1 ? 's' : ''} an extra 5` : ''}${n >= 125 ? ', and 125 gives one more' : ''}. That makes ${z}.` };
+});
+GT('stamp', 'imc', 'Number', 3, r => {
+  const [a, b] = rpick(r, [[3, 7], [4, 9], [5, 8], [3, 8], [5, 7], [4, 7]]), N = rpick(r, [100, 120, 150, 90]);
+  const sol = []; for (let x = 1; a * x < N; x++) if ((N - a * x) % b === 0 && N - a * x > 0) sol.push([x, (N - a * x) / b]);
+  if (sol.length < 2) return null;
+  const ans = Nm(sol.length);
+  return { q: `Stamps cost ${a}p and ${b}p. In how many ways can exactly ${pounds(N)} be spent using at least one stamp of each kind?`, ...opts(r, ans, [Nm(sol.length + 1), Nm(sol.length - 1), Nm(sol.length + 2), Nm(sol.length + 3)]),
+    s: `We need ${a}<i>x</i> + ${b}<i>y</i> = ${N} with <i>x</i> and <i>y</i> at least 1. The solutions are ${sol.map(s => `${s[0]} and ${s[1]}`).join('; ')}. So there are ${sol.length} ways.` };
+});
+GT('mix', 'imc', 'Ratio & percentages', 3, r => {
+  let p, q, rr, V; do { p = rpick(r, [10, 20, 25, 30]); q = rpick(r, [40, 50, 60, 70, 80]); rr = rpick(r, [30, 35, 40, 45, 50, 60]); V = rpick(r, [10, 12, 20, 24, 30, 40]); } while (!(p < rr && rr < q) || !Number.isInteger(V * (q - rr) / (q - p)));
+  const A = V * (q - rr) / (q - p), ans = Nm(A);
+  return { q: `Drink <i>A</i> is ${p}% juice and drink <i>B</i> is ${q}% juice. They are mixed to make ${V} litres that is ${rr}% juice. How many litres of <i>A</i> are used?`, ...opts(r, ans, [Nm(V - A), Nm(V / 2), Nm(A + 2), Nm(A - 2), Nm(A + 1)]),
+    s: `${rr}% is ${rr - p} away from ${p}% and ${q - rr} away from ${q}%. The amounts go the other way: <i>A</i> : <i>B</i> = ${q - rr} : ${rr - p}. Splitting ${V} litres in that ratio gives ${A} litres of <i>A</i>.` };
+});
+GT('path', 'imc', 'Counting & probability', 3, r => {
+  let m = rint(r, 2, 5), n = rint(r, 2, 4); if (m === 3 && n === 3) m = 4;
+  const cnt = choose(m + n, n), w = Math.min(36, 160 / m, 110 / n), x0 = 110 - m * w / 2, y0 = 75 - n * w / 2;
+  let body = ''; for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) body += gR(x0 + i * w, y0 + j * w, w, w);
+  body += gD([x0, y0 + n * w]) + gD([x0 + m * w, y0]) + gT([x0 - 4, y0 + n * w + 12], 'start', 'end', 'sm') + gT([x0 + m * w + 4, y0 - 4], 'finish', 'start', 'sm');
+  const ans = Nm(cnt);
+  return { q: `An ant walks along the lines of this ${m} by ${n} grid from the bottom-left corner to the top-right corner, moving only right or up. How many different routes can it take?`, fig: gS(body, 220, 150), ...opts(r, ans, [Nm(m * n), Nm((m + 1) * (n + 1)), Nm(2 ** (m + n - 1)), Nm(cnt - n), Nm(cnt + m)]),
+    s: `Every route is ${m + n} moves long: ${m} to the right and ${n} up, in some order. Choose which ${n} of the ${m + n} moves are up. That is ${cnt} routes.` };
+});
+GT('pmod', 'imc', 'Number', 3, r => {
+  const b = rpick(r, [2, 3, 5, 7]), m = rpick(r, [7, 9, 11, 13].filter(x => gcd(x, b) === 1)), e = rpick(r, [2026, 2027, 100, 50, 1000]);
+  const cyc = []; let x = b % m; do { cyc.push(x); x = (x * b) % m; } while (x !== b % m && cyc.length < 20);
+  const res = cyc[(e - 1) % cyc.length], ans = Nm(res), others = Array.from({ length: m - 1 }, (_, i) => i + 1).filter(v => v !== res);
+  return { q: `What is the remainder when ${b}<sup>${e}</sup> is divided by ${m}?`, ...opts(r, ans, rshuf(r, others).map(v => Nm(v))),
+    s: `The remainders of ${b}, ${b}², ${b}³, … on dividing by ${m} are ${cyc.join(', ')}, then they repeat every ${cyc.length}. ${e} = ${cyc.length} × ${Math.floor(e / cyc.length)} + ${e % cyc.length}, so we want position ${e % cyc.length || cyc.length} in the cycle. The remainder is ${res}.` };
+});
+GT('dig', 'imc', 'Counting & probability', 3, r => {
+  const V = [['all of whose digits are odd', s => /^[13579]+$/.test(s)], ['whose digits are all different', s => new Set(s).size === s.length], ['whose digits strictly increase from left to right', s => s[0] < s[1] && s[1] < s[2]], ['containing at least one digit 7', s => s.includes('7')], ['whose digits multiply to an even number', s => s.split('').some(c => +c % 2 === 0)]];
+  const [txt, f] = rpick(r, V); let cnt = 0; for (let n = 100; n <= 999; n++) if (f(String(n))) cnt++;
+  const ans = Nm(cnt), why = { 'all of whose digits are odd': `Each of the three digits has 5 choices: 5 × 5 × 5 = 125.`, 'whose digits are all different': `The first digit has 9 choices (not 0), the second 9 (not the first), the third 8. That is 9 × 9 × 8 = 648.`, 'whose digits strictly increase from left to right': `No digit can be 0. Choose any 3 different digits from 1 to 9: there is exactly one increasing order. 9 × 8 × 7 ÷ 6 = 84.`, 'containing at least one digit 7': `Count those with no 7: 8 × 9 × 9 = 648. There are 900 three-digit numbers, so 900 − 648 = 252 contain a 7.`, 'whose digits multiply to an even number': `The product is odd only when every digit is odd: 5 × 5 × 5 = 125 numbers. So 900 − 125 = 775 have an even product.` }[txt];
+  return { q: `How many three-digit numbers are there ${txt}?`, ...opts(r, ans, [Nm(900 - cnt), Nm(cnt + 9), Nm(cnt - 9), Nm(Math.round(cnt * 1.1)), Nm(cnt * 2)]), s: why };
+});
+GT('qc', 'imc', 'Geometry', 2, r => {
+  const rad = rint(r, 1, 5), s = 2 * rad, A = s * s, kind = rpick(r, ['corners', 'circle']), ans = { k: A - Math.PI * rad * rad, t: `${A} − ${rad * rad === 1 ? '' : rad * rad}π` };
+  const sq = 120, x0 = 50, y0 = 15, R = sq / 2; let body = gR(x0, y0, sq, sq, 'soft');
+  if (kind === 'corners') { const q = (c, a0) => [c, ...Array.from({ length: 13 }, (_, i) => gpol(c, R, a0 + 90 * i / 12))]; body += gP(q([x0, y0], 0), 'paper') + gP(q([x0 + sq, y0], 90), 'paper') + gP(q([x0 + sq, y0 + sq], 180), 'paper') + gP(q([x0, y0 + sq], 270), 'paper') + gR(x0, y0, sq, sq); }
+  else body += gC([x0 + R, y0 + R], R, 'paper') + gR(x0, y0, sq, sq);
+  const t = v => ({ k: v[0] - Math.PI * v[1], t: `${v[0]} − ${v[1] === 1 ? '' : v[1]}π` });
+  return { q: kind === 'corners' ? `A quarter circle of radius ${rad} is drawn at each corner of a square of side ${s}. What is the area of the shaded region?` : `A circle fits exactly inside a square of side ${s}. What is the area of the shaded region inside the square but outside the circle?`,
+    fig: gS(body + gT([x0 + R, y0 + sq + 14], `${s}`), 220, 152), ...opts(r, ans, [t([A, 2 * rad * rad]), t([A, 4 * rad * rad]), t([2 * A, rad * rad]), { k: Math.PI * rad * rad - A / 2, t: `${rad * rad === 1 ? '' : rad * rad}π − ${A / 2}` }, t([A, rad])], { sort: false }),
+    s: kind === 'corners' ? `The four quarter circles join to make one whole circle of radius ${rad}, with area ${rad * rad === 1 ? '' : rad * rad}π. The square has area ${A}. The shaded region is ${A} − ${rad * rad === 1 ? '' : rad * rad}π.` : `The circle has radius ${rad}, so its area is ${rad * rad === 1 ? '' : rad * rad}π. The square has area ${A}. The difference is ${A} − ${rad * rad === 1 ? '' : rad * rad}π.` };
+});
+GT('inc', 'imc', 'Geometry', 3, r => {
+  const [p, q, h] = rpick(r, [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [20, 21, 29], [9, 12, 15], [6, 8, 10]]), k = rint(r, 1, 2), a = p * k, b = q * k, c = h * k, rad = (a + b - c) / 2;
+  if (!Number.isInteger(rad)) return null;
+  const sc = 130 / b, A = [40, 130], B = [40 + b * sc, 130], Cc = [40, 130 - a * sc], ins = rad * sc, ans = Nm(rad);
+  return { q: `A right-angled triangle has shorter sides ${a} and ${b}. What is the radius of the largest circle that fits inside it?`, fig: gS(gP([A, B, Cc]) + gC([40 + ins, 130 - ins], ins, 'soft') + `<polyline points="49,130 49,121 40,121"/>` + gT([40 + b * sc / 2, 145], `${b}`) + gT([30, 130 - a * sc / 2], `${a}`, 'end'), 220, 152),
+    ...opts(r, ans, [Nm(c / 2), Nm(a * b / (a + b + c)), Nm(rad + 1), Nm(Math.max(1, rad - 1)), Nm((a + b) / 2)].map(x => ({ k: x.k, t: Number.isInteger(x.k) ? x.t : `${Math.round(x.k * 10) / 10}` }))),
+    s: `The hypotenuse is ${c}. The area is ½ × ${a} × ${b} = ${a * b / 2}. Splitting the triangle into three pieces from the circle’s centre gives area = ½ × <i>r</i> × perimeter = ½ × <i>r</i> × ${a + b + c}. So <i>r</i> = ${a * b} ÷ ${a + b + c} = ${rad}. For a right-angled triangle this is always (<i>a</i> + <i>b</i> − <i>c</i>) ÷ 2.` };
+});
+GT('ball', 'imc', 'Geometry', 4, r => {
+  const [R, rr] = rpick(r, [[4, 1], [9, 1], [8, 2], [12, 3], [9, 4], [16, 9], [18, 2], [25, 4], [16, 4]]), d = 2 * Math.sqrt(R * rr), ans = Nm(d);
+  const sc = 60 / R, y = 135, cx = 150, x2 = cx - d * sc, fig = gS(gL([10, y], [210, y]) + gC([cx, y - R * sc], R * sc, 'soft') + gC([x2, y - rr * sc], rr * sc, 'soft') + gD([cx, y]) + gD([x2, y]) + gT([(cx + x2) / 2, y + 13], '?'), 220, 150);
+  return { q: `Two balls of radius ${rr} and ${R} rest on a flat table, touching each other. How far apart are the points where they touch the table?`, fig, ...opts(r, ans, [Nm(R + rr), Nm(R - rr), Nm(R), Nm(d + 2), Nm(d - 2)]),
+    s: `The centres are ${R} + ${rr} = ${R + rr} apart. Their heights above the table differ by ${R} − ${rr} = ${R - rr}. The horizontal distance is √(${R + rr}² − ${R - rr}²) = √${(R + rr) ** 2 - (R - rr) ** 2} = ${d}. The contact points are straight below the centres, so they are ${d} apart.` };
+});
+GT('hcf', 'imc', 'Number', 3, r => {
+  const h = rint(r, 2, 9), qn = rpick(r, [4, 8, 9, 25, 27, 16, 49]), x = h, y = h * qn, P = x * y, ask = r() < 0.5;
+  const ans = Nm(ask ? x + y : y - x), sq = Math.sqrt(qn), alt = Number.isInteger(sq) ? h * sq : h * 2;
+  return { q: `Two positive whole numbers have product ${P} and highest common factor ${h}. What is their ${ask ? 'sum' : 'difference'}?`, ...opts(r, ans, [Nm(ask ? 2 * alt : 0 || h * 3), Nm(ask ? x + y - h : y - x + h), Nm(ask ? h + P / h : P / h - h + 2 * h), Nm(ans.k + 2 * h), Nm(ans.k - h)]),
+    s: `Write the numbers as ${h}<i>a</i> and ${h}<i>b</i>, where <i>a</i> and <i>b</i> share no factor. Then ${h * h}<i>ab</i> = ${P}, so <i>ab</i> = ${qn}. The only pair with no common factor is 1 and ${qn}. The numbers are ${x} and ${y}, so the ${ask ? 'sum' : 'difference'} is ${ans.k}.` };
+});
+GT('fib', 'imc', 'Algebra', 3, r => {
+  const a = rint(r, 1, 6), b = rint(r, 1, 8), t = [a, b]; while (t.length < 8) t.push(t[t.length - 1] + t[t.length - 2]);
+  const ans = Nm(t[6]);
+  return { q: `In a sequence, each term after the second is the sum of the two terms before it. The third term is ${t[2]} and the sixth term is ${t[5]}. What is the seventh term?`, ...opts(r, ans, [Nm(t[4]), Nm(t[7]), Nm(t[5] + t[2]), Nm(2 * t[5]), Nm(t[6] + 1)]),
+    s: `Call the first two terms <i>a</i> and <i>b</i>. The terms are <i>a</i>, <i>b</i>, <i>a</i> + <i>b</i>, <i>a</i> + 2<i>b</i>, 2<i>a</i> + 3<i>b</i>, 3<i>a</i> + 5<i>b</i>. From <i>a</i> + <i>b</i> = ${t[2]} and 3<i>a</i> + 5<i>b</i> = ${t[5]} we get <i>b</i> = ${b} and <i>a</i> = ${a}. The fifth term is ${t[4]}, so the seventh is ${t[4]} + ${t[5]} = ${t[6]}.` };
+});
+GT('cut', 'imc', 'Geometry', 1, r => {
+  const s = rint(r, 8, 15), a = rint(r, 2, 4), b = rint(r, 2, 5), notch = r() < 0.5, k = 120 / s;
+  if (!notch) {
+    const x0 = 50, y0 = 15, W = s * k, fig = gS(gP([[x0, y0], [x0 + W - b * k, y0], [x0 + W - b * k, y0 + a * k], [x0 + W, y0 + a * k], [x0 + W, y0 + W], [x0, y0 + W]], 'soft') + gT([x0 + W - b * k / 2, y0 - 3], `${b}`, 'middle', 'sm') + gT([x0 + W + 4, y0 + a * k / 2 + 4], `${a}`, 'start', 'sm') + gT([x0 + W / 2, y0 + W + 14], `${s}`), 220, 152);
+    const ans = Nm(4 * s);
+    return { q: `A ${a} by ${b} rectangle is cut from one corner of a square of side ${s}. What is the perimeter of the shape that is left?`, fig, ...opts(r, ans, [Nm(4 * s - 2 * (a + b)), Nm(4 * s + 2 * (a + b)), Nm(4 * s - a - b), Nm(4 * s + a + b)]),
+      s: `Cutting the corner removes a length ${b} across and ${a} down from the outside edge. The two new edges are exactly ${b} across and ${a} down. So the perimeter does not change: 4 × ${s} = ${4 * s}.` };
+  }
+  const x0 = 50, y0 = 15, W = s * k, mid = x0 + W / 2, fig = gS(gP([[x0, y0], [mid - b * k / 2, y0], [mid - b * k / 2, y0 + a * k], [mid + b * k / 2, y0 + a * k], [mid + b * k / 2, y0], [x0 + W, y0], [x0 + W, y0 + W], [x0, y0 + W]], 'soft') + gT([mid, y0 + a * k + 14], `${b}`, 'middle', 'sm') + gT([mid + b * k / 2 + 4, y0 + a * k / 2 + 4], `${a}`, 'start', 'sm') + gT([x0 + W / 2, y0 + W + 14], `${s}`), 220, 152);
+  const ans = Nm(4 * s + 2 * a);
+  return { q: `A ${b} by ${a} notch is cut from the middle of one side of a square of side ${s}, as shown. What is the perimeter of the new shape?`, fig, ...opts(r, ans, [Nm(4 * s), Nm(4 * s + 2 * a + 2 * b), Nm(4 * s - b + 2 * a + b), Nm(4 * s + a), Nm(4 * s - 2 * a)]),
+    s: `The bottom of the notch replaces the ${b} that was cut out, so that part is unchanged. The two sides of the notch are new: 2 × ${a} = ${2 * a}. So the perimeter is 4 × ${s} + ${2 * a} = ${4 * s + 2 * a}.` };
+});
+GT('tri', 'imc', 'Number', 1, r => {
+  const n = rint(r, 15, 60), m = rpick(r, [7, 8, 9, 11, 12]), S = n * (n + 1) / 2, rem = S % m, ans = Nm(rem);
+  return { q: `What is the remainder when 1 + 2 + 3 + … + ${n} is divided by ${m}?`, ...opts(r, ans, rshuf(r, Array.from({ length: m }, (_, i) => i).filter(v => v !== rem)).map(v => Nm(v)), { fill: k => Nm(rem + k + m) }),
+    s: `The sum is ½ × ${n} × ${n + 1} = ${S}. Since ${m} × ${Math.floor(S / m)} = ${m * Math.floor(S / m)}, the remainder is ${rem}.` };
+});
+GT('liar', 'imc', 'Logic & puzzles', 4, r => {
+  const n = rint(r, 4, 9), ask = rpick(r, ['truth', 'which']);
+  if (ask === 'truth') { const ans = Nm(1); return { q: `${NUMW[n][0].toUpperCase() + NUMW[n].slice(1)} people stand in a line. For each <i>k</i> from 1 to ${n}, person <i>k</i> says “Exactly <i>k</i> of us are lying.” How many of them are telling the truth?`, ...opts(r, ans, [Nm(0), Nm(2), Nm(n - 1), Nm(n)]), s: `The statements contradict each other, so at most one is true. If none were true, all ${n} would be lying, which would make person ${n} truthful: a contradiction. So exactly one tells the truth, and ${n - 1} are lying. That matches person ${n - 1}, who is the truthful one.` }; }
+  const ans = { k: n - 1, t: `Person ${n - 1}` }, o = [1, 2, Math.floor(n / 2), n - 1, n].filter((v, i, a) => a.indexOf(v) === i).map(v => ({ k: v, t: `Person ${v}` }));
+  return { q: `${NUMW[n][0].toUpperCase() + NUMW[n].slice(1)} people stand in a line. For each <i>k</i> from 1 to ${n}, person <i>k</i> says “Exactly <i>k</i> of us are lying.” Who is telling the truth?`, ...opts(r, ans, o.concat([{ k: 0, t: 'Nobody' }, { k: n + 1, t: 'Everyone' }])), s: `The statements contradict each other, so at most one is true. If none were true, all ${n} would be lying, which would make person ${n} truthful: a contradiction. So exactly one is true and ${n - 1} people are lying. That is what person ${n - 1} says.` };
+});
+
+/* ═════════ Senior templates ═════════ */
+GT('roots', 'smc', 'Algebra', 1, r => {
+  const s = rint(r, 3, 9), t = rint(r, 1, 7), ans = Nm(s * s - 2 * t);
+  return { q: `The roots of <i>x</i>² − ${s}<i>x</i> + ${t} = 0 are <i>p</i> and <i>q</i>. What is the value of <i>p</i>² + <i>q</i>²?`, ...opts(r, ans, [Nm(s * s), Nm(s * s + 2 * t), Nm(s * s - t), Nm(s * s - 4 * t), Nm(2 * t)]),
+    s: `The sum of the roots is ${s} and the product is ${t}. So <i>p</i>² + <i>q</i>² = (<i>p</i> + <i>q</i>)² − 2<i>pq</i> = ${s * s} − ${2 * t} = ${s * s - 2 * t}.` };
+});
+GT('tele', 'smc', 'Algebra', 2, r => {
+  const N = rpick(r, [9, 19, 24, 49, 99, 199]), ans = Fr(N, N + 1);
+  return { q: `What is the value of 1/(1×2) + 1/(2×3) + 1/(3×4) + … + 1/(${N}×${N + 1})?`, ...opts(r, ans, [Fr(N - 1, N), Fr(N + 1, N + 2), Fr(1, 1), Fr(N, 2 * (N + 1)), Fr(2 * N - 1, 2 * N)]),
+    s: `Each term splits: 1/(<i>n</i>(<i>n</i> + 1)) = 1/<i>n</i> − 1/(<i>n</i> + 1). Adding them, almost everything cancels, leaving 1 − 1/${N + 1} = ${N}/${N + 1}.` };
+});
+GT('incl', 'smc', 'Counting & probability', 3, r => {
+  const [a, b, c] = rpick(r, [[2, 3, 5], [2, 3, 7], [3, 5, 7], [2, 5, 7]]), N = rpick(r, [100, 120, 200, 210, 300]);
+  let cnt = 0; for (let n = 1; n <= N; n++) if (n % a && n % b && n % c) cnt++;
+  const ans = Nm(cnt), f = x => Math.floor(N / x);
+  return { q: `How many of the whole numbers from 1 to ${N} inclusive are divisible by none of ${a}, ${b} and ${c}?`, ...opts(r, ans, [Nm(N - f(a) - f(b) - f(c)), Nm(cnt + f(a * b * c)), Nm(cnt - 2), Nm(cnt + 2), Nm(N - cnt)]),
+    s: `Count those divisible by at least one, by inclusion–exclusion: ${f(a)} + ${f(b)} + ${f(c)} − ${f(a * b)} − ${f(a * c)} − ${f(b * c)} + ${f(a * b * c)} = ${N - cnt}. So ${N} − ${N - cnt} = ${cnt} are divisible by none.` };
+});
+GT('pfact', 'smc', 'Number', 3, r => {
+  const p = rpick(r, [2, 3, 5]), n = rint(r, 15, 60); let e = 0; const parts = []; for (let q = p; q <= n; q *= p) { e += Math.floor(n / q); parts.push(Math.floor(n / q)); }
+  const pw = v => ({ k: v, t: `${p}<sup>${v}</sup>` }), ans = pw(e);
+  return { q: `What is the largest power of ${p} that divides ${n}!?`, ...opts(r, ans, [pw(Math.floor(n / p)), pw(e + 1), pw(e - 1), pw(e + 2), pw(Math.floor(n / p) + 1)].filter(x => x.k !== e)),
+    s: `Count the factors of ${p}: ${parts.map((v, i) => `⌊${n}/${p ** (i + 1)}⌋`).join(' + ')} = ${parts.join(' + ')} = ${e}. So the answer is ${p}<sup>${e}</sup>.` };
+});
+GT('arsum', 'smc', 'Algebra', 2, r => {
+  const a = rint(r, 1, 9), d = rint(r, 2, 6), n = rpick(r, [10, 12, 15, 20]), t3 = a + 2 * d, t7 = a + 6 * d, S = n * (2 * a + (n - 1) * d) / 2, ans = Nm(S);
+  return { q: `The third term of an arithmetic sequence is ${t3} and the seventh term is ${t7}. What is the sum of the first ${n} terms?`, ...opts(r, ans, [Nm(S + n * d), Nm(S - n * d), Nm(n * (a + (n - 1) * d)), Nm(S + d), Nm(n * t7)]),
+    s: `Four steps take ${t3} to ${t7}, so the common difference is ${d}. The first term is ${t3} − 2 × ${d} = ${a}. The ${n}th term is ${a} + ${n - 1} × ${d} = ${a + (n - 1) * d}. The sum is ${n} × (${a} + ${a + (n - 1) * d}) ÷ 2 = ${S}.` };
+});
+GT('cosr', 'smc', 'Geometry', 2, r => {
+  let a, b, c, num, den; do { a = rint(r, 3, 9); b = rint(r, 3, 9); c = rint(r, 3, 12); num = a * a + b * b - c * c; den = 2 * a * b; } while (!(a + b > c && a + c > b && b + c > a) || num === 0 || Math.abs(num) >= den);
+  const ans = Fr(num, den), t = (x, y) => { const f = Fr(x, y); return f; };
+  return { q: `In triangle <i>ABC</i>, <i>BC</i> = ${a}, <i>CA</i> = ${b} and <i>AB</i> = ${c}. What is the value of cos <i>C</i>?`, ...opts(r, ans, [t(c * c - a * a - b * b, den), t(num, a * b), t(a * a + c * c - b * b, 2 * a * c), t(b * b + c * c - a * a, 2 * b * c), t(num + 2, den)].filter(x => x.k !== ans.k)),
+    s: `Use the cosine rule with the angle at <i>C</i>, between the sides ${a} and ${b}: cos <i>C</i> = (${a}² + ${b}² − ${c}²) ÷ (2 × ${a} × ${b}) = ${num}/${den}${gcd(Math.abs(num), den) > 1 ? ` = ${ans.t}` : ''}.` };
+});
+GT('egy', 'smc', 'Number', 3, r => {
+  const n = rpick(r, [2, 3, 4, 5, 6, 8, 10, 12]); let cnt = 0; for (let d = 1; d <= n * n; d++) if ((n * n) % d === 0) cnt++;
+  const ans = Nm(cnt);
+  return { q: `How many ordered pairs of positive whole numbers (<i>x</i>, <i>y</i>) satisfy 1/<i>x</i> + 1/<i>y</i> = 1/${n}?`, ...opts(r, ans, [Nm((cnt + 1) / 2 | 0), Nm(cnt - 1), Nm(cnt + 1), Nm(cnt + 2), Nm(cnt * 2)]),
+    s: `Clear fractions: ${n}(<i>x</i> + <i>y</i>) = <i>xy</i>, which rearranges to (<i>x</i> − ${n})(<i>y</i> − ${n}) = ${n * n}. Both brackets must be positive, so each pair matches a factor of ${n * n}. ${n * n} has ${cnt} factors, so there are ${cnt} pairs.` };
+});
+GT('tan', 'smc', 'Algebra', 1, r => {
+  const m = rpick(r, [2, 4, 6, -2, -4, 8]), c = -(m * m) / 4, ans = Nm(c);
+  return { q: `The line <i>y</i> = ${m}<i>x</i> + <i>c</i> is a tangent to the curve <i>y</i> = <i>x</i>². What is the value of <i>c</i>?`, ...opts(r, ans, [Nm(-c), Nm(c / 2), Nm(-m), Nm(m * m), Nm(c - 1)]),
+    s: `Where they meet, <i>x</i>² − ${m}<i>x</i> − <i>c</i> = 0. A tangent meets the curve once, so this has a repeated root and the discriminant is zero: ${m * m} + 4<i>c</i> = 0. So <i>c</i> = ${c}.` };
+});
+GT('dsp', 'smc', 'Number', 3, r => {
+  const N = rpick(r, [15, 21, 33, 35, 45, 63, 77, 99, 105, 117, 135]); let cnt = 0; for (let d = 1; d * d < N; d++) if (N % d === 0 && (d + N / d) % 2 === 0) cnt++;
+  const ans = Nm(cnt);
+  return { q: `How many pairs of positive whole numbers (<i>a</i>, <i>b</i>) satisfy <i>a</i>² − <i>b</i>² = ${N}?`, ...opts(r, ans, [Nm(cnt + 1), Nm(cnt - 1), Nm(cnt * 2), Nm(cnt + 2), Nm(0)]),
+    s: `Factorise: (<i>a</i> − <i>b</i>)(<i>a</i> + <i>b</i>) = ${N}. Each factor pair with the smaller factor first gives one solution, as long as both factors are odd (${N} is odd, so they are) and different. ${N} has ${cnt} such pair${cnt === 1 ? '' : 's'}, so there ${cnt === 1 ? 'is' : 'are'} ${cnt}.` };
+});
+
+/* Build one question from its id. Returns null if the template rejects the seed. */
+function genById(id) {
+  const [, tid, seed] = id.split('.'), T = GEN.find(t => t.id === tid); if (!T) return null;
+  let q = null; try { q = T.make(seeded(id)); } catch (e) { q = null; }
+  if (!q || !q.o || q.o.length !== 5 || q.a < 0) return null;
+  return { id, tr: T.tr, tp: T.tp, d: T.d, q: q.q, o: q.o, a: q.a, s: q.s, fig: q.fig || '', gen: true, tpl: tid, seed };
+}
+/* A fresh question from a template, skipping seeds the template rejects. */
+function genFresh(T, salt) {
+  for (let i = 0; i < 30; i++) { const q = genById(`G.${T.id}.${salt}${i ? '-' + i : ''}`); if (q) return q; }
+  return null;
+}
+
 /* ───────── Motion, sound and haptics ─────────
    Everything here is presentation. The app works the same without it,
    and it all switches off for people who ask for reduced motion. */
@@ -1445,7 +1943,23 @@ function sfx(kind) {
     }
   } catch (e) { /* no audio here */ }
 }
-const buzz = p => { if (S.mute) return; try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) { /* no vibration here */ } };
+/* In the App Store build, Capacitor gives real iPhone haptics. On the web, Android vibrates and iPhone stays silent. */
+const native = n => { try { return window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins[n]; } catch (e) { return null; } };
+const buzz = p => {
+  if (S.mute) return;
+  const H = native('Haptics');
+  if (H) { try { Array.isArray(p) ? H.notification({ type: 'ERROR' }) : H.impact({ style: p >= 15 ? 'MEDIUM' : 'LIGHT' }); } catch (e) { /* ignore */ } return; }
+  try { if (navigator.vibrate) navigator.vibrate(p); } catch (e) { /* no vibration here */ }
+};
+/* Streak reminder, App Store build only: one gentle nudge at 7pm on days you have not practised. */
+function nativeReminder() {
+  const LN = native('LocalNotifications'); if (!LN || S.remind === false) return;
+  try {
+    const at = new Date(); at.setHours(19, 0, 0, 0); if (S.lastDay === dayKey() || at < new Date()) at.setDate(at.getDate() + 1);
+    const n = streakNow();
+    LN.cancel({ notifications: [{ id: 1 }] }).catch(() => {}).then(() => LN.schedule({ notifications: [{ id: 1, title: n ? `Keep your ${n}-day streak` : 'Ten minutes of maths?', body: n ? 'One short set keeps it alive.' : 'Today’s plan is ready.', schedule: { at } }] })).catch(() => {});
+  } catch (e) { /* ignore */ }
+}
 
 /* Numbers that tick up. */
 function countUp(el, from, to, ms = 700) {
@@ -1626,11 +2140,18 @@ const TRACKS = [
   { id: 'as', name: 'A-level Science', short: 'A-level Science', blurb: 'Biology, chemistry and physics' },
 ];
 const TR = Object.fromEntries(TRACKS.map(t => [t.id, t]));
-const BYID = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+const BYMAP = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
+// Generated questions are rebuilt from their id the first time they are looked up.
+const BYID = new Proxy(BYMAP, { get(t, k) { if (k in t) return t[k]; if (typeof k === 'string' && k.startsWith('G.')) { const q = genById(k); if (q) t[k] = q; return q || undefined; } return undefined; } });
 const LETTERS = 'ABCDE';
 const kind = q => (q.o ? 'mcq' : q.a === null ? 'written' : 'numeric');
 
 const I = {
+  bank: '<svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg>',
+  duel: '<svg viewBox="0 0 24 24"><path d="M5 19l9-9M14 4h6v6M19 19l-9-9M4 4l3 3M17 17l3 3"/></svg>',
+  peak: '<svg viewBox="0 0 24 24"><path d="M3 20l6-10 4 6 2-3 6 7z"/></svg>',
+  mix: '<svg viewBox="0 0 24 24"><path d="M4 7h3l10 10h3M4 17h3l3-3M14 10l3-3h3"/></svg>',
+  paper: '<svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>',
   home: '<svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>',
   practice: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
   mocks: '<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2.5 2M9 3h6"/></svg>',
@@ -1647,14 +2168,14 @@ const I = {
 
 /* ───────── State ───────── */
 const KEY = 'podium.v1';
-const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, lessons: {}, quest: null, questAll: 0, bank: null, bankCleared: 0, plan: null, target: 'Silver', freeze: 0, work: {}, qd: { last: '', n: 0 }, duels: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
+const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, lessons: {}, quest: null, questAll: 0, bank: null, bankCleared: 0, plan: null, target: 'Silver', freeze: 0, work: {}, gseen: {}, qd: { last: '', n: 0 }, duels: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
 let S = loadState();
 function loadState() {
   try { const r = JSON.parse(localStorage.getItem(KEY)); if (r && r.v === 1) { const s = Object.assign(blank(), r); if (s.xp > 0) s.onboarded = true; return s; } } catch (e) { /* storage unavailable */ }
   return blank();
 }
 function persistLocal() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage unavailable */ } }
-function save() { S.updated = Date.now(); persistLocal(); cloudPush(); }
+function save() { S.updated = Date.now(); persistLocal(); cloudPush(); clearTimeout(save.t); save.t = setTimeout(() => { try { nativeReminder(); } catch (e) { /* web */ } }, 1500); }
 
 const pad = n => String(n).padStart(2, '0');
 const dayKey = (d = new Date()) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -1683,7 +2204,8 @@ function addXP(n) {
 }
 function record(q, ok) {
   const r = S.q[q.id] || (S.q[q.id] = { n: 0, c: 0, last: 0, t: 0 });
-  r.n++; if (ok) r.c++; r.last = ok ? 1 : 0; r.t = Date.now();
+  r.n++; if (ok) r.c++; r.last = ok ? 1 : 0; r.t = Date.now(); r.tr = q.tr; r.d = q.d;
+  if (q.gen) S.gseen[sigOf(q)] = 1;
   if (!ok && q.o) S.bank[q.id] = { due: dayShift(1), wins: 0 };
   const qu = quest(); qu.ans++; qu.cur = ok ? qu.cur + 1 : 0; qu.row = Math.max(qu.row, qu.cur); questCheck();
 }
@@ -1790,7 +2312,7 @@ const PAPER = { imc: [[1, 5, 'a'], [2, 8, 'a'], [3, 2, 'a'], [3, 5, 'b'], [4, 5,
 const TIER_NAME = { imc: ['', 'Q1–5', 'Q6–15', 'Q16–20', 'Q21–25'], smc: ['', 'Q1–8', 'Q9–17', 'Q18–25', ''] };
 function tierP(tr) {
   const prior = { 1: 0.6, 2: 0.42, 3: 0.25, 4: 0.12 }, st = {};
-  for (const q of QUESTIONS) if (q.tr === tr && q.o) { const r = S.q[q.id]; if (r) { const x = st[q.d] || (st[q.d] = [0, 0]); x[0] += r.c; x[1] += r.n; } }
+  for (const id in S.q) { const r = S.q[id], q = r.tr ? r : BYID[id]; if (!q || q.tr !== tr || !q.d || kind(BYID[id] || {}) === 'written') continue; const x = st[q.d] || (st[q.d] = [0, 0]); x[0] += r.c; x[1] += r.n; }
   const p = {}; for (const d of [1, 2, 3, 4]) { const [c, n] = st[d] || [0, 0]; p[d] = (c + prior[d] * 4) / (n + 4); } return p;
 }
 function expected(tr, p) {
@@ -1800,7 +2322,7 @@ function expected(tr, p) {
 }
 function predict(tr) {
   if (!PAPER[tr]) return null;
-  const n = QUESTIONS.filter(q => q.tr === tr && q.o && S.q[q.id]).reduce((a, q) => a + S.q[q.id].n, 0), p = tierP(tr), score = Math.round(expected(tr, p));
+  const n = Object.keys(S.q).reduce((a, id) => { const r = S.q[id], q = r.tr ? r : BYID[id]; return a + (q && q.tr === tr ? r.n : 0); }, 0), p = tierP(tr), score = Math.round(expected(tr, p));
   let best = 1, gain = -1; for (const d of [1, 2, 3, 4]) { if (!TIER_NAME[tr][d]) continue; const g = expected(tr, Object.assign({}, p, { [d]: Math.min(1, p[d] + 0.15) })) - expected(tr, p); if (g > gain) { gain = g; best = d; } }
   return { n, score, tier: best, full: BANDS[tr].full, band: band(tr, score, BANDS[tr].full) };
 }
@@ -1844,9 +2366,47 @@ function planCard() {
 const tiersOf = tr => [1, 2, 3, 4].filter(d => QUESTIONS.some(q => q.tr === tr && q.d === d));
 function workTier(tr) { const ts = tiersOf(tr); if (!S.work[tr]) S.work[tr] = Math.min(ts[ts.length - 1], S.target === 'Bronze' ? 1 : 2); return S.work[tr]; }
 const tierLabel = (tr, d) => (TIER_NAME[tr] && TIER_NAME[tr][d] ? TIER_NAME[tr][d] + ' level' : ['', 'Foundation', 'Core', 'Stretch', 'Expert'][d]);
-function pickLevel(tr) { // six questions centred on your working level: four at it, the rest either side
-  const target = workTier(tr), cls = q => { const r = S.q[q.id]; return !r ? 0 : !r.last ? 1 : 2; };
-  return shuffle(QUESTIONS.filter(q => q.tr === tr)).sort((a, b) => Math.abs(a.d - target) - Math.abs(b.d - target) || cls(a) - cls(b)).slice(0, 6).sort((a, b) => a.d - b.d);
+/* ───────── Fresh questions ─────────
+   Nothing you have answered in the last few weeks comes back outside the
+   Mistake Bank. Written questions you have never seen go first; generated
+   ones fill the gaps, never two from the same recipe in one set. */
+const RECENT = 28 * 864e5;
+const plainText = t => String(t).replace(/<[^>]+>/g, '');
+const hashStr = t => { let h = 5381; for (let i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+const sigOf = q => q.tpl + ':' + hashStr(plainText(q.q) + '|' + q.o[q.a]);
+const answeredRecently = q => { const r = S.q[q.id]; return !!r && r.t > Date.now() - RECENT; };
+function genOne(tr, d, { tp = null, used = new Set(), fig = false, salt = null } = {}) {
+  const pool = GEN.filter(t => t.tr === tr && (!tp || t.tp === tp) && !used.has(t.id));
+  if (!pool.length) return null;
+  const order = shuffle(pool, salt ? seeded(salt) : Math.random).sort((a, b) => Math.abs(a.d - d) - Math.abs(b.d - d));
+  for (const T of order.slice(0, 10)) for (let i = 0; i < 14; i++) {
+    const seed = salt ? `${salt}-${i}` : Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    const q = BYID[`G.${T.id}.${seed}`];
+    if (!q || (!salt && S.gseen[sigOf(q)]) || (fig && !q.fig)) continue;
+    return q;
+  }
+  return null;
+}
+function freshSet(tr, tiers, { tp = null, figShare = 0, preferGen = 0.45, used = new Set(), ids = new Set() } = {}) {
+  const out = [];
+  const take = q => { out.push(q); ids.add(q.id); if (q.tpl) used.add(q.tpl); };
+  const written = (d, needFig) => shuffle(QUESTIONS.filter(q => q.tr === tr && q.o && q.d === d && (!tp || q.tp === tp) && !ids.has(q.id) && (!needFig || FIGS[q.id])));
+  tiers.forEach((d, i) => {
+    const needFig = i < Math.round(tiers.length * figShare) ? true : false;
+    const unseen = written(d, needFig).filter(q => !S.q[q.id]);
+    const gen = () => genOne(tr, d, { tp, used, fig: needFig });
+    let q = null;
+    if (unseen.length && Math.random() > preferGen) q = unseen[0];
+    q = q || gen() || unseen[0] || written(d, false).filter(x => !S.q[x.id])[0] || written(d, false).filter(x => !answeredRecently(x))[0] || genOne(tr, d, { tp, used }) || written(d, false)[0];
+    if (!q) { const any = shuffle(QUESTIONS.filter(x => x.tr === tr && x.o && !ids.has(x.id) && (!tp || x.tp === tp))).sort((a, b) => Math.abs(a.d - d) - Math.abs(b.d - d)); q = any.find(x => !answeredRecently(x)) || any[0]; }
+    if (q) take(q);
+  });
+  return out;
+}
+const hasGen = tr => GEN.some(t => t.tr === tr);
+function pickLevel(tr, tp = null) { // six questions around your working level: four at it, one either side
+  const c = workTier(tr), ts = tiersOf(tr), lo = Math.max(ts[0], c - 1), hi = Math.min(ts[ts.length - 1], c + 1);
+  return freshSet(tr, [lo, c, c, c, c, hi], { tp, figShare: tr === 'imc' ? 0.34 : 0 }).sort((a, b) => a.d - b.d);
 }
 function levelAfter(tr, right, total) { // promote on 5 of 6, drop back on 2 or fewer
   const ts = tiersOf(tr), cur = workTier(tr), top = ts[ts.length - 1];
@@ -1871,7 +2431,8 @@ function scoreMock(tr, marks, last) { // marks: array of 'c' | 'w' | 'b'; last =
   return { score, max, c, w, b, lost };
 }
 const BANDS = {
-  imc: { full: 135, cuts: [[115, 'Olympiad invite range'], [96, 'Kangaroo invite range'], [86, 'Gold'], [70, 'Silver'], [55, 'Bronze']] },
+  // Averages of the paper-based years 2017, 2018, 2019 and 2023 (published boundaries).
+  imc: { full: 135, cuts: [[100, 'Olympiad range'], [74, 'Gold'], [57, 'Silver'], [45, 'Bronze']] },
   smc: { full: 125, cuts: [[105, 'BMO1 invite range'], [92, 'Senior Kangaroo invite range'], [88, 'Gold'], [70, 'Silver'], [55, 'Bronze']] },
 };
 function band(tr, score, max) { const B = BANDS[tr]; const scaled = score * B.full / max; const hit = B.cuts.find(c => scaled >= c[0]); return hit ? hit[1] : 'Working towards Bronze'; }
@@ -1924,7 +2485,13 @@ const bar = (p, cls = '') => `<span class="bar ${cls}"><i style="width:${Math.ma
 const dots = d => `<span class="dots" aria-label="Difficulty ${d} of 4">${[1, 2, 3, 4].map(i => `<i class="${i <= d ? 'on' : ''}"></i>`).join('')}</span>`;
 
 /* ───────── Home ───────── */
-function dailyQ() { let pool = QUESTIONS.filter(q => q.tr === S.track && q.o && q.d >= 3); if (pool.length < 5) pool = QUESTIONS.filter(q => q.tr === S.track && q.o); return pool[Math.floor(seeded(dayKey() + S.track)() * pool.length)]; }
+function dailyQ() {
+  const t = dayKey(); if (S.dq && S.dq.day === t && S.dq.tr === S.track && BYID[S.dq.id]) return BYID[S.dq.id];
+  let q = null; const ts = tiersOf(S.track), top = ts[ts.length - 1];
+  if (hasGen(S.track)) q = genOne(S.track, top, {});
+  if (!q) { const pool = QUESTIONS.filter(x => x.tr === S.track && x.o && x.d >= Math.max(1, top - 1) && !S.q[x.id]); q = pool.length ? pool[Math.floor(seeded(t + S.track)() * pool.length)] : freshSet(S.track, [top])[0]; }
+  S.dq = { day: t, tr: S.track, id: q.id }; return q;
+}
 function weakest(tr) {
   const st = topicStats(tr); const tried = st.filter(s => s.n >= 2).sort((a, b) => a.c / a.n - b.c / b.n)[0];
   if (tried && tried.c / tried.n < 0.8) return { ...tried, why: `${Math.round(100 * tried.c / tried.n)}% correct so far` };
@@ -1971,9 +2538,9 @@ function vHome() {
   ${medalCard()}
   <div class="shortcuts">
     <button class="shortcut" data-act="golearn"><span class="sc-ic">${I.remember}</span><b>Lessons</b><small>${lsDone} of ${ls.length} done</small></button>
-    <button class="shortcut" data-act="nav" data-to="practice"><span class="sc-ic">${I.practice}</span><b>Practice</b><small>${done} of ${all} mastered</small></button>
-    ${BANDS[S.track] ? `<button class="shortcut" data-act="nav" data-to="mocks"><span class="sc-ic">${I.mocks}</span><b>Mock paper</b><small>Timed, real marking</small></button>` : ''}
-    <button class="shortcut" data-act="gofacts"><span class="sc-ic">${I.check}</span><b>Remember</b><small>Key facts, searchable</small></button>
+    <button class="shortcut" data-act="nav" data-to="practice"><span class="sc-ic green">${I.practice}</span><b>Practice</b><small>${hasGen(S.track) ? 'Always new questions' : `${done} of ${all} mastered`}</small></button>
+    ${BANDS[S.track] ? `<button class="shortcut" data-act="nav" data-to="mocks"><span class="sc-ic orange">${I.mocks}</span><b>Mock paper</b><small>Timed, real marking</small></button>` : ''}
+    <button class="shortcut" data-act="gofacts"><span class="sc-ic gold">${I.check}</span><b>Remember</b><small>Key facts, searchable</small></button>
   </div>
   <p class="course">Course: <b>${tr.name}</b> · <button class="link" data-act="homech">Change</button></p>`;
 }
@@ -1985,40 +2552,24 @@ function pick(tr, tp, n, minD = 1) {
   return shuffle(pool).sort((a, b) => cls(a) - cls(b) || (S.q[a.id] ? S.q[a.id].t : 0) - (S.q[b.id] ? S.q[b.id].t : 0)).slice(0, n).sort((a, b) => a.d - b.d);
 }
 function vPractice() {
-  const tr = TR[S.track], st = topicStats(S.track);
-  const all = st.reduce((a, s) => a + s.total, 0), done = st.reduce((a, s) => a + s.done, 0);
+  const tr = TR[S.track], st = topicStats(S.track), due = bankDue().length, inBank = bankList().length, gen = hasGen(S.track);
   return `
-  <header class="page-head"><h1>Practice</h1><p class="muted">Instant feedback and a worked solution after every question.</p></header>
-  ${trackChips()}
-  <section class="card">
-    <div class="row between"><div><h2>${tr.name}</h2><p class="muted">${tr.blurb}</p></div><span class="pill">${done} / ${all} mastered</span></div>
-    ${bar(100 * done / all, 'big')}
-    <div class="row gap wrap">
-      <button class="btn primary" data-act="quick">Mixed practice</button>
-      <button class="btn" data-act="hard">Hard questions only</button>
-
-    </div>
-  </section>
-  <section class="card">
-    <div class="row between"><h2>Mistake Bank</h2><span class="pill ${bankList().length ? '' : 'good'}">${bankList().length} inside</span></div>
-    <p class="muted">Every question you get wrong goes in here. It comes back the next day, then three days later. Two right answers in a row clears it.</p>
-    ${bankDue().length ? `<button class="btn primary" data-act="bank">Review ${bankDue().length} due today</button>` : bankList().length ? `<button class="btn" data-act="bankall">Nothing due today. Review early</button>` : ''}
-  </section>
-  <section class="card">
-    <h2>Duel a friend</h2>
-    <p class="muted">Five questions, marked like the paper: 5 for right, minus 2 for wrong, 0 for blank. Play, then send your code. Your friend plays the same five and sees who won.</p>
-    <button class="btn primary" data-act="duel">Start a duel</button>
-    <label class="field" for="duel-in">Got a code from a friend?<input id="duel-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste the duel code"></label>
-    <button class="btn" data-act="duelcode">Play their five</button>
-  </section>
+  <header class="page-head"><h1>Practice</h1><p class="muted">${tr.name}${gen ? ' · new questions every time' : ''}</p></header>
+  <div class="tiles">
+    <button class="tile-btn t-blue" data-act="quick"><span class="sc-ic">${I.mix}</span><b>Mixed</b><small>${tierLabel(S.track, workTier(S.track))}</small></button>
+    <button class="tile-btn t-red" data-act="hard"><span class="sc-ic">${I.peak}</span><b>Hard only</b><small>The end of the paper</small></button>
+    <button class="tile-btn t-orange" data-act="${due ? 'bank' : 'bankall'}" ${inBank ? '' : 'disabled'}><span class="sc-ic">${I.bank}</span><b>Mistake Bank</b><small>${due ? `${due} due today` : inBank ? `${inBank} waiting` : 'Empty, nice'}</small>${due ? `<span class="badge-n">${due}</span>` : ''}</button>
+    <button class="tile-btn t-green" data-act="duelmenu"><span class="sc-ic">${I.duel}</span><b>Duel</b><small>Same five as a friend</small></button>
+  </div>
   <h3 class="section">Topics</h3>
   <div class="list">${st.map(s => `
     <button class="rowbtn" data-act="topic" data-tp="${s.tp}">
-      <span class="rowbtn-main"><b>${s.tp}</b><small>${s.done} of ${s.total} mastered${s.n ? ` · ${Math.round(100 * s.c / s.n)}% accuracy` : ''}</small>${bar(100 * s.done / s.total)}</span>
-      <span class="rowbtn-go">${s.done === s.total ? I.check : I.arrow}</span>
+      <span class="rowbtn-main"><b>${s.tp}</b><small>${s.n ? `${Math.round(100 * s.c / s.n)}% accuracy` : 'Not started'}</small>${bar(s.n ? 100 * s.c / s.n : 0)}</span>
+      <span class="rowbtn-go">${I.arrow}</span>
     </button>`).join('')}</div>
   <h3 class="section">Warm-up</h3>
-  <button class="rowbtn" data-act="sprint"><span class="rowbtn-main"><b>60-second number sprint</b><small>Squares, primes and fractions against the clock · best ${S.sprint}</small></span><span class="rowbtn-go">${I.arrow}</span></button>`;
+  <button class="rowbtn" data-act="sprint"><span class="sc-ic gold">${I.bolt}</span><span class="rowbtn-main"><b>60-second sprint</b><small>Squares, primes, fractions · best ${S.sprint}</small></span><span class="rowbtn-go">${I.arrow}</span></button>
+  ${trackChips()}`;
 }
 
 const baseXP = q => [0, 10, 12, 15, 20][q.d];
@@ -2110,38 +2661,30 @@ function schemeText(m) {
   const a = Math.round(m.n * 0.6), b = Math.round(m.n * 0.8);
   return `Q1–${a}: 5 marks. Q${a + 1}–${b}: 6 marks, minus 1 if wrong. Q${b + 1}–${m.n}: 6 marks, minus 2 if wrong.`;
 }
-function buildMock(def) { // about 40% of each tier comes with a diagram, like the real paper
-  const has = q => typeof FIGS !== 'undefined' && !!FIGS[q.id]; let qs = [];
-  [1, 2, 3, 4].forEach((d, i) => {
-    const n = def.d[i]; if (!n) return;
-    const pool = shuffle(QUESTIONS.filter(q => q.tr === def.tr && q.o && q.d === d)), want = Math.round(n * 0.4);
-    const withFig = pool.filter(has).slice(0, want), rest = pool.filter(q => !withFig.includes(q));
-    qs = qs.concat(shuffle(withFig.concat(rest.slice(0, n - withFig.length))));
-  });
+function buildMock(def) { // fresh questions only, about 40% with a diagram, like the real paper
+  const used = new Set(), ids = new Set(), qs = [];
+  [1, 2, 3, 4].forEach((d, i) => { const n = def.d[i]; if (!n) return; qs.push(...shuffle(freshSet(def.tr, Array(n).fill(d), { figShare: def.tr === 'imc' ? 0.4 : 0, preferGen: 0.5, used, ids }))); });
   return qs;
 }
 function vMocks() {
   const hist = S.mocks.slice().reverse();
   return `
-  <header class="page-head"><h1>Timed mocks</h1><p class="muted">Sit a paper against the clock with the real marking rules. Every paper is built into the app, so mocks work with no connection, and a paper you leave is kept until its time runs out.</p></header>
+  <header class="page-head"><h1>Mock papers</h1><p class="muted">Real timing and marking. Works offline.</p></header>
   ${mockResumeCard()}
-  <div class="cards2">${MOCKS.map(m => `
-    <article class="card">
-      <span class="eyebrow">${m.n} questions · ${m.mins} minutes</span>
-      <h2>${m.name}</h2>
-      <p class="muted">${schemeText(m)}</p>
-      <button class="btn ${m.n === 25 ? 'primary' : ''}" data-act="mock" data-id="${m.id}">Start paper</button>
-    </article>`).join('')}</div>
+  <div class="list">${MOCKS.map(m => `
+    <button class="paper-row" data-act="mock" data-id="${m.id}">
+      <span class="sc-ic ${m.tr === 'smc' ? 'violet' : m.last ? 'red' : ''}">${I.paper}</span>
+      <span class="rowbtn-main"><b>${m.name}</b><small>${m.n} questions · ${m.mins} min${m.last ? ' · the hard end only' : ''}</small></span>
+      <span class="rowbtn-go">${I.arrow}</span>
+    </button>`).join('')}</div>
   <section class="card">
-    <span class="eyebrow">Real past papers</span>
-    <h2>Sit an official paper, mark it here</h2>
-    <p class="muted">UKMT publishes its past papers and solutions free. Sit one on paper, mark it with the official solutions, then enter right, wrong or blank for each question. Your score is worked out with the real marking and saved to your results.</p>
+    <h2>Sat a real paper?</h2>
+    <p class="muted">Mark it with UKMT’s free solutions, then tap right, wrong or blank for each question. We score it with the real marking.</p>
     <div class="row gap wrap"><button class="btn primary" data-act="sheet">Mark a past paper</button>
-    <a class="btn" href="https://ukmt.org.uk/intermediate-challenges/intermediate-mathematical-challenge" target="_blank" rel="noopener">Intermediate papers</a>
-    <a class="btn" href="https://ukmt.org.uk/senior-challenges/senior-mathematical-challenge" target="_blank" rel="noopener">Senior papers</a></div>
+    <a class="btn" href="https://ukmt.org.uk/intermediate-challenges/intermediate-mathematical-challenge" target="_blank" rel="noopener">Get the papers</a></div>
   </section>
   <h3 class="section">Your results</h3>
-  ${hist.length ? `<div class="list">${hist.map(m => `<div class="rowstat"><span class="rowbtn-main"><b>${m.name}</b><small>${m.date} · ${m.c} right, ${m.w} wrong, ${m.b} blank · ${m.band}</small>${bar(100 * m.score / m.max)}</span><span class="score">${m.score}<small>/${m.max}</small></span></div>`).join('')}</div>` : `<p class="empty">No papers yet. Your scores will build up here so you can see the trend.</p>`}`;
+  ${hist.length ? `<div class="list">${hist.map(m => `<div class="rowstat"><span class="rowbtn-main"><b>${m.name}</b><small>${m.date} · ${m.c} right, ${m.w} wrong, ${m.b} blank · ${m.band}</small>${bar(100 * m.score / m.max)}</span><span class="score">${m.score}<small>/${m.max}</small></span></div>`).join('')}</div>` : `<p class="empty">No papers yet. Your scores build up here.</p>`}`;
 }
 const MKEY = 'podium.mock';
 function saveMock() {
@@ -2213,6 +2756,7 @@ function vMockResult() {
   </div>`;
 }
 
+
 /* ───────── Remember ───────── */
 function factsHtml() {
   const q = FACTQ.trim().toLowerCase(), plain = t => t.replace(/<[^>]+>/g, '').toLowerCase();
@@ -2245,7 +2789,7 @@ function vLearn() {
     <button class="rowbtn" data-act="deck" data-id="${d.id}"><span class="rowbtn-main"><b>${d.name}</b><small>${TR[d.tr].short} · ${d.note}</small>${bar(100 * l / n)}</span><span class="pill">${l}/${n}</span></button>`; }).join('')}</div>`;
   }
   return `
-  <header class="page-head"><h1>Learn</h1><p class="muted">Short lessons, everything to remember in one place, and flashcards to make it stick.</p></header>
+  <header class="page-head"><h1>Learn</h1><p class="muted">Lessons, key facts and flashcards</p></header>
   <div class="seg" role="tablist" aria-label="Learn sections">${tabs.map(([k, n]) => `<button role="tab" aria-selected="${LTAB === k}" data-act="ltab" data-id="${k}">${n}</button>`).join('')}</div>
   ${trackChips()}
   ${body}`;
@@ -2383,7 +2927,11 @@ function vSheet() {
 /* ───────── Duels by code (no server needed) ───────── */
 const enc = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/=+$/, '');
 const dec = t => { try { return JSON.parse(decodeURIComponent(escape(atob(t.trim())))); } catch (e) { return null; } };
-function duelQs(tr, seed) { const pool = QUESTIONS.filter(q => q.tr === tr && q.o && q.d >= 2 && q.d <= 3).sort((a, b) => (a.id < b.id ? -1 : 1)); return shuffle(pool, seeded('duel' + seed)).slice(0, 5).sort((a, b) => a.d - b.d); }
+function duelQs(tr, seed) { // both players rebuild the same five from the seed
+  const used = new Set(), out = []; [2, 2, 3, 3, 3].forEach((d, i) => { const q = genOne(tr, d, { used, salt: `duel${seed}${i}` }); if (q) { out.push(q); used.add(q.tpl); } });
+  if (out.length === 5) return out;
+  const pool = QUESTIONS.filter(q => q.tr === tr && q.o && q.d >= 2 && q.d <= 3).sort((a, b) => (a.id < b.id ? -1 : 1)); return shuffle(pool, seeded('duel' + seed)).slice(0, 5).sort((a, b) => a.d - b.d);
+}
 function startDuel(tr, seed, rival) { const qs = duelQs(tr, seed); if (qs.length < 5) { toast('Duels need the Intermediate or Senior course'); return; } DUEL = { tr, seed, qs, i: 0, ans: [], rival: rival || null, done: false }; go('duel'); }
 const duelScore = D => D.qs.reduce((a, q, i) => a + (D.ans[i] === null ? 0 : D.ans[i] === q.a ? 5 : -2), 0);
 function vDuel() {
@@ -2458,11 +3006,15 @@ const ACT = {
   nav: d => setRoute(d.to),
   track: d => { S.track = d.id; HOMECH = false; save(); render(); },
   quick: () => startRun(pickLevel(S.track), { title: TR[S.track].short, level: true, again: () => ACT.quick() }),
-  topic: d => startRun(pick(S.track, d.tp, 6), { title: TR[S.track].short, again: () => ACT.topic(d) }),
+  topic: d => startRun(pickLevel(S.track, d.tp), { title: `${TR[S.track].short} · ${d.tp}`, again: () => ACT.topic(d) }),
   bank: () => startRun(shuffle(bankDue()).slice(0, 8), { title: 'Mistake Bank', bank: true }),
   bankall: () => startRun(shuffle(bankList()).slice(0, 8), { title: 'Mistake Bank', bank: true }),
+  duelmenu: () => sheet(`<h2>Duel a friend</h2><p class="muted">Five questions marked like the paper: +5 right, −2 wrong, 0 blank. Play, send your code, and your friend plays the same five.</p>
+    <button class="btn primary wide" data-act="duel">Start a new duel</button>
+    <label class="field" for="duel-in">Got a code from a friend?<input id="duel-in" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste the duel code"></label>
+    <button class="btn wide" data-act="duelcode">Play their five</button>`),
   duel: () => startDuel(BANDS[S.track] ? S.track : 'imc', Math.random().toString(36).slice(2, 8)),
-  duelcode: () => { const r = dec(document.getElementById('duel-in').value || ''); if (!r || !r.s || !BANDS[r.t] || typeof r.p !== 'number') { toast('That code is not valid. Copy the whole code and try again.'); return; } startDuel(r.t, String(r.s), { p: r.p, n: String(r.n || '').slice(0, 24) }); },
+  duelcode: () => { const r = dec(document.getElementById('duel-in').value || ''); if (r && r.s) closeSheet(true); if (!r || !r.s || !BANDS[r.t] || typeof r.p !== 'number') { toast('That code is not valid. Copy the whole code and try again.'); return; } startDuel(r.t, String(r.s), { p: r.p, n: String(r.n || '').slice(0, 24) }); },
   duelans: d => {
     const D = DUEL, i = +d.i; D.ans[D.i] = i < 0 ? null : i; const q = D.qs[D.i]; if (i >= 0) record(q, i === q.a);
     if (++D.i >= 5) { D.done = true; S.duels++; const mine = duelScore(D); addXP(10 + 3 * D.qs.filter((x, k) => D.ans[k] === x.a).length + (D.rival && mine > D.rival.p ? 10 : 0)); if (D.rival && mine > D.rival.p) confetti(); checkBadges(); }
@@ -2489,13 +3041,13 @@ const ACT = {
   sheetclose: () => closeSheet(),
   ovclose: () => closeOverlay(),
   mute: () => { S.mute = !S.mute; save(); render(); if (!S.mute) { sfx('right'); buzz(15); } },
-  hard: () => startRun(pick(S.track, null, 6, Math.min(3, Math.max(...QUESTIONS.filter(q => q.tr === S.track).map(q => q.d)))), { title: TR[S.track].short + ' · hard', again: () => ACT.hard() }),
+  hard: () => { const ts = tiersOf(S.track), top = ts[ts.length - 1], nx = Math.max(ts[0], top - 1); startRun(freshSet(S.track, [nx, nx, nx, top, top, top], { figShare: 0.34 }), { title: TR[S.track].short + ' · hard', again: () => ACT.hard() }); },
   lstep: () => { LES.step++; render(); },
   lfinish: () => { lessonDone(LES.l); leave(); },
   lpractise: () => { const l = LES.l; lessonDone(l); S.track = l.tr; startRun(pick(l.tr, l.tp, 6), { title: TR[l.tr].short, again: () => ACT.topic({ tp: l.tp }) }); },
   goal: d => { S.goal = +d.v; save(); render(); },
   target: d => { S.target = d.v; save(); render(); },
-  tier: d => { const dd = +d.d; startRun(shuffle(QUESTIONS.filter(q => q.tr === S.track && q.d === dd)).sort((a, b) => (S.q[a.id] ? S.q[a.id].last + 1 : 0) - (S.q[b.id] ? S.q[b.id].last + 1 : 0)).slice(0, 6), { title: `${TR[S.track].short} · ${TIER_NAME[S.track][dd]} level`, again: () => ACT.tier(d) }); },
+  tier: d => { const dd = +d.d; startRun(freshSet(S.track, [dd, dd, dd, dd, dd, dd], { figShare: 0.34 }), { title: `${TR[S.track].short} · ${TIER_NAME[S.track][dd]} level`, again: () => ACT.tier(d) }); },
   begin: () => { S.onboarded = true; save(); render(); window.scrollTo(0, 0); },
   self: d => { const q = RUN.qs[RUN.i], v = +d.v; RUN.sel = v; finishAnswer(q, v === 2, [2, 8, 15][v]); },
   next: () => {
@@ -2568,7 +3120,7 @@ document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
   if (b.dataset.act !== 'reset') CONFIRM = false;
   if (!['backup', 'restore'].includes(b.dataset.act)) BACKUP = false;
-  if (b.closest('.sheet') && b.dataset.act !== 'sheetclose') closeSheet();
+  if (b.closest('.sheet') && b.dataset.act !== 'sheetclose' && b.dataset.act !== 'duelcode') closeSheet();
   const f = ACT[b.dataset.act]; if (!f) return;
   try { f(b.dataset, b); } catch (err) { toast('Something went wrong. Try that again.'); try { console.error(err); } catch (e2) { /* ignore */ } }
 });

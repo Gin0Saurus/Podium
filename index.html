@@ -584,6 +584,52 @@ h1{font-weight:800;letter-spacing:-.02em}
 
 .fig .accent-stroke{stroke:var(--accent);stroke-width:2}
 
+/* ───────── v8: calmer motion, one action bar ───────── */
+#app.in-right{animation:inRight .26s var(--out)}
+#app.in-left{animation:inLeft .26s var(--out)}
+#app.in-up{animation:inUp .3s var(--out)}
+#app.in-fade{animation:inFade .16s ease-out}
+@keyframes inRight{from{opacity:0;transform:translateX(18px)}}
+@keyframes inLeft{from{opacity:0;transform:translateX(-18px)}}
+@keyframes inUp{from{opacity:0;transform:translateY(20px)}}
+.just .fb{animation:inFade .25s ease-out}
+
+/* options press down without moving anything around them */
+.opt{border-bottom-width:2px;box-shadow:0 3px 0 var(--line)}
+.opt:active:not(:disabled){border-bottom-width:2px;margin-top:0;transform:translateY(3px);box-shadow:0 0 0 var(--line)}
+.opt.picked{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 3px 0 color-mix(in srgb,var(--accent) 55%,transparent)}
+.opt.picked .loz{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt.right{box-shadow:0 3px 0 color-mix(in srgb,var(--good) 55%,transparent)}
+.opt.wrong{box-shadow:0 3px 0 color-mix(in srgb,var(--bad) 55%,transparent)}
+.opt.dim{box-shadow:none}
+
+/* the action bar */
+.abar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-left,0px)) calc(12px + var(--safe-b)) max(16px,env(safe-area-inset-right,0px));transition:background .2s}
+.abar.enter{animation:barUp .28s var(--out)}
+@keyframes barUp{from{transform:translateY(100%)}}
+.abar-in{max-width:680px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.abar-txt{flex:1 1 150px;display:flex;flex-direction:column;min-width:0}
+.abar-txt b{font:800 1.15rem var(--display)}
+.abar-txt small{color:var(--muted);font-size:.9rem;font-weight:600}
+.abar-btns{flex:1 1 220px;display:flex;gap:10px;justify-content:flex-end}
+.abar-btns .btn{flex:1;max-width:340px;padding:14px 18px;font-size:1.02rem}
+.abar-btns .btn:only-child{max-width:none}
+.abar-txt:empty{display:none}
+.abar.good{background:var(--good-soft);border-top-color:transparent}.abar.good b{color:var(--good)}
+.abar.bad{background:var(--bad-soft);border-top-color:transparent}.abar.bad b{color:var(--bad)}
+.abar.good .btn.primary{background:var(--good);box-shadow:0 4px 0 color-mix(in srgb,var(--good) 60%,#000)}
+.abar.bad .btn.primary{background:var(--bad);box-shadow:0 4px 0 color-mix(in srgb,var(--bad) 60%,#000)}
+.abar .btn:disabled{opacity:.4;box-shadow:none}
+body.has-bar main{padding-bottom:150px}
+body.has-bar #toasts{bottom:calc(110px + var(--safe-b))}
+
+/* first-time guidance */
+.cta-pulse{animation:ctaPulse 2.2s ease-in-out infinite}
+@keyframes ctaPulse{0%,100%{box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,#000),0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent)}50%{box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,#000),0 0 0 10px transparent}}
+.start-tip{align-self:center;font:800 .78rem var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@media (prefers-reduced-motion:reduce){.cta-pulse,.start-tip{animation:none}}
+
 </style>
 </head>
 <body>
@@ -604,6 +650,7 @@ h1{font-weight:800;letter-spacing:-.02em}
 </div></header>
 <div id="toasts" aria-live="polite"></div>
 <main id="app"></main>
+<div id="bar"></div>
 <script>
 // Original practice questions written in the style of each paper. Not past-paper questions.
 // Q(id, track, topic, difficulty 1-3, stem, options|null, answer index | integer | null, solution)
@@ -2085,7 +2132,7 @@ function transition(setup) {
   if (!prev || prev === next) return '';
   const pm = prev.split(':')[0], nm = next.split(':')[0];
   if (/d$/.test(next) || nm === 'mockres') return 'in-pop';
-  if (pm === 'tab' && nm === 'tab') return ROUTES.indexOf(next.slice(4)) >= ROUTES.indexOf(prev.slice(4)) ? 'in-right' : 'in-left';
+  if (pm === 'tab' && nm === 'tab') return 'in-fade';
   if (pm === 'tab' || pm === 'setup') return 'in-up';
   if (nm === 'tab') return 'in-fade';
   if (pm === nm) return MOTION_DIR < 0 ? 'in-left' : 'in-right';
@@ -2096,7 +2143,7 @@ function afterRender(anim) {
   app.classList.remove('in-right', 'in-left', 'in-up', 'in-fade', 'in-pop', 'stagger');
   if (anim && !calmMotion()) {
     void app.offsetWidth;
-    app.classList.add(anim); if (anim !== 'in-fade') app.classList.add('stagger');
+    app.classList.add(anim);
     clearTimeout(afterRender.t); afterRender.t = setTimeout(() => app.classList.remove(anim, 'stagger'), 900);
     app.querySelectorAll('[data-count]').forEach(el => countUp(el, +el.dataset.from || 0, +el.dataset.count, 900));
   }
@@ -2111,12 +2158,12 @@ function afterRender(anim) {
   // The level ring fills from its last value, or from empty when you arrive on Home.
   const ring = app.querySelector('.hero .ring-fg');
   if (ring && !calmMotion()) {
-    const target = ring.getAttribute('stroke-dashoffset'), from = anim ? ring.getAttribute('stroke-dasharray') : RINGSEEN;
+    const target = ring.getAttribute('stroke-dashoffset'), from = RINGSEEN === null ? ring.getAttribute('stroke-dasharray') : RINGSEEN;
     if (from !== null && from !== target) { ring.style.transition = 'none'; ring.style.strokeDashoffset = from; void ring.getBoundingClientRect(); ring.style.transition = ''; requestAnimationFrame(() => { ring.style.strokeDashoffset = target; }); }
     RINGSEEN = target;
   }
   navPill();
-  flushCeleb();
+  if (anim === 'in-pop' && !calmMotion()) setTimeout(flushCeleb, 650); else flushCeleb();
   pumpToasts();
 }
 
@@ -2360,7 +2407,7 @@ function planCard() {
   return `<section class="card next">
     <div class="row between"><h2>Today’s plan</h2><span class="pill ${next ? '' : 'good'}">${n}/${steps.length} done</span></div>
     <ol class="plan">${steps.map(x => `<li class="${p[x.k] ? 'done' : x === next ? 'cur' : ''} ${p[x.k] && !PLANSEEN[x.k + p.day] ? 'pop' : ''}"><span class="qtick">${p[x.k] ? I.check : ''}</span><span class="rowbtn-main"><b>${x.t}</b><small>${x.sub}</small></span></li>`).join('')}</ol>
-    ${next ? `<button class="btn primary wide" data-act="${next.act}" data-id="${next.id}">${n ? 'Continue' : 'Start'} ${I.arrow}</button>` : `<p class="muted">All done for today. Come back tomorrow to keep your streak, or carry on with anything below.</p>`}
+    ${next ? `${totals().n === 0 && !n ? '<span class="start-tip">Start here</span>' : ''}<button class="btn primary wide ${totals().n === 0 && !n ? 'cta-pulse' : ''}" data-act="${next.act}" data-id="${next.id}">${n ? 'Continue' : 'Start'} ${I.arrow}</button>` : `<p class="muted">All done for today. Come back tomorrow to keep your streak, or carry on with anything below.</p>`}
   </section>`;
 }
 const tiersOf = tr => [1, 2, 3, 4].filter(d => QUESTIONS.some(q => q.tr === tr && q.d === d));
@@ -2438,8 +2485,17 @@ const BANDS = {
 function band(tr, score, max) { const B = BANDS[tr]; const scaled = score * B.full / max; const hit = B.cuts.find(c => scaled >= c[0]); return hit ? hit[1] : 'Working towards Bronze'; }
 
 /* ───────── UI plumbing ───────── */
+/* One action bar at the bottom of every full-screen task, so the next step is always in the same place.
+   b = [action, label, extra attributes, disabled] */
+function setBar({ key, tone = '', title = '', hint = '', primary = null, secondary = null }) {
+  const btn = (b, cls) => b ? `<button class="btn ${cls}" data-act="${b[0]}" ${b[2] || ''} ${b[3] ? 'disabled' : ''}>${b[1]}</button>` : '';
+  BARKEY = key;
+  BAR = `<div class="abar ${tone}" role="region" aria-label="Next step"><div class="abar-in">
+    ${title || hint ? `<div class="abar-txt" aria-live="polite">${title ? `<b>${title}</b>` : ''}${hint ? `<small>${hint}</small>` : ''}</div>` : ''}
+    <div class="abar-btns">${btn(secondary, '')}${btn(primary, 'primary')}</div></div></div>`;
+}
 const app = document.getElementById('app');
-let DUEL = null, HOMECH = false, CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
+let BAR = '', BARKEY = '', DUEL = null, HOMECH = false, CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
 const ROUTES = ['home', 'learn', 'practice', 'mocks', 'progress', 'account'];
 const readHash = () => { try { let h = String(location.hash || '').slice(1); if (h === 'remember') h = 'learn'; return ROUTES.includes(h) ? h : ''; } catch (e) { return ''; } };
 let ROUTE = readHash() || 'home';
@@ -2469,10 +2525,12 @@ function render() {
   const sk = document.getElementById('chip-streak'); setChip(sk, streakNow());
   sk.parentElement.classList.toggle('lit', S.lastDay === dayKey());
   if (!XPHOLD) setChip(document.getElementById('chip-xp'), S.xp);
-  const anim = transition(setup);
+  const anim = transition(setup); BAR = ''; const lastKey = BARKEY; BARKEY = '';
   app.innerHTML = setup ? vSetup() : MODE === 'lesson' ? vLesson() : MODE === 'run' ? vRun() : MODE === 'mock' ? vMock() : MODE === 'mockres' ? vMockResult() : MODE === 'cards' ? vCards() : MODE === 'sprint' ? vSprint() : MODE === 'sheet' ? vSheet() : MODE === 'duel' ? vDuel()
     : ({ home: vHome, practice: vPractice, mocks: vMocks, learn: vLearn, progress: vProgress, account: vAccount })[r]();
   const me = document.getElementById('me-btn'); if (me) me.textContent = (S.name || cloudName || '?').trim().charAt(0).toUpperCase() || '?';
+  const host = document.getElementById('bar'); host.innerHTML = BAR; document.body.classList.toggle('has-bar', !!BAR);
+  if (BAR && BARKEY !== lastKey && !calmMotion()) { const el = host.firstElementChild; el.classList.add('enter'); }
   afterRender(anim);
 }
 function go(mode) { MODE = mode; render(); window.scrollTo(0, 0); }
@@ -2505,8 +2563,7 @@ function vSetup() {
     <div class="field"><span>What are you preparing for?</span><div class="pickgrid">${TRACKS.map(t => `<button class="pick ${t.id === S.track ? 'on' : ''}" data-act="track" data-id="${t.id}" aria-pressed="${t.id === S.track}"><b>${t.name}</b><small>${t.blurb}</small></button>`).join('')}</div></div>
     ${BANDS[S.track] ? `<div class="field"><span>What are you aiming for?</span><div class="chips">${['Bronze', 'Silver', 'Gold'].map(m => `<button class="chip" aria-selected="${m === S.target}" data-act="target" data-v="${m}">${m}</button>`).join('')}</div></div>` : ''}
     <div class="field"><span>How much each day?</span><div class="chips">${[[20, 'Light'], [30, 'Regular'], [50, 'Keen'], [80, 'Serious']].map(([g, n]) => `<button class="chip" aria-selected="${g === S.goal}" data-act="goal" data-v="${g}">${n} · ${g} XP</button>`).join('')}</div></div>
-    <button class="btn primary wide" data-act="begin">Start training ${I.arrow}</button>
-    <p class="hint">You can change all of this later in Account.</p>
+    ${(setBar({ key: 'setup', hint: 'You can change all of this later', primary: ['begin', `Start training ${I.arrow}`] }), '')}
   </article></div>`;
 }
 const nextLesson = tr => LESSONS.find(l => l.tr === tr && !S.lessons[l.id]) || null;
@@ -2576,7 +2633,7 @@ const baseXP = q => [0, 10, 12, 15, 20][q.d];
 function startRun(qs, o = {}) {
   if (!qs.length) { toast('Nothing to practise here yet'); return; }
   const P0 = predict(S.track);
-  RUN = Object.assign({ xp0: S.xp, times: [], t0: Date.now(), pred0: P0 && P0.n >= 10 ? P0.score : null, qs, i: 0, sel: null, ok: null, step: 1, hint: false, gain: 0, correct: 0, xp: 0, combo: 0, done: false, mult: 1, title: 'Practice', reveal: false }, o);
+  RUN = Object.assign({ pick: null, xp0: S.xp, times: [], t0: Date.now(), pred0: P0 && P0.n >= 10 ? P0.score : null, qs, i: 0, sel: null, ok: null, step: 1, hint: false, gain: 0, correct: 0, xp: 0, combo: 0, done: false, mult: 1, title: 'Practice', reveal: false }, o);
   go('run');
 }
 function finishAnswer(q, ok, gain) {
@@ -2590,31 +2647,35 @@ function finishAnswer(q, ok, gain) {
   if (gain > 0 && !calmMotion()) XPHOLD = true;
   render();
   flyXP(app.querySelector('.opt.right') || app.querySelector('#fb .xp'), gain, xpBefore);
-  const fb = document.getElementById('fb'); if (fb) fb.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  setTimeout(() => { const fb = document.getElementById('fb'); if (fb) fb.scrollIntoView({ block: 'nearest', behavior: calmMotion() ? 'auto' : 'smooth' }); }, 120);
 }
 function vRun() {
   if (RUN.done) return vRunDone();
   const q = RUN.qs[RUN.i], k = kind(q), ans = RUN.ok !== null, just = RUN.just; RUN.just = false;
   let body = '';
   if (k === 'mcq') body = `<div class="opts">${q.o.map((o, i) => {
-    const st = !ans ? '' : i === q.a ? 'right' : i === RUN.sel ? 'wrong' : 'dim';
-    return `<button class="opt ${st}" data-act="ans" data-i="${i}" ${ans ? 'disabled' : ''}><span class="loz">${st === 'right' ? I.check : st === 'wrong' ? I.cross : LETTERS[i]}</span><span>${o}</span></button>`;
+    const st = !ans ? (i === RUN.pick ? 'picked' : '') : i === q.a ? 'right' : i === RUN.sel ? 'wrong' : 'dim';
+    return `<button class="opt ${st}" data-act="ans" data-i="${i}" aria-pressed="${i === RUN.pick}" ${ans ? 'disabled' : ''}><span class="loz">${st === 'right' ? I.check : st === 'wrong' ? I.cross : LETTERS[i]}</span><span>${o}</span></button>`;
   }).join('')}</div>`;
   if (k === 'numeric') body = `<form class="numform" data-form="num"><label for="numin">Your answer (a whole number from 1 to 999)</label>
-    <div class="row gap"><input id="numin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" ${ans ? `disabled value="${RUN.sel}"` : ''}><button class="btn primary" ${ans ? 'disabled' : ''}>Check</button></div></form>`;
+    <div class="row gap"><input id="numin" inputmode="numeric" pattern="[0-9]*" autocomplete="off" enterkeyhint="done" ${ans ? `disabled value="${RUN.sel}"` : ''}></div></form>`;
   const st = steps(q);
   if (!ans && k !== 'written' && st.length >= 2) body += RUN.hint ? `<div class="tip"><b>Hint</b> ${st[0]}</div>` : `<button class="link hintlink" data-act="hint">Need a hint?</button>`;
-  if (k === 'written') body = RUN.reveal ? '' : `<p class="muted">Write a full solution on paper first, as you would in the Olympiad. Then compare it with the model solution.</p><button class="btn primary" data-act="reveal">Show model solution</button>`;
+  if (k === 'written') body = RUN.reveal ? '' : `<p class="muted">Write a full solution on paper first, as you would in the Olympiad. Then compare it with the model solution.</p>`;
   let fb = '';
   if (ans) fb = `<div id="fb" class="fb ${RUN.ok ? 'good' : 'bad'}">
       <div class="fb-head"><span class="fb-ic">${RUN.ok ? I.check : I.cross}</span><b>${RUN.ok ? (RUN.combo >= 3 ? `Correct. <span class="combo">${I.flame}${RUN.combo} in a row</span>` : 'Correct.') : k === 'written' ? 'Marked. Read the model solution again.' : `Not this time. The answer is ${k === 'mcq' ? LETTERS[q.a] : q.a}.`}</b>${RUN.gain ? `<span class="xp">+${RUN.gain} XP</span>` : ''}</div>
       <span class="eyebrow">Step by step</span>
       ${stepsHtml(st, RUN.ok || k === 'written' ? st.length : RUN.step)}
-      ${!RUN.ok && k !== 'written' && RUN.step < st.length ? `<button class="btn wide" data-act="step">Show next step · ${RUN.step} of ${st.length}</button>` : ''}
-      <button class="btn primary wide" data-act="next">${RUN.i + 1 === RUN.qs.length ? 'Finish' : 'Next question'} ${I.arrow}</button></div>`;
+      ${!RUN.ok && k !== 'written' && RUN.step < st.length ? `<button class="btn wide" data-act="step">Show next step · ${RUN.step} of ${st.length}</button>` : ''}</div>`;
   else if (k === 'written' && RUN.reveal) fb = `<div id="fb" class="fb"><div class="fb-head"><b>Model solution</b></div>${stepsHtml(st, st.length)}
       <p class="muted">Mark yourself honestly. How close was your written solution?</p>
       <div class="row gap wrap"><button class="btn" data-act="self" data-v="0">Could not start</button><button class="btn" data-act="self" data-v="1">Right idea, gaps</button><button class="btn primary" data-act="self" data-v="2">Complete proof</button></div></div>`;
+  const last = RUN.i + 1 === RUN.qs.length, praise = ['Correct!', 'Nice one!', 'Spot on!', 'Exactly right!'][RUN.i % 4];
+  if (!ans) setBar(k === 'mcq' ? { key: 'q' + RUN.i, hint: RUN.pick === null ? 'Pick an answer' : 'Happy with it? Press Check', primary: ['check', 'Check', '', RUN.pick === null] }
+    : k === 'numeric' ? { key: 'q' + RUN.i, hint: 'Type a whole number, then press Check', primary: ['check', 'Check'] }
+    : RUN.reveal ? { key: 'q' + RUN.i + 'm', hint: 'Mark yourself honestly above' } : { key: 'q' + RUN.i, hint: 'Write it out on paper first', primary: ['reveal', 'Show model solution'] });
+  else setBar({ key: 'a' + RUN.i, tone: RUN.ok ? 'good' : k === 'written' ? '' : 'bad', title: RUN.ok ? (RUN.combo >= 3 ? `${praise} ${RUN.combo} in a row` : praise) : k === 'written' ? 'Marked' : 'Not quite', hint: RUN.ok ? `+${RUN.gain} XP` : k === 'written' ? `+${RUN.gain} XP` : 'Read the steps above, then carry on', primary: ['next', last ? 'Finish' : `Continue ${I.arrow}`] });
   return `<div class="run ${just ? 'just' : ''}">
     <div class="run-top"><button class="icon" data-act="quit" aria-label="Leave session">${I.cross}</button>${bar(100 * (RUN.i + (ans ? 1 : 0)) / RUN.qs.length, 'big')}<span class="count">${RUN.i + 1}/${RUN.qs.length}</span></div>
     <article class="qcard">
@@ -2643,7 +2704,7 @@ function vRunDone() {
     ${hasP ? `<div class="pred-change"><span>Predicted score</span><b data-count="${p1}" data-from="${p0 === null ? p1 : p0}">${p1}</b>${p0 !== null && p1 !== p0 ? `<span class="delta ${p1 > p0 ? 'up' : 'down'}">${p1 > p0 ? '+' : '−'}${Math.abs(p1 - p0)}</span>` : ''}</div>` : ''}
     ${RUN.move > 0 ? `<p class="predline"><span class="up">Level up.</span> You now work at <b>${tierLabel(S.track, workTier(S.track))}</b>.</p>` : RUN.move < 0 ? `<p class="predline">Stepping back to <b>${tierLabel(S.track, workTier(S.track))}</b> to rebuild. 5 of 6 moves you up again.</p>` : RUN.level ? `<p class="muted">Working at ${tierLabel(S.track, workTier(S.track))}. Score 5 of 6 to move up.</p>` : ''}
     <div class="lvl-row"><span>Level ${L1}</span><span class="bar big from" style="--from:${fromPct.toFixed(1)}%"><i style="width:${(100 * into / need).toFixed(1)}%"></i></span><span>${need - into} XP to go</span></div>
-    <div class="row gap wrap centerrow">${RUN.again ? `<button class="btn primary" data-act="again">Go again</button>` : ''}<button class="btn" data-act="quit">Done</button></div>
+    ${(setBar({ key: 'done', primary: ['quit', 'Continue'], secondary: RUN.again ? ['again', 'Go again'] : null }), '')}
   </article></div>`;
 }
 
@@ -2725,7 +2786,7 @@ function vMock() {
       <div class="opts">${q.o.map((o, i) => `<button class="opt ${M.ans[M.i] === i ? 'picked' : ''}" data-act="mans" data-i="${i}" aria-pressed="${M.ans[M.i] === i}"><span class="loz">${LETTERS[i]}</span><span>${o}</span></button>`).join('')}</div>
       <p class="hint">Tap your answer again to leave the question blank.</p>
     </article>
-    <div class="row between"><button class="btn" data-act="mgo" data-i="${M.i - 1}" ${M.i === 0 ? 'disabled' : ''}>Back</button><button class="btn primary" data-act="mgo" data-i="${M.i + 1}" ${M.i === n - 1 ? 'disabled' : ''}>Next ${I.arrow}</button></div>
+    ${(setBar({ key: 'mock', hint: `${n - blanks} of ${n} answered`, secondary: ['mgo', 'Back', `data-i="${M.i - 1}"`, M.i === 0], primary: M.i === n - 1 ? ['msubmit', 'Hand in'] : ['mgo', `Next ${I.arrow}`, `data-i="${M.i + 1}"`] }), '')}
     <div class="qgrid" aria-label="Question navigator">${M.qs.map((_, i) => `<button class="${i === M.i ? 'cur' : ''} ${M.ans[i] !== null ? 'ans' : ''} ${M.flag[i] ? 'flag' : ''}" data-act="mgo" data-i="${i}" aria-label="Question ${i + 1}">${i + 1}</button>`).join('')}</div>
   </div>`;
 }
@@ -2747,8 +2808,8 @@ function vMockResult() {
       <div class="bigscore">${r.score}<small>/${r.max}</small></div>
       <h1>${r.band}</h1>
       <p class="muted">${r.c} right, ${r.w} wrong, ${r.b} blank. ${r.lost ? `Wrong answers cost you <b>${r.lost}</b> mark${r.lost === 1 ? '' : 's'}.` : 'No marks lost to penalties.'} +${r.xp} XP.</p>
+      ${(setBar({ key: 'mockres', primary: ['quit', 'Done'] }), '')}
       <p class="hint">${M.def.last ? 'No award estimate for this one: it is only the hardest ten questions.' : 'Award ranges are a rough guide scaled from recent years. The real boundaries move every year.'} Wrong answers have gone into your Mistake Bank.</p>
-      <button class="btn primary" data-act="quit">Done</button>
     </article>
     <h3 class="section">Review every question</h3>
     <div class="list">${M.qs.map((q, i) => { const m = r.marks[i]; return `<details class="review ${m}"><summary><span class="num">${i + 1}</span><span class="rv-t">${q.tp}</span><span class="pill ${m === 'c' ? 'good' : m === 'w' ? 'bad' : ''}">${m === 'c' ? 'Correct' : m === 'w' ? 'Wrong' : 'Blank'}</span></summary>
@@ -2805,14 +2866,15 @@ function vLesson() {
       ${LFIG_AT[l.id] === pg ? lfig(l.id) : ''}
       <p class="idea">${l.ideas[pg]}</p>
     </article>
-    <div class="row gap">${pg ? `<button class="btn" data-act="lback">Back</button>` : ''}<button class="btn primary wide" data-act="lnext">${pg === n - 1 ? 'See a worked example' : 'Next'} ${I.arrow}</button></div>
+    ${(setBar({ key: 'les', hint: `Idea ${pg + 1} of ${n}`, secondary: pg ? ['lback', 'Back'] : null, primary: ['lnext', pg === n - 1 ? 'Worked example' : `Next ${I.arrow}`] }), '')}
   </div>`;
   return `<div class="run">${top}
     <article class="qcard lesson"><span class="eyebrow">Worked example · try it first</span><p class="stem">${l.exq}</p>
       ${LFIG_AT[l.id] === 'ex' ? lfig(l.id) : ''}
       ${LES.step ? stepsHtml(l.exs, LES.step) : ''}
-      ${all ? `<div class="tip"><b>Remember</b> ${l.tip}</div>` : `<button class="btn primary wide" data-act="lstep">${LES.step ? `Next step · ${LES.step} of ${l.exs.length}` : 'Show the first step'}</button>`}</article>
-    ${all ? `<div class="row gap wrap"><button class="btn primary" data-act="lfinish">${S.lessons[l.id] ? 'Done' : 'Finish lesson · +15 XP'}</button>${l.tp ? `<button class="btn" data-act="lpractise">Practise ${l.tp.toLowerCase()}</button>` : ''}</div>` : `<button class="btn" data-act="lback">Back</button>`}
+      ${all ? `<div class="tip"><b>Remember</b> ${l.tip}</div>` : ''}</article>
+    ${(setBar(all ? { key: 'lesdone', hint: S.lessons[l.id] ? '' : '+15 XP', secondary: l.tp ? ['lpractise', 'Practise it'] : null, primary: ['lfinish', S.lessons[l.id] ? 'Done' : 'Finish lesson'] }
+      : { key: 'lesex', hint: LES.step ? `Step ${LES.step} of ${l.exs.length}` : 'Try it yourself first', secondary: ['lback', 'Back'], primary: ['lstep', LES.step ? `Next step ${I.arrow}` : 'Show first step'] }), '')}
   </div>`;
 }
 function lessonDone(l) { plan().lesson = 1; if (!S.lessons[l.id]) { S.lessons[l.id] = dayKey(); addXP(15); } planCheck(); checkBadges(); save(); }
@@ -2829,9 +2891,8 @@ function vCards() {
     <button class="flash ${D.flip ? 'flipped' : ''} ${D.justFlip ? 'turn' : ''}" data-act="flip" aria-live="polite">
       <span class="eyebrow">${D.flip ? 'Answer' : d.name}</span>
       <span class="flash-t">${D.flip ? c.b : c.f}</span>
-      ${D.flip ? '' : '<span class="hint">Say the answer, then tap to check</span>'}
     </button>
-    ${D.flip ? `<div class="row gap"><button class="btn wide" data-act="card" data-v="0">Again</button><button class="btn primary wide" data-act="card" data-v="1">Got it</button></div>` : `<button class="btn primary wide" data-act="flip">Show answer</button>`}
+    ${(setBar(D.flip ? { key: 'cardb', hint: 'Did you know it?', secondary: ['card', 'Again', 'data-v="0"'], primary: ['card', 'Got it', 'data-v="1"'] } : { key: 'carda', hint: 'Say the answer in your head', primary: ['flip', 'Show answer'] }), '')}
   </div>`;
 }
 
@@ -2919,7 +2980,8 @@ function vSheet() {
       <label class="field" for="sheet-label">Which paper?<input id="sheet-label" placeholder="For example 2025" maxlength="30" value="${esc(H.label)}"></label>
       <p class="hint">Tap a question to cycle it: blank, right, wrong.</p>
       <div class="qgrid sheet">${H.m.map((m, i) => `<button class="${m}" data-act="sheetq" data-i="${i}" aria-label="Question ${i + 1}: ${m === 'c' ? 'right' : m === 'w' ? 'wrong' : 'blank'}">${i + 1}</button>`).join('')}</div>
-      <div class="row between"><div><div class="bigscore small">${r.score}<small>/${r.max}</small></div><p class="muted">${r.c} right, ${r.w} wrong, ${r.b} blank · ${b}</p></div><button class="btn primary" data-act="sheetsave">Save result</button></div>
+      <div class="row between"><div><div class="bigscore small">${r.score}<small>/${r.max}</small></div><p class="muted">${r.c} right, ${r.w} wrong, ${r.b} blank · ${b}</p></div></div>
+      ${(setBar({ key: 'sheet', hint: 'Tap each question to mark it', primary: ['sheetsave', 'Save result'] }), '')}
       <p class="hint">Award ranges are a rough guide. UKMT publishes the real boundaries for each year.</p>
     </article></div>`;
 }
@@ -2941,14 +3003,14 @@ function vDuel() {
     <article class="qcard"><div class="qmeta"><span>Duel${D.rival ? ' against ' + esc(D.rival.n || 'a friend') : ''} · +5 right, −2 wrong, 0 blank</span>${dots(q.d)}</div>
       <p class="stem">${q.q}</p>${fig(q)}
       <div class="opts">${q.o.map((o, i) => `<button class="opt" data-act="duelans" data-i="${i}"><span class="loz">${LETTERS[i]}</span><span>${o}</span></button>`).join('')}</div>
-      <button class="btn" data-act="duelans" data-i="-1">Leave blank</button></article></div>`; }
+      ${(setBar({ key: 'duel' + D.i, hint: 'Tap an answer · +5 right, −2 wrong', secondary: ['duelans', 'Leave blank', 'data-i="-1"'] }), '')}</article></div>`; }
   const mine = duelScore(D), r = D.rival, code = enc({ t: D.tr, s: D.seed, p: mine, n: S.name || '' });
   const verdict = !r ? 'Now send it' : mine > r.p ? 'You win' : mine < r.p ? `${esc(r.n || 'Your friend')} wins` : 'A draw';
   return `<div class="run"><article class="qcard center">
     <span class="eyebrow">Duel</span><div class="bigscore">${mine}<small>/25</small></div><h1>${verdict}</h1>
     ${r ? `<p class="muted">${esc(r.n || 'Your friend')} scored <b>${r.p}</b>. You scored <b>${mine}</b>.</p>` : `<p class="muted">Send this code to a friend. They paste it into Duel a friend, play the same five questions, and see who won.</p>
     <label class="field" for="duel-out">Your duel code<textarea id="duel-out" readonly rows="3">${code}</textarea></label><button class="btn primary" data-act="duelcopy">Copy code</button>`}
-    <button class="btn" data-act="quit">Done</button></article>
+    ${(setBar({ key: 'dueldone', primary: ['quit', 'Done'] }), '')}</article>
     <h3 class="section">The five questions</h3>
     <div class="list">${D.qs.map((q, i) => { const m = D.ans[i] === null ? 'b' : D.ans[i] === q.a ? 'c' : 'w'; return `<details class="review ${m}"><summary><span class="num">${i + 1}</span><span class="rv-t">${q.tp}</span><span class="pill ${m === 'c' ? 'good' : m === 'w' ? 'bad' : ''}">${m === 'c' ? '+5' : m === 'w' ? '−2' : '0'}</span></summary>
       <div class="rv-body"><p class="stem">${q.q}</p>${fig(q)}<p><b>Answer: ${LETTERS[q.a]}</b> (${q.o[q.a]})</p>${stepsHtml(steps(q), 99)}</div></details>`; }).join('')}</div></div>`;
@@ -3023,8 +3085,11 @@ const ACT = {
   reportcopy: () => { const out = document.getElementById('report-out'); if (out) { out.focus(); out.select(); } try { navigator.clipboard.writeText(out.value).then(() => toast('Report copied', 'good'), () => toast('Select the text and copy it')); } catch (e) { toast('Select the text and copy it'); } },
   duelcopy: () => { const out = document.getElementById('duel-out'); if (out) { out.focus(); out.select(); } try { navigator.clipboard.writeText(out.value).then(() => toast('Duel code copied', 'good'), () => toast('Select the code and copy it')); } catch (e) { toast('Select the code and copy it'); } },
   daily: () => startRun([dailyQ()], { title: 'Daily challenge', mult: 2, daily: true }),
-  ans: d => {
-    if (RUN.ok !== null) return; const q = RUN.qs[RUN.i], i = +d.i, ok = i === q.a; RUN.sel = i;
+  ans: d => { if (RUN.ok !== null) return; RUN.pick = +d.i; sfx('tap'); buzz(6); render(); },
+  check: () => {
+    if (RUN.ok !== null) return; const q = RUN.qs[RUN.i];
+    if (kind(q) === 'numeric') { checkNumeric(); return; }
+    if (RUN.pick === null) return; const i = RUN.pick, ok = i === q.a; RUN.sel = i;
     RUN.combo = ok ? RUN.combo + 1 : 0;
     finishAnswer(q, ok, ok ? Math.round(baseXP(q) * RUN.mult * (RUN.hint ? 0.7 : 1)) + (RUN.combo >= 5 ? 5 : RUN.combo >= 3 ? 2 : 0) : 0);
   },
@@ -3051,7 +3116,7 @@ const ACT = {
   begin: () => { S.onboarded = true; save(); render(); window.scrollTo(0, 0); },
   self: d => { const q = RUN.qs[RUN.i], v = +d.v; RUN.sel = v; finishAnswer(q, v === 2, [2, 8, 15][v]); },
   next: () => {
-    if (RUN.i + 1 < RUN.qs.length) { RUN.i++; RUN.sel = null; RUN.ok = null; RUN.gain = 0; RUN.reveal = false; RUN.step = 1; RUN.hint = false; RUN.t0 = Date.now(); render(); window.scrollTo(0, 0); return; }
+    if (RUN.i + 1 < RUN.qs.length) { RUN.i++; RUN.sel = null; RUN.ok = null; RUN.gain = 0; RUN.reveal = false; RUN.step = 1; RUN.hint = false; RUN.pick = null; RUN.t0 = Date.now(); render(); window.scrollTo(0, 0); return; }
     RUN.done = true; sfx('done'); buzz(20);
     if (RUN.bank || RUN.daily) plan().extra = 1; else if (RUN.qs.length >= 5) plan().set = 1;
     if (RUN.level) { RUN.move = levelAfter(S.track, RUN.correct, RUN.qs.length); if (RUN.move > 0) confetti(); }
@@ -3124,13 +3189,14 @@ document.addEventListener('click', e => {
   const f = ACT[b.dataset.act]; if (!f) return;
   try { f(b.dataset, b); } catch (err) { toast('Something went wrong. Try that again.'); try { console.error(err); } catch (e2) { /* ignore */ } }
 });
-document.addEventListener('submit', e => {
-  e.preventDefault();
-  if (e.target.dataset.form !== 'num' || RUN.ok !== null) return;
+function checkNumeric() {
+  if (!RUN || RUN.ok !== null) return;
   const raw = document.getElementById('numin').value.trim(); if (!/^\d+$/.test(raw)) { toast('Type a whole number'); return; }
   const q = RUN.qs[RUN.i], v = parseInt(raw, 10), ok = v === q.a; RUN.sel = v; RUN.combo = ok ? RUN.combo + 1 : 0;
   finishAnswer(q, ok, ok ? baseXP(q) + 3 : 0);
-});
+}
+document.addEventListener('touchstart', () => {}, { passive: true });
+document.addEventListener('submit', e => { e.preventDefault(); if (e.target.dataset.form === 'num') checkNumeric(); });
 document.addEventListener('input', e => {
   if (e.target.id === 'sheet-label' && SHEET) SHEET.label = e.target.value;
   if (e.target.id === 'set-name') S.name = e.target.value.trim().slice(0, 24);

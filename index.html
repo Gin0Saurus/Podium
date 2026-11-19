@@ -630,6 +630,23 @@ body.has-bar #toasts{bottom:calc(110px + var(--safe-b))}
 @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 @media (prefers-reduced-motion:reduce){.cta-pulse,.start-tip{animation:none}}
 
+/* Podium Maths Plus */
+.plus-tag{display:inline-flex;align-items:center;gap:4px;font:800 .7rem var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--gold);background:var(--gold-soft);padding:2px 8px;border-radius:99px;vertical-align:middle}
+.plus-tag svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.4}
+.plus-sheet h2{margin:4px 0 6px}
+.plus-list{list-style:none;padding:0;margin:14px 0 16px;display:grid;gap:10px}
+.plus-list li{display:flex;gap:10px;align-items:flex-start;font-weight:600}
+.plus-list li svg{flex:none;width:20px;height:20px;color:var(--good);stroke:currentColor;fill:none;stroke-width:2.6;margin-top:1px}
+.plan-btn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;margin:0 0 10px;padding:14px 16px;border-radius:var(--r);background:var(--surface2);border:2px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}
+.plan-btn.best{border-color:var(--gold);background:var(--gold-soft)}
+.plan-btn b{font:800 1.05rem var(--display);display:block}.plan-btn small{color:var(--muted);font-weight:600}
+.plan-btn .price{font:800 1.1rem var(--display);white-space:nowrap}
+.plus-legal{font-size:.76rem;color:var(--muted);line-height:1.45;margin:12px 0 0}
+.plus-legal a{color:inherit;text-decoration:underline}
+.plus-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.free-left{font-size:.85rem;color:var(--muted);font-weight:600;margin:-4px 0 12px}
+.rowbtn.locked .rowbtn-main b,.paper-row.locked .rowbtn-main b{opacity:.75}
+
 </style>
 </head>
 <body>
@@ -2215,7 +2232,7 @@ const I = {
 
 /* ───────── State ───────── */
 const KEY = 'podium.v1';
-const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, lessons: {}, quest: null, questAll: 0, bank: null, bankCleared: 0, plan: null, target: 'Silver', freeze: 0, work: {}, gseen: {}, qd: { last: '', n: 0 }, duels: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
+const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, free: { day: '', n: 0 }, lessons: {}, quest: null, questAll: 0, bank: null, bankCleared: 0, plan: null, target: 'Silver', freeze: 0, work: {}, gseen: {}, qd: { last: '', n: 0 }, duels: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
 let S = loadState();
 function loadState() {
   try { const r = JSON.parse(localStorage.getItem(KEY)); if (r && r.v === 1) { const s = Object.assign(blank(), r); if (s.xp > 0) s.onboarded = true; return s; } } catch (e) { /* storage unavailable */ }
@@ -2566,7 +2583,7 @@ function vSetup() {
     ${(setBar({ key: 'setup', hint: 'You can change all of this later', primary: ['begin', `Start training ${I.arrow}`] }), '')}
   </article></div>`;
 }
-const nextLesson = tr => LESSONS.find(l => l.tr === tr && !S.lessons[l.id]) || null;
+const nextLesson = tr => LESSONS.find(l => l.tr === tr && !S.lessons[l.id] && (hasPlus() || lessonFree(l))) || null;
 function mockResumeCard() {
   if (!MOCK || MOCK.done) return '';
   const left = Math.round((MOCK.end - Date.now()) / 1000);
@@ -2612,9 +2629,10 @@ function vPractice() {
   const tr = TR[S.track], st = topicStats(S.track), due = bankDue().length, inBank = bankList().length, gen = hasGen(S.track);
   return `
   <header class="page-head"><h1>Practice</h1><p class="muted">${tr.name}${gen ? ' · new questions every time' : ''}</p></header>
+  ${hasPlus() ? '' : `<p class="free-left">${setsLeft() ? `${setsLeft()} of ${PLUS.freeSets} free sets left today` : 'Free sets used for today'} · <button class="link" data-act="plus">Unlimited with Plus</button></p>`}
   <div class="tiles">
     <button class="tile-btn t-blue" data-act="quick"><span class="sc-ic">${I.mix}</span><b>Mixed</b><small>${tierLabel(S.track, workTier(S.track))}</small></button>
-    <button class="tile-btn t-red" data-act="hard"><span class="sc-ic">${I.peak}</span><b>Hard only</b><small>The end of the paper</small></button>
+    <button class="tile-btn t-red" data-act="hard"><span class="sc-ic">${I.peak}</span><b>Hard only</b><small>${hasPlus() ? 'The end of the paper' : plusTag()}</small></button>
     <button class="tile-btn t-orange" data-act="${due ? 'bank' : 'bankall'}" ${inBank ? '' : 'disabled'}><span class="sc-ic">${I.bank}</span><b>Mistake Bank</b><small>${due ? `${due} due today` : inBank ? `${inBank} waiting` : 'Empty, nice'}</small>${due ? `<span class="badge-n">${due}</span>` : ''}</button>
     <button class="tile-btn t-green" data-act="duelmenu"><span class="sc-ic">${I.duel}</span><b>Duel</b><small>Same five as a friend</small></button>
   </div>
@@ -2703,6 +2721,7 @@ function vRunDone() {
     </div>
     ${hasP ? `<div class="pred-change"><span>Predicted score</span><b data-count="${p1}" data-from="${p0 === null ? p1 : p0}">${p1}</b>${p0 !== null && p1 !== p0 ? `<span class="delta ${p1 > p0 ? 'up' : 'down'}">${p1 > p0 ? '+' : '−'}${Math.abs(p1 - p0)}</span>` : ''}</div>` : ''}
     ${RUN.move > 0 ? `<p class="predline"><span class="up">Level up.</span> You now work at <b>${tierLabel(S.track, workTier(S.track))}</b>.</p>` : RUN.move < 0 ? `<p class="predline">Stepping back to <b>${tierLabel(S.track, workTier(S.track))}</b> to rebuild. 5 of 6 moves you up again.</p>` : RUN.level ? `<p class="muted">Working at ${tierLabel(S.track, workTier(S.track))}. Score 5 of 6 to move up.</p>` : ''}
+    ${RUN.metered && !hasPlus() ? `<p class="muted">${setsLeft() ? `${setsLeft()} free set${setsLeft() === 1 ? '' : 's'} left today.` : 'That was your last free set today.'} <button class="link" data-act="plus">Unlimited with Plus</button></p>` : ''}
     <div class="lvl-row"><span>Level ${L1}</span><span class="bar big from" style="--from:${fromPct.toFixed(1)}%"><i style="width:${(100 * into / need).toFixed(1)}%"></i></span><span>${need - into} XP to go</span></div>
     ${(setBar({ key: 'done', primary: ['quit', 'Continue'], secondary: RUN.again ? ['again', 'Go again'] : null }), '')}
   </article></div>`;
@@ -2733,9 +2752,9 @@ function vMocks() {
   <header class="page-head"><h1>Mock papers</h1><p class="muted">Real timing and marking. Works offline.</p></header>
   ${mockResumeCard()}
   <div class="list">${MOCKS.map(m => `
-    <button class="paper-row" data-act="mock" data-id="${m.id}">
+    <button class="paper-row ${!hasPlus() && !mockFree(m) ? 'locked' : ''}" data-act="mock" data-id="${m.id}">
       <span class="sc-ic ${m.tr === 'smc' ? 'violet' : m.last ? 'red' : ''}">${I.paper}</span>
-      <span class="rowbtn-main"><b>${m.name}</b><small>${m.n} questions · ${m.mins} min${m.last ? ' · the hard end only' : ''}</small></span>
+      <span class="rowbtn-main"><b>${m.name} ${!hasPlus() && !mockFree(m) ? plusTag() : ''}</b><small>${m.n} questions · ${m.mins} min${m.last ? ' · the hard end only' : ''}</small></span>
       <span class="rowbtn-go">${I.arrow}</span>
     </button>`).join('')}</div>
   <section class="card">
@@ -2836,8 +2855,8 @@ function vLearn() {
   if (LTAB === 'lessons') {
     const ls = LESSONS.filter(l => l.tr === S.track);
     body = [1, 2, 3].map(lv => { const g = ls.filter(l => l.lv === lv); return g.length ? `<h3 class="section">${LEVELS[lv]}</h3><div class="list">${g.map(l => `
-      <button class="rowbtn" data-act="lesson" data-id="${l.id}"><span class="node ${S.lessons[l.id] ? 'done' : ''}">${S.lessons[l.id] ? I.check : I.remember}</span>
-      <span class="rowbtn-main"><b>${l.title}</b><small>${l.sum}${l.tp ? ` · ${l.tp}` : ''}</small></span><span class="rowbtn-go">${I.arrow}</span></button>`).join('')}</div>` : ''; }).join('');
+      <button class="rowbtn ${!hasPlus() && !lessonFree(l) ? 'locked' : ''}" data-act="lesson" data-id="${l.id}"><span class="node ${S.lessons[l.id] ? 'done' : ''}">${S.lessons[l.id] ? I.check : !hasPlus() && !lessonFree(l) ? I.lock : I.remember}</span>
+      <span class="rowbtn-main"><b>${l.title}${!hasPlus() && !lessonFree(l) ? ' ' + plusTag() : ''}</b><small>${l.sum}${l.tp ? ` · ${l.tp}` : ''}</small></span><span class="rowbtn-go">${I.arrow}</span></button>`).join('')}</div>` : ''; }).join('');
   } else if (LTAB === 'facts') {
     const g = GUIDES[S.track];
     body = `<label class="field search" for="facts-q">Search everything worth remembering<input id="facts-q" type="search" placeholder="Try primes, circle, percent…" value="${esc(FACTQ)}" autocomplete="off"></label>
@@ -3030,6 +3049,7 @@ function vAccount() {
     ${BANDS[S.track] ? `<label for="set-target">Aiming for<select id="set-target">${['Bronze', 'Silver', 'Gold'].map(m => `<option ${m === S.target ? 'selected' : ''}>${m}</option>`).join('')}</select></label>` : ''}
     <label for="set-goal">Daily goal<select id="set-goal">${[20, 30, 50, 80].map(g => `<option value="${g}" ${g === S.goal ? 'selected' : ''}>${g} XP${g === 20 ? ' (light)' : g === 80 ? ' (serious)' : ''}</option>`).join('')}</select></label>
   </section>
+  ${plusCard()}
   <section class="card">
     <span class="eyebrow">Sync</span>
     <h2>${cloudOn ? `Signed in${cloudName ? ' as ' + esc(cloudName) : ''}` : 'Saved on this device'}</h2>
@@ -3063,12 +3083,131 @@ function vAccount() {
   </section>`;
 }
 
+/* ───────── Podium Maths Plus (subscription) ─────────
+   iPhone app: in-app purchase through RevenueCat (@revenuecat/purchases-capacitor).
+   Nothing is locked until there is a way to pay: either the native purchase plugin with a key,
+   or an App Store link for web visitors. Until then the app stays fully free. */
+const PLUS = {
+  rcKey: '',               // RevenueCat public Apple SDK key, starts "appl_". Fill in before building.
+  entitlement: 'plus',     // the entitlement identifier set up in RevenueCat
+  appStoreUrl: '',         // App Store link once the app is live. Web visitors are sent there to upgrade.
+  terms: 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/',
+  privacy: 'https://gin0saurus.github.io/Podium/privacy.html',
+  manage: 'https://apps.apple.com/account/subscriptions',
+  freeSets: 3,             // free practice sets a day
+};
+const PKEY = 'podium.plus';
+let PL = (() => { try { return JSON.parse(localStorage.getItem(PKEY)) || {}; } catch (e) { return {}; } })();
+let RC = null, RCOFFER = null, RCBUSY = false, PKGS = [];
+const plusLive = () => !!RC || !!PLUS.appStoreUrl;
+const isPlus = () => !!PL.on && (!PL.exp || Date.parse(PL.exp) > Date.now() - 3 * 864e5); // 3 days' grace while offline
+const hasPlus = () => !plusLive() || isPlus();
+function setPlus(ci) {
+  if (!ci || !ci.entitlements) return;
+  const e = ci.entitlements.active && ci.entitlements.active[PLUS.entitlement];
+  PL = { on: !!e, exp: e ? e.expirationDate || null : null, at: Date.now() };
+  try { localStorage.setItem(PKEY, JSON.stringify(PL)); } catch (err) { /* storage unavailable */ }
+}
+async function plusInit() {
+  const P = native('Purchases'); if (!P || !PLUS.rcKey) return;
+  try { await P.configure({ apiKey: PLUS.rcKey }); RC = P; } catch (e) { return; }
+  await plusRefresh();
+}
+async function plusRefresh() {
+  if (!RC) return;
+  try { const r = await RC.getCustomerInfo(); setPlus(r && r.customerInfo); } catch (e) { /* offline: keep the saved status */ }
+  if (!MODE) render();
+}
+async function plusOffer() {
+  if (RCOFFER || !RC) return RCOFFER;
+  try {
+    const r = await RC.getOfferings(), o = r && (r.current !== undefined ? r : r.offerings), c = o && o.current;
+    if (c) {
+      const all = c.availablePackages || [], byType = t => all.find(p => p.packageType === t) || null;
+      RCOFFER = [c.annual || byType('ANNUAL'), c.monthly || byType('MONTHLY')].filter(Boolean);
+      if (!RCOFFER.length) RCOFFER = all.slice(0, 2);
+    }
+  } catch (e) { /* offline */ }
+  return RCOFFER;
+}
+
+/* Free allowance: practice sets finished today */
+const setsUsed = () => (S.free && S.free.day === dayKey() ? S.free.n : 0);
+const setsLeft = () => (hasPlus() ? Infinity : Math.max(0, PLUS.freeSets - setsUsed()));
+function useSet() { if (hasPlus()) return; S.free = { day: dayKey(), n: setsUsed() + 1 }; }
+const lessonFree = l => { const ls = LESSONS.filter(x => x.tr === l.tr); return l.lv === 1 || ls.indexOf(l) < 2; };
+const mockFree = m => /-mini$/.test(m.id);
+const plusTag = () => `<span class="plus-tag">${I.lock}Plus</span>`;
+function needPlus(why) { if (hasPlus()) return false; paywall(why); return true; }
+function needSet() { return setsLeft() > 0 ? false : needPlus('sets'); }
+
+const WHY = {
+  sets: ['That’s today’s free practice', `You’ve used your ${PLUS.freeSets} free sets for today. Plus gives you unlimited practice, every day.`],
+  hard: ['Hard only is a Plus drill', 'Questions 16 to 25 are where medals are won. Plus lets you drill them as often as you like.'],
+  mock: ['Full mock papers are in Plus', 'Sit the whole paper against the clock, with real marking, as many times as you need.'],
+  lesson: ['This lesson is in Plus', 'Free lessons cover the basics. Plus unlocks every lesson, including the stretch topics.'],
+  info: ['Podium Maths Plus', 'Everything you need to go for a medal.'],
+};
+const tick = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function plusSheetHtml(why) {
+  const [title, sub] = WHY[why] || WHY.info;
+  const perks = ['Unlimited practice, every day', 'Every full mock paper, timed and marked', 'Hard only drills for questions 16 to 25', 'Every lesson, including stretch topics'];
+  const head = `<span class="eyebrow">Podium Maths Plus</span><h2>${title}</h2><p class="muted">${sub}</p><ul class="plus-list">${perks.map(p => `<li>${tick}<span>${p}</span></li>`).join('')}</ul>`;
+  if (!RC) return head + (PLUS.appStoreUrl
+    ? `<a class="btn primary wide" href="${esc(PLUS.appStoreUrl)}" target="_blank" rel="noopener">Get Plus in the iPhone app</a><p class="plus-legal">Plus is bought in the Podium Maths iPhone app.</p>`
+    : `<button class="btn wide" data-act="sheetclose">OK</button>`);
+  if (!RCOFFER) return head + `<p class="muted" id="plus-wait">Loading prices…</p><button class="btn wide" data-act="sheetclose">Not now</button>`;
+  PKGS = RCOFFER;
+  const per = p => (p.packageType === 'ANNUAL' ? 'year' : p.packageType === 'MONTHLY' ? 'month' : p.packageType === 'WEEKLY' ? 'week' : '');
+  const trial = p => { const t = p.product && p.product.introPrice; if (!t || t.price !== 0) return ''; const n = t.periodNumberOfUnits || 1, u = String(t.periodUnit || 'DAY').toLowerCase(); return `${n} ${u}${n === 1 ? '' : 's'} free, then `; };
+  const btns = PKGS.map((p, i) => `<button class="plan-btn ${p.packageType === 'ANNUAL' ? 'best' : ''}" data-act="plusbuy" data-i="${i}">
+    <span><b>${p.packageType === 'ANNUAL' ? 'Yearly' : p.packageType === 'MONTHLY' ? 'Monthly' : esc(p.product.title || 'Plus')}</b><small>${trial(p)}${esc(p.product.priceString)}${per(p) ? ' a ' + per(p) : ''}${p.packageType === 'ANNUAL' ? ' · best value' : ''}</small></span>
+    <span class="price">${esc(p.product.priceString)}</span></button>`).join('');
+  return head + btns + `<div class="plus-row"><button class="link" data-act="plusrestore">Restore purchases</button><button class="link" data-act="sheetclose">Not now</button></div>
+    <p class="plus-legal">Payment is charged to your Apple ID when you confirm. The subscription renews automatically unless you cancel at least 24 hours before the end of the current period. Manage or cancel any time in your App Store account settings. <a href="${PLUS.terms}" target="_blank" rel="noopener">Terms of Use</a> · <a href="${PLUS.privacy}" target="_blank" rel="noopener">Privacy Policy</a></p>`;
+}
+function paywall(why) {
+  sheet(`<div class="plus-sheet">${plusSheetHtml(why)}</div>`);
+  if (RC && !RCOFFER) plusOffer().then(o => {
+    const el = document.querySelector('.sheet .plus-sheet'); if (!el) return;
+    if (o) el.innerHTML = plusSheetHtml(why);
+    else { const w = el.querySelector('#plus-wait'); if (w) w.textContent = 'Prices could not load. Check your connection and try again.'; }
+  });
+}
+async function buyPlus(i) {
+  const pk = PKGS[i]; if (!RC || !pk || RCBUSY) return; RCBUSY = true;
+  try {
+    const r = await RC.purchasePackage({ aPackage: pk }); setPlus(r && r.customerInfo);
+    if (isPlus()) { closeSheet(true); confetti(); toast('Welcome to Plus. Everything is unlocked.', 'good'); if (!MODE) render(); }
+  } catch (e) {
+    if (!(e && (e.userCancelled || String(e.code) === '1'))) toast('The purchase did not finish. Try again in a moment.');
+  }
+  RCBUSY = false;
+}
+async function restorePlus() {
+  if (!RC || RCBUSY) return; RCBUSY = true;
+  try { const r = await RC.restorePurchases(); setPlus(r && r.customerInfo); toast(isPlus() ? 'Plus restored. Everything is unlocked.' : 'No Plus subscription found for this Apple ID.', isPlus() ? 'good' : ''); if (!MODE) render(); }
+  catch (e) { toast('Could not reach the App Store. Try again in a moment.'); }
+  RCBUSY = false;
+}
+function plusCard() {
+  if (!plusLive()) return '';
+  if (isPlus()) return `<section class="card"><span class="eyebrow">Podium Maths Plus</span><h2>You have Plus</h2><p class="muted">Everything is unlocked${PL.exp ? `. Renews or ends on ${new Date(PL.exp).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}` : ''}.</p>
+    ${RC ? `<div class="row gap wrap"><a class="btn" href="${PLUS.manage}" target="_blank" rel="noopener">Manage subscription</a><button class="btn" data-act="plusrestore">Restore purchases</button></div>` : ''}</section>`;
+  return `<section class="card"><span class="eyebrow">Podium Maths Plus</span><h2>Unlimited practice and every mock paper</h2><p class="muted">Free: ${PLUS.freeSets} practice sets a day, mini papers and the starter lessons. Plus unlocks the lot.</p>
+    <div class="row gap wrap"><button class="btn primary" data-act="plus">See Plus</button>${RC ? '<button class="btn" data-act="plusrestore">Restore purchases</button>' : ''}</div></section>`;
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && RC) plusRefresh(); });
+
 /* ───────── Actions ───────── */
 const ACT = {
+  plus: () => paywall('info'),
+  plusbuy: d => buyPlus(+d.i),
+  plusrestore: () => restorePlus(),
   nav: d => setRoute(d.to),
   track: d => { S.track = d.id; HOMECH = false; save(); render(); },
-  quick: () => startRun(pickLevel(S.track), { title: TR[S.track].short, level: true, again: () => ACT.quick() }),
-  topic: d => startRun(pickLevel(S.track, d.tp), { title: `${TR[S.track].short} · ${d.tp}`, again: () => ACT.topic(d) }),
+  quick: () => { if (needSet()) return; startRun(pickLevel(S.track), { title: TR[S.track].short, level: true, metered: true, again: () => ACT.quick() }); },
+  topic: d => { if (needSet()) return; startRun(pickLevel(S.track, d.tp), { title: `${TR[S.track].short} · ${d.tp}`, metered: true, again: () => ACT.topic(d) }); },
   bank: () => startRun(shuffle(bankDue()).slice(0, 8), { title: 'Mistake Bank', bank: true }),
   bankall: () => startRun(shuffle(bankList()).slice(0, 8), { title: 'Mistake Bank', bank: true }),
   duelmenu: () => sheet(`<h2>Duel a friend</h2><p class="muted">Five questions marked like the paper: +5 right, −2 wrong, 0 blank. Play, send your code, and your friend plays the same five.</p>
@@ -3097,7 +3236,7 @@ const ACT = {
   hint: () => { RUN.hint = true; render(); },
   step: () => { RUN.step++; render(); },
   ltab: d => { LTAB = d.id; render(); },
-  lesson: d => { const l = LESSONS.find(x => x.id === d.id); if (!l) return; LES = { l, page: 0, step: 0 }; go('lesson'); },
+  lesson: d => { const l = LESSONS.find(x => x.id === d.id); if (!l) return; if (!lessonFree(l) && needPlus('lesson')) return; LES = { l, page: 0, step: 0 }; go('lesson'); },
   lnext: () => { LES.page++; render(); window.scrollTo(0, 0); },
   lback: () => { if (LES.page > 0) LES.page--; MOTION_DIR = -1; render(); window.scrollTo(0, 0); },
   golearn: () => { LTAB = 'lessons'; setRoute('learn'); },
@@ -3106,18 +3245,19 @@ const ACT = {
   sheetclose: () => closeSheet(),
   ovclose: () => closeOverlay(),
   mute: () => { S.mute = !S.mute; save(); render(); if (!S.mute) { sfx('right'); buzz(15); } },
-  hard: () => { const ts = tiersOf(S.track), top = ts[ts.length - 1], nx = Math.max(ts[0], top - 1); startRun(freshSet(S.track, [nx, nx, nx, top, top, top], { figShare: 0.34 }), { title: TR[S.track].short + ' · hard', again: () => ACT.hard() }); },
+  hard: () => { if (needPlus('hard')) return; const ts = tiersOf(S.track), top = ts[ts.length - 1], nx = Math.max(ts[0], top - 1); startRun(freshSet(S.track, [nx, nx, nx, top, top, top], { figShare: 0.34 }), { title: TR[S.track].short + ' · hard', again: () => ACT.hard() }); },
   lstep: () => { LES.step++; render(); },
   lfinish: () => { lessonDone(LES.l); leave(); },
-  lpractise: () => { const l = LES.l; lessonDone(l); S.track = l.tr; startRun(pick(l.tr, l.tp, 6), { title: TR[l.tr].short, again: () => ACT.topic({ tp: l.tp }) }); },
+  lpractise: () => { const l = LES.l; lessonDone(l); S.track = l.tr; if (needSet()) return; startRun(pick(l.tr, l.tp, 6), { title: TR[l.tr].short, metered: true, again: () => ACT.topic({ tp: l.tp }) }); },
   goal: d => { S.goal = +d.v; save(); render(); },
   target: d => { S.target = d.v; save(); render(); },
-  tier: d => { const dd = +d.d; startRun(freshSet(S.track, [dd, dd, dd, dd, dd, dd], { figShare: 0.34 }), { title: `${TR[S.track].short} · ${TIER_NAME[S.track][dd]} level`, again: () => ACT.tier(d) }); },
+  tier: d => { if (needSet()) return; const dd = +d.d; startRun(freshSet(S.track, [dd, dd, dd, dd, dd, dd], { figShare: 0.34 }), { title: `${TR[S.track].short} · ${TIER_NAME[S.track][dd]} level`, metered: true, again: () => ACT.tier(d) }); },
   begin: () => { S.onboarded = true; save(); render(); window.scrollTo(0, 0); },
   self: d => { const q = RUN.qs[RUN.i], v = +d.v; RUN.sel = v; finishAnswer(q, v === 2, [2, 8, 15][v]); },
   next: () => {
     if (RUN.i + 1 < RUN.qs.length) { RUN.i++; RUN.sel = null; RUN.ok = null; RUN.gain = 0; RUN.reveal = false; RUN.step = 1; RUN.hint = false; RUN.pick = null; RUN.t0 = Date.now(); render(); window.scrollTo(0, 0); return; }
     RUN.done = true; sfx('done'); buzz(20);
+    if (RUN.metered) useSet();
     if (RUN.bank || RUN.daily) plan().extra = 1; else if (RUN.qs.length >= 5) plan().set = 1;
     if (RUN.level) { RUN.move = levelAfter(S.track, RUN.correct, RUN.qs.length); if (RUN.move > 0) confetti(); }
     RUN.avg = RUN.times.length ? Math.round(RUN.times.reduce((a, b) => a + b, 0) / RUN.times.length / 1000) : 0;
@@ -3128,7 +3268,7 @@ const ACT = {
   },
   again: () => { const f = RUN.again; f && f(); },
   quit: () => { if (MODE === 'mockres') MOCK = null; leave(); },
-  mock: d => startMock(d.id),
+  mock: d => { const m = MOCKS.find(x => x.id === d.id); if (m && !mockFree(m) && needPlus('mock')) return; startMock(d.id); },
   resume: () => { if (Date.now() >= MOCK.end) { finishMock(); return; } go('mock'); startMockTimer(); },
   mleave: () => { clearInterval(tickId); MOCK.leave = false; MODE = null; render(); window.scrollTo(0, 0); toast('Paper kept. The clock is still running.'); },
   mans: d => { sfx('tap'); buzz(8); const i = +d.i; MOCK.ans[MOCK.i] = MOCK.ans[MOCK.i] === i ? null : i; saveMock(); render(); },
@@ -3236,7 +3376,7 @@ async function cloudFlush() {
   cloudBusy = false; if (cloudDirty) cloudPush();
 }
 
-if (typeof document !== 'undefined' && app) { bankInit(); loadMock(); render(); splash(); cloudInit(); }
+if (typeof document !== 'undefined' && app) { bankInit(); loadMock(); render(); splash(); cloudInit(); plusInit(); }
 
 
 </script>

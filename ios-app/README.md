@@ -35,4 +35,43 @@ In Xcode: choose your team under Signing, pick a simulator or your phone, press 
 - Anything digital sold inside the app must use Apple's in-app purchase. RevenueCat's
   Capacitor plugin (`@revenuecat/purchases-capacitor`) is the usual way to add subscriptions.
 - If the app is listed in the Kids category, Apple's extra rules apply (no third-party
-  analytics or ads, and purchases behind a parental gate).
+  analytics or ads, and purchases behind a parental gate). List it under **Education** instead.
+
+## Podium Maths Plus (the subscription)
+The paywall, free limits and purchase code are already in `../index.html`. **Nothing is locked
+until you add your RevenueCat key**, so the app stays fully free until you switch this on.
+
+**Free:** 3 practice sets a day, mini mock papers, the starter lessons, Mistake Bank, daily
+challenge, duels, flashcards, sprint, Remember and the predicted score.
+**Plus:** unlimited practice, full and "last ten" mock papers, Hard only drills, every lesson.
+
+Suggested prices: **£3.99 a month** or **£24.99 a year with a 7-day free trial**. Prices and the
+trial are set in App Store Connect; the app shows whatever the store returns.
+
+### Switching it on (about an hour, once)
+1. **Apple Developer Program**: join and accept the **Paid Apps agreement** in App Store Connect
+   (Business section), with bank and tax details. Without it, purchases never load. The account
+   holder must be 18 or over, so if that is not you, a parent sets this up and gets the payouts.
+2. **App Store Connect**: create the app (bundle ID = `appId` in `capacitor.config.json`), then
+   Subscriptions → create a group "Podium Maths Plus" with two products:
+   `podium_plus_monthly` and `podium_plus_yearly` (add the 7-day free trial as an introductory
+   offer on the yearly one).
+3. **RevenueCat** (free until you earn $2.5k a month): create a project and an Apple app, then
+   - Entitlement with identifier **`plus`**, attached to both products.
+   - Offering **default** (marked current) with the **Annual** and **Monthly** packages.
+   - Copy the **public Apple SDK key** (starts `appl_`).
+4. In `../index.html`, find `const PLUS = {` and paste the key into `rcKey`.
+5. In Xcode: Signing & Capabilities → **+ Capability → In-App Purchase**.
+6. Build, then test with a **Sandbox tester** (App Store Connect → Users and Access → Sandbox).
+   Check: buy yearly, buy monthly, cancel the Apple sheet (no error should show), Restore purchases.
+7. When the app is live, put its App Store link in `appStoreUrl`. From then on the website
+   shows the same free limits and sends people to the iPhone app to upgrade.
+
+### App Review checklist for subscriptions
+- Privacy Policy URL in App Store Connect: `https://gin0saurus.github.io/Podium/privacy.html`
+  (`../privacy.html` in this repo; check the link opens once GitHub Pages has published it).
+- Terms of Use: the paywall links to Apple's standard EULA. Add the same link to the App
+  Store description, or Apple may reject the build.
+- The paywall already shows price, length, auto-renew wording, Restore purchases, Terms and
+  Privacy, which are the things reviewers check.
+- Upload a screenshot of the paywall with the subscription products for review.

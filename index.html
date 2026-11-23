@@ -630,6 +630,19 @@ body.has-bar #toasts{bottom:calc(110px + var(--safe-b))}
 @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 @media (prefers-reduced-motion:reduce){.cta-pulse,.start-tip{animation:none}}
 
+/* shortcuts */
+.sc-hero{background:radial-gradient(120% 120% at 100% 0%,var(--gold-soft) 0%,var(--surface) 60%);gap:8px}
+.sc-hero h2{font-size:1.35rem}.sc-hero p{max-width:56ch}
+.sc-meta{padding:0 2px}.sc-meta .link{font-size:.92rem}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-flex;align-items:center;gap:4px;font:700 .72rem var(--body);letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.tag.good{background:var(--good-soft);color:var(--good)}.tag svg{width:13px;height:13px;stroke-width:3}
+.sc-card h1{font-size:1.8rem}
+.example{display:flex;flex-direction:column;gap:10px;align-items:flex-start;align-self:stretch;padding:16px;border-radius:16px;background:var(--surface2)}
+.example .steps li{animation:rise .3s var(--out) both}
+.example .steps li:nth-child(2){animation-delay:.08s}.example .steps li:nth-child(3){animation-delay:.16s}
+.seg button{font-size:.88rem;padding:9px 4px}
+
 </style>
 </head>
 <body>
@@ -1945,6 +1958,140 @@ GT('dsp', 'smc', 'Number', 3, r => {
     s: `Factorise: (<i>a</i> − <i>b</i>)(<i>a</i> + <i>b</i>) = ${N}. Each factor pair with the smaller factor first gives one solution, as long as both factors are odd (${N} is odd, so they are) and different. ${N} has ${cnt} such pair${cnt === 1 ? '' : 's'}, so there ${cnt === 1 ? 'is' : 'are'} ${cnt}.` };
 });
 
+/* ═════════ Shortcut drills (quick questions that practise one trick) ═════════ */
+const DR = (id, tp, d, make) => GT(id, 'drill', tp, d, make);
+DR('d_cancel', 'Number', 1, r => {
+  let a, b, c, d2; do { a = rint(r, 2, 9); b = rint(r, 2, 12); c = rint(r, 2, 9); d2 = rint(r, 2, 12); } while (a === c || b === c || d2 === a || a * b === c * d2);
+  const A = a * b, B = c * d2, C = a * c, ans = Nm(b * d2);
+  return { q: `What is ${A} × ${B} ÷ ${C}?`, ...opts(r, ans, [Nm(b * d2 + a), Nm(b * d2 - c), Nm(a * c), Nm(2 * b * d2), Nm(b + d2)]),
+    s: `${A} = ${a} × ${b} and ${B} = ${c} × ${d2}, while ${C} = ${a} × ${c}. Cancel the ${a} and the ${c}. What is left is ${b} × ${d2} = ${b * d2}.` };
+});
+DR('d_sq5', 'Number', 1, r => {
+  const n = rint(r, 1, 14), N = 10 * n + 5, v = n * (n + 1) * 100 + 25, ans = Nm(v);
+  return { q: `What is ${N}²?`, ...opts(r, ans, [Nm(n * n * 100 + 25), Nm((n + 1) * (n + 1) * 100 + 25), Nm(v - 100), Nm(v + 100), Nm(v - 25)]),
+    s: `Take the front part, ${n}, and multiply it by one more: ${n} × ${n + 1} = ${n * (n + 1)}. Write 25 after it: ${v}.` };
+});
+DR('d_near', 'Number', 1, r => {
+  const x = rint(r, 1, 12), y = rint(r, 1, 12), a = 100 - x, b = 100 - y, ans = Nm(a * b);
+  return { q: `What is ${a} × ${b}?`, ...opts(r, ans, [Nm(a * b + 100), Nm(a * b - 100), Nm((100 - x - y) * 100 + x + y), Nm(a * b + 10), Nm(a * b - 10)]),
+    s: `${a} is ${x} below 100 and ${b} is ${y} below 100. Take ${x} from ${b}: ${100 - x - y}. Multiply the gaps: ${x} × ${y} = ${x * y}. So the answer is ${100 - x - y} hundreds and ${x * y}: ${a * b}.` };
+});
+DR('d_x11', 'Number', 1, r => {
+  const n = rint(r, 12, 98), a = Math.floor(n / 10), b = n % 10, ans = Nm(11 * n);
+  return { q: `What is ${n} × 11?`, ...opts(r, ans, [Nm(11 * n + 10), Nm(11 * n - 10), Nm(a * 100 + b), Nm(11 * n + 100), Nm(a * 100 + (a + b) % 10 * 10 + b)]),
+    s: `Write ${a} and ${b} apart and put ${a} + ${b} = ${a + b} in the middle${a + b >= 10 ? `, carrying the 1 into the front digit` : ''}. That gives ${11 * n}.` };
+});
+DR('d_x25', 'Number', 1, r => {
+  const n = rint(r, 12, 96), ans = Nm(25 * n);
+  return { q: `What is ${n} × 25?`, ...opts(r, ans, [Nm(25 * n + 25), Nm(25 * n - 25), Nm(20 * n), Nm(25 * n + 100), Nm(n * 100 / 2)]),
+    s: `25 is 100 ÷ 4. So ${n} × 25 = ${n} × 100 ÷ 4 = ${n * 100} ÷ 4 = ${25 * n}.` };
+});
+DR('d_dots', 'Number', 2, r => {
+  const m = rint(r, 2, 9) * 10, dd = rint(r, 1, 4), ans = Nm(m * m - dd * dd);
+  return { q: `What is ${m - dd} × ${m + dd}?`, ...opts(r, ans, [Nm(m * m), Nm(m * m + dd * dd), Nm(m * m - dd), Nm(m * m - 2 * dd), Nm(m * m - dd * dd - 10)]),
+    s: `Both numbers are ${dd} away from ${m}. So the product is ${m}² − ${dd}² = ${m * m} − ${dd * dd} = ${m * m - dd * dd}.` };
+});
+DR('d_sumrange', 'Number', 2, r => {
+  const a = rint(r, 1, 40), b = a + rint(r, 9, 40), n = b - a + 1, S = n * (a + b) / 2, ans = Nm(S);
+  return { q: `What is ${a} + ${a + 1} + ${a + 2} + … + ${b}?`, ...opts(r, ans, [Nm(Math.round((b - a) * (a + b) / 2)), Nm(S + a), Nm(S - b), Nm(b * (b + 1) / 2), Nm(S + n)]),
+    s: `There are ${b} − ${a} + 1 = ${n} numbers. The sum is the number of terms times the average of the first and last: ${n} × (${a} + ${b}) ÷ 2 = ${S}.` };
+});
+DR('d_odds', 'Number', 1, r => {
+  const n = rint(r, 6, 30), ans = Nm(n * n);
+  return { q: `What is 1 + 3 + 5 + … + ${2 * n - 1}?`, ...opts(r, ans, [Nm((2 * n - 1) * (2 * n - 1)), Nm(n * (n + 1)), Nm((n - 1) * (n - 1)), Nm((n + 1) * (n + 1)), Nm(n * (2 * n - 1))]),
+    s: `${2 * n - 1} = 2 × ${n} − 1, so there are ${n} odd numbers. The first <i>n</i> odd numbers add up to <i>n</i>². So the answer is ${n}² = ${n * n}.` };
+});
+DR('d_mod9', 'Number', 1, r => {
+  const N = rint(r, 100000, 999999), dsum = String(N).split('').reduce((a, c) => a + +c, 0), m = rpick(r, [9, 9, 3]), rem = N % m, ans = Nm(rem);
+  return { q: `What is the remainder when ${N} is divided by ${m}?`, ...opts(r, ans, rshuf(r, Array.from({ length: Math.max(m, 6) }, (_, i) => i % 9).filter(v => v !== rem)).map(v => Nm(v)), { fill: k => Nm(rem + k + 9) }),
+    s: `A number leaves the same remainder as its digit sum. The digits add to ${dsum}${dsum >= 10 ? `, and ${dsum} leaves ${dsum % m} on dividing by ${m}` : ''}. So the remainder is ${rem}.` };
+});
+DR('d_div11', 'Number', 2, r => {
+  const ok = 11 * rint(r, 92, 908), alt = n => { const d = String(n).split('').map(Number); return d.reduce((a, x, i) => a + (i % 2 ? -x : x), 0); };
+  const others = []; while (others.length < 4) { const x = ok + rpick(r, [-9, -2, -1, 1, 2, 10, 20, 99, 101]) * rint(r, 1, 3); if (x % 11 && x > 999 && x < 10000 && !others.includes(x)) others.push(x); }
+  return { q: `Which of these numbers is a multiple of 11?`, ...opts(r, Nm(ok), others.map(x => Nm(x))),
+    s: `Alternately add and subtract the digits. For ${ok}: ${String(ok).split('').map((x, i) => (i ? (i % 2 ? ' − ' : ' + ') : '') + x).join('')} = ${alt(ok)}, which is ${alt(ok) === 0 ? '0' : 'a multiple of 11'}. So ${ok} is a multiple of 11.` };
+});
+DR('d_pctswap', 'Ratio & percentages', 1, r => {
+  const [a, step] = rpick(r, [[25, 4], [50, 2], [20, 5], [5, 20], [40, 5], [75, 4]]); let b; do { b = step * rint(r, 3, Math.floor(96 / step)); } while (b === a || b % 10 === 0 && a === 50);
+  const v = a * b / 100, ans = Nm(v);
+  return { q: `What is ${b}% of ${a}?`, ...opts(r, ans, [Nm(v * 10), Nm(v + 1), Nm(v - 1), Nm(v * 2), Nm(b - a > 0 ? b - a : v + 5)]),
+    s: `<i>a</i>% of <i>b</i> is the same as <i>b</i>% of <i>a</i>. So ${b}% of ${a} = ${a}% of ${b}. That is ${b} × ${a / 100} = ${v}.` };
+});
+DR('d_rates', 'Ratio & percentages', 2, r => {
+  const [a, b] = rpick(r, [[3, 6], [4, 12], [6, 12], [10, 15], [12, 24], [20, 30], [6, 3], [12, 4], [10, 40], [15, 30]]), t = a * b / (a + b), ans = Nm(t, ' minutes');
+  const who = rpick(r, [['One tap fills a bath', 'another'], ['One printer prints the job', 'another'], ['Ana paints the fence', 'Ben']]);
+  return { q: `${who[0]} in ${a} minutes and ${who[1]} in ${b} minutes. How long do they take working together?`, ...opts(r, ans, [Nm((a + b) / 2, ' minutes'), Nm(a + b, ' minutes'), Nm(Math.abs(a - b) || t + 2, ' minutes'), Nm(t + 1, ' minutes'), Nm(Math.min(a, b) - 1 > 0 && Math.min(a, b) - 1 !== t ? Math.min(a, b) - 1 : t + 3, ' minutes')]),
+    s: `Rates add, times do not. Together they do 1/${a} + 1/${b} = ${a + b}/${a * b} of the job each minute. So the job takes ${a * b} ÷ ${a + b} = ${t} minutes.` };
+});
+DR('d_triple', 'Geometry', 1, r => {
+  const [p, q, h] = rpick(r, [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25], [20, 21, 29]]), k = rint(r, 1, Math.floor(60 / h)), a = p * k, b = q * k, c = h * k, hyp = r() < 0.6;
+  const ans = Nm(hyp ? c : b);
+  return { q: hyp ? `A right-angled triangle has shorter sides ${a} and ${b}. How long is the hypotenuse?` : `A right-angled triangle has hypotenuse ${c} and one shorter side ${a}. How long is the third side?`, ...opts(r, ans, hyp ? [Nm(a + b), Nm(c + k), Nm(c - k), Nm(b + k)] : [Nm(c - a), Nm(b + k), Nm(b - k), Nm(c + a)]),
+    s: `${a}, ${b}, ${c} is ${k === 1 ? 'the' : `${k} × the`} ${p}-${q}-${h} triple. So the ${hyp ? 'hypotenuse' : 'third side'} is ${hyp ? c : b}.` };
+});
+DR('d_diag', 'Geometry', 1, r => {
+  const dd = 2 * rint(r, 1, 10), ans = Nm(dd * dd / 2);
+  return { q: `The diagonal of a square is ${dd} cm long. What is the area of the square, in cm²?`, ...opts(r, ans, [Nm(dd * dd), Nm(dd * dd / 4), Nm(2 * dd), Nm(dd * dd / 2 + dd)]),
+    s: `A square is two right-angled isosceles triangles, or think of it as a rhombus: area = ½ × diagonal². So ½ × ${dd}² = ${dd * dd / 2}.` };
+});
+DR('d_scale', 'Geometry', 1, r => {
+  if (r() < 0.5) { const k = rint(r, 2, 5), vol = r() < 0.5, ans = Nm(vol ? k ** 3 : k * k);
+    return { q: `Every length of a ${vol ? 'cube' : 'square'} is multiplied by ${k}. By what factor does its ${vol ? 'volume' : 'area'} increase?`, ...opts(r, ans, [Nm(k), Nm(vol ? k * k : k ** 3), Nm(3 * k), Nm(2 * k), Nm(k ** 4)]), s: `${vol ? 'Volume' : 'Area'} scales by the ${vol ? 'cube' : 'square'} of the length factor: ${k}${vol ? '³' : '²'} = ${vol ? k ** 3 : k * k}.` }; }
+  let a, b; do { a = rint(r, 1, 5); b = rint(r, 2, 7); } while (a >= b || gcd(a, b) !== 1);
+  const R = (x, y) => ({ k: x / y, t: `${x} : ${y}` }), ans = R(a * a, b * b);
+  return { q: `Two similar shapes have lengths in the ratio ${a} : ${b}. What is the ratio of their areas?`, ...opts(r, ans, [R(a, b), R(a ** 3, b ** 3), R(2 * a, 2 * b + 1), R(a * a, b), R(a, b * b)]), s: `Areas scale with the square of lengths: ${a}² : ${b}² = ${a * a} : ${b * b}.` };
+});
+DR('d_repeats', 'Counting & probability', 2, r => {
+  const W = rpick(r, ['LEVEL', 'APPLE', 'BANANA', 'LETTER', 'PEPPER', 'COFFEE', 'CHEESE', 'ARRAY', 'MAMMAL', 'TOFFEE', 'GIGGLE', 'REFER']);
+  const f = n => (n <= 1 ? 1 : n * f(n - 1)), cnt = {}; for (const c of W) cnt[c] = (cnt[c] || 0) + 1;
+  const reps = Object.entries(cnt).filter(e => e[1] > 1), den = reps.reduce((a, e) => a * f(e[1]), 1), v = f(W.length) / den, ans = Nm(v);
+  return { q: `In how many different ways can the letters of ${W} be arranged in a row?`, ...opts(r, ans, [Nm(f(W.length)), Nm(f(W.length) / f(reps[0][1])), Nm(v * 2), Nm(v / 2 | 0 || v + 3), Nm(v + W.length)]),
+    s: `${W.length} letters can be ordered in ${W.length}! = ${f(W.length)} ways. Divide by the repeats: ${reps.map(e => `${e[0]} appears ${e[1]} times (÷ ${f(e[1])})`).join(', ')}. ${f(W.length)} ÷ ${den} = ${v}.` };
+});
+DR('d_choose', 'Counting & probability', 2, r => {
+  const n = rint(r, 5, 10), k = rint(r, 2, 4), v = choose(n, k), ord = Array.from({ length: k }, (_, i) => n - i).reduce((a, b) => a * b, 1), ans = Nm(v);
+  const ctx = rpick(r, [[`A team of ${k} is picked from ${n} players`, 'teams'], [`${NUMW[k][0].toUpperCase() + NUMW[k].slice(1)} toppings are chosen from ${n}`, 'choices'], [`A committee of ${k} is chosen from ${n} people`, 'committees']]);
+  return { q: `${ctx[0]}. How many different ${ctx[1]} are possible?`, ...opts(r, ans, [Nm(ord), Nm(n * k), Nm(choose(n, k - 1) === v ? v + 1 : choose(n, k - 1)), Nm(v + n), Nm(2 ** n > v ? 2 ** n : v * 2)]),
+    s: `Order does not matter. ${Array.from({ length: k }, (_, i) => n - i).join(' × ')} = ${ord} counts ordered choices, and each group is counted ${k}! = ${ord / v} times. So ${ord} ÷ ${ord / v} = ${v}.` };
+});
+DR('d_atleast', 'Counting & probability', 2, r => {
+  if (r() < 0.6) { const n = rint(r, 2, 6), ans = Fr(2 ** n - 1, 2 ** n);
+    return { q: `A fair coin is tossed ${n} times. What is the probability of at least one head?`, ...opts(r, ans, [Fr(1, 2), Fr(n, 2 ** n), Fr(1, 2 ** n), Fr(n - 1, n), Fr(2 ** n - 2, 2 ** n)]), s: `Find the opposite: no heads at all has probability (½)<sup>${n}</sup> = 1/${2 ** n}. So at least one head is 1 − 1/${2 ** n} = ${ans.t}.` }; }
+  const n = rint(r, 2, 3), ans = Fr(6 ** n - 5 ** n, 6 ** n);
+  return { q: `${n === 2 ? 'Two' : 'Three'} fair dice are rolled. What is the probability that at least one shows a six?`, ...opts(r, ans, [Fr(n, 6), Fr(1, 6), Fr(5 ** n, 6 ** n), Fr(n, 36), Fr(6 ** n - 5 ** n - 1, 6 ** n)]), s: `Find the opposite: no sixes has probability (5/6)<sup>${n}</sup> = ${5 ** n}/${6 ** n}. So at least one six is 1 − ${5 ** n}/${6 ** n} = ${ans.t}.` };
+});
+DR('d_pigeon', 'Logic & puzzles', 1, r => {
+  const c = rint(r, 3, 7), k = rint(r, 2, 4), v = c * (k - 1) + 1, ans = Nm(v), it = rpick(r, [['socks', 'colours'], ['marbles', 'colours'], ['cards', 'suits']]);
+  const cc = it[0] === 'cards' ? 4 : c, vv = it[0] === 'cards' ? 4 * (k - 1) + 1 : v;
+  return { q: `A bag holds plenty of ${it[0]} in ${cc} ${it[1]}. How many must you take, without looking, to be sure of getting ${k} of the same ${it[1].slice(0, -1)}?`, ...opts(r, Nm(vv), [Nm(cc * k), Nm(cc + k), Nm(cc * (k - 1)), Nm(vv + 1), Nm(k + 1)]),
+    s: `In the worst case you get ${k - 1} of every ${it[1].slice(0, -1)} first: ${cc} × ${k - 1} = ${cc * (k - 1)}. The next one must make ${k} of a kind. So ${vv}.` };
+});
+DR('d_recip', 'Algebra', 2, r => {
+  const k = rint(r, 2, 9), minus = r() < 0.35, v = minus ? k * k + 2 : k * k - 2, ans = Nm(v);
+  return { q: `The number <i>x</i> satisfies <i>x</i> ${minus ? '−' : '+'} 1/<i>x</i> = ${k}. What is <i>x</i>² + 1/<i>x</i>²?`, ...opts(r, ans, [Nm(k * k), Nm(minus ? k * k - 2 : k * k + 2), Nm(2 * k), Nm(v + 1), Nm(v - 1)]),
+    s: `Square both sides: <i>x</i>² ${minus ? '−' : '+'} 2 + 1/<i>x</i>² = ${k * k}. So <i>x</i>² + 1/<i>x</i>² = ${k * k} ${minus ? '+' : '−'} 2 = ${v}.` };
+});
+DR('d_sfft', 'Algebra', 3, r => {
+  let p, q; do { p = rpick(r, [2, 3, 5, 7, 11, 13]); q = rpick(r, [3, 5, 7, 11, 13, 17]); } while (p >= q);
+  const N = p * q - 1, ans = Nm(p + q - 2);
+  return { q: `The positive whole numbers <i>m</i> and <i>n</i> satisfy <i>mn</i> + <i>m</i> + <i>n</i> = ${N}. What is <i>m</i> + <i>n</i>?`, ...opts(r, ans, [Nm(p + q), Nm(p + q - 1), Nm(N - 1), Nm(Math.round(Math.sqrt(N)) * 2), Nm(p * q)]),
+    s: `Add 1 to both sides and factorise: (<i>m</i> + 1)(<i>n</i> + 1) = ${N + 1} = ${p} × ${q}. Both brackets are at least 2, so they are ${p} and ${q}. Then <i>m</i> and <i>n</i> are ${p - 1} and ${q - 1}, and <i>m</i> + <i>n</i> = ${p + q - 2}.` };
+});
+DR('d_parity', 'Algebra', 1, r => {
+  const n = '<i>n</i>', evenA = [`${n}² + ${n}`, `${n}² − ${n}`, `${n}³ − ${n}`, `(${n} + 1)(${n} + 2)`, `${n}(${n} + 3)`];
+  const oddA = [`${n}² + ${n} + 1`, `2${n} + 1`, `${n}² − ${n} + 3`, `4${n} − 1`];
+  const some = [`${n}² + 1`, `3${n}`, `${n} + 4`, `${n}² + 2`, `5${n} + 1`, `${n}³`];
+  const wantEven = r() < 0.6, right = rpick(r, wantEven ? evenA : oddA), pool = rshuf(r, some.concat(wantEven ? oddA : evenA)).slice(0, 4);
+  return { q: `The number <i>n</i> is a whole number. Which of these is always ${wantEven ? 'even' : 'odd'}?`, ...opts(r, { k: 0, t: right }, pool.map((t, i) => ({ k: i + 1, t })), { sort: false }),
+    s: `${n}(${n} + 1) is a product of two consecutive whole numbers, so it is always even. ${wantEven ? `${right} can be written using that product (or a similar one with a consecutive pair), so it is always even.` : `${right} is an even number plus an odd number, so it is always odd.`} Each other option changes with ${n}: try ${n} = 1 and ${n} = 2.` };
+});
+DR('d_amgm', 'Algebra', 2, r => {
+  const k = rint(r, 2, 12), ans = Nm(2 * k);
+  return { q: `The positive numbers <i>x</i> and <i>y</i> have product ${k * k}. What is the smallest possible value of <i>x</i> + <i>y</i>?`, ...opts(r, ans, [Nm(k), Nm(k * k + 1), Nm(2 * k + 1), Nm(k * k), Nm(2 * k - 1)]),
+    s: `For a fixed product, the sum is smallest when the numbers are equal. <i>x</i> = <i>y</i> = ${k} gives ${2 * k}. In general (<i>x</i> + <i>y</i>)² ≥ 4<i>xy</i> = ${4 * k * k}, so <i>x</i> + <i>y</i> ≥ ${2 * k}.` };
+});
+
 /* Build one question from its id. Returns null if the template rejects the seed. */
 function genById(id) {
   const [, tid, seed] = id.split('.'), T = GEN.find(t => t.id === tid); if (!T) return null;
@@ -1957,6 +2104,118 @@ function genFresh(T, salt) {
   for (let i = 0; i < 30; i++) { const q = genById(`G.${T.id}.${salt}${i ? '-' + i : ''}`); if (q) return q; }
   return null;
 }
+
+// Shortcuts: one trick each, a quick worked example, and practice questions that use it.
+// tags say which challenges the trick turns up in; drill lists the question recipes that practise it.
+const SC_TAGS = ['JMC', 'IMC', 'SMC', 'Kangaroo', 'Olympiad'];
+const SC_TAG_NAME = { JMC: 'Junior', IMC: 'Intermediate', SMC: 'Senior', Kangaroo: 'Kangaroo', Olympiad: 'Olympiad' };
+const SC_CATS = ['Mental arithmetic', 'Number', 'Percentages and ratio', 'Algebra', 'Geometry', 'Counting and probability', 'Logic'];
+const SHORTCUTS = [];
+const SC = (id, cat, tags, title, trick, exq, exs, drill) => SHORTCUTS.push({ id, cat, tags, title, trick, exq, exs, drill });
+
+SC('cancel', 'Mental arithmetic', ['JMC', 'IMC'], 'Cancel before you multiply', 'In any division, split the numbers into factors and cancel first. You almost never need the big product.',
+  'What is 6 × 7 × 8 ÷ 21?', ['21 = 3 × 7, so cancel the 7.', '6 ÷ 3 = 2, leaving 2 × 8 = 16.'], ['d_cancel']);
+SC('sq5', 'Mental arithmetic', ['JMC', 'IMC'], 'Squaring numbers ending in 5', 'Multiply the front part by one more than itself, then write 25 on the end.',
+  'What is 65²?', ['6 × 7 = 42.', 'Write 25 after it: 4225.'], ['d_sq5']);
+SC('near100', 'Mental arithmetic', ['IMC'], 'Multiplying numbers near 100', 'Find how far each number is below 100. Take one gap from the other number, then multiply the gaps for the last two digits.',
+  'What is 97 × 96?', ['The gaps are 3 and 4.', '96 − 3 = 93, and 3 × 4 = 12.', 'So 97 × 96 = 9312.'], ['d_near']);
+SC('x11', 'Mental arithmetic', ['JMC', 'IMC'], 'Times 11 in your head', 'For a two-digit number, write its digits apart and put their sum in the middle. Carry if the sum is 10 or more.',
+  'What is 47 × 11?', ['4 + 7 = 11: write 1 in the middle and carry 1.', 'The front becomes 4 + 1 = 5, so 517.'], ['d_x11']);
+SC('x25', 'Mental arithmetic', ['JMC'], 'Times 25', '25 is 100 ÷ 4, so multiply by 100 and divide by 4.',
+  'What is 36 × 25?', ['36 ÷ 4 = 9.', '9 × 100 = 900.'], ['d_x25']);
+SC('dots', 'Mental arithmetic', ['IMC', 'SMC'], 'Either side of a round number', '(m − d)(m + d) = m² − d². Look for a round number exactly in the middle.',
+  'What is 49 × 51?', ['The middle is 50.', '50² − 1² = 2500 − 1 = 2499.'], ['d_dots']);
+SC('diffsq', 'Number', ['IMC', 'SMC', 'Kangaroo'], 'Difference of two squares', 'a² − b² = (a − b)(a + b). Use it whenever squares are subtracted, even under a square root.',
+  'What is √(45² − 36²)?', ['45² − 36² = 9 × 81.', '√(9 × 81) = 3 × 9 = 27.'], ['dsq']);
+SC('sumrange', 'Number', ['JMC', 'IMC'], 'Adding a run of numbers', 'For numbers going up evenly: number of terms × (first + last) ÷ 2.',
+  'What is 11 + 12 + … + 30?', ['There are 30 − 11 + 1 = 20 terms.', '20 × (11 + 30) ÷ 2 = 410.'], ['d_sumrange', 'tri']);
+SC('odds', 'Number', ['JMC', 'IMC'], 'Odd numbers add up to squares', 'The first n odd numbers add up to n².',
+  'What is 1 + 3 + 5 + … + 19?', ['19 is the 10th odd number.', 'So the total is 10² = 100.'], ['d_odds']);
+SC('mod9', 'Number', ['JMC', 'IMC'], 'Digit sums for 3 and 9', 'A number leaves the same remainder as its digit sum when divided by 9, and the same when divided by 3.',
+  'What is the remainder when 7358 is divided by 9?', ['7 + 3 + 5 + 8 = 23, and 2 + 3 = 5.', 'So the remainder is 5.'], ['d_mod9']);
+SC('div11', 'Number', ['IMC'], 'Testing for 11', 'Alternately add and subtract the digits. If you get 0 or a multiple of 11, so is the number.',
+  'Is 2816 a multiple of 11?', ['2 − 8 + 1 − 6 = −11.', 'That is a multiple of 11, so yes: 2816 = 11 × 256.'], ['d_div11']);
+SC('lastdig', 'Number', ['IMC', 'SMC', 'Kangaroo'], 'Last digits repeat', 'Last digits of powers repeat every 4 at most. Use the remainder of the power when divided by 4.',
+  'What is the last digit of 7<sup>2026</sup>?', ['Last digits of powers of 7 go 7, 9, 3, 1, then repeat.', '2026 leaves 2 on dividing by 4, so the answer is 9.'], ['ld']);
+SC('factors', 'Number', ['IMC', 'SMC'], 'Counting factors', 'Write the number in primes. Add 1 to each power and multiply.',
+  'How many factors does 72 have?', ['72 = 2³ × 3².', '(3 + 1)(2 + 1) = 12.'], ['fac']);
+SC('zeros', 'Number', ['IMC', 'SMC'], 'Zeros on the end of n!', 'Count the 5s: n ÷ 5, plus n ÷ 25, plus n ÷ 125, ignoring remainders.',
+  'How many zeros are at the end of 100!?', ['100 ÷ 5 = 20 and 100 ÷ 25 = 4.', 'So 24 zeros.'], ['zer']);
+SC('lcmrem', 'Number', ['JMC', 'IMC'], 'Same remainder every time', 'If a number leaves remainder r on dividing by several numbers, it is r more than a common multiple.',
+  'What is the smallest number above 1 that leaves remainder 1 when divided by 2, 3, 4, 5 and 6?', ['The lowest common multiple of 2, 3, 4, 5, 6 is 60.', 'So the answer is 61.'], ['lcm']);
+SC('pctswap', 'Percentages and ratio', ['JMC', 'IMC'], 'Percentages swap', 'a% of b equals b% of a. Swap to whichever is easier.',
+  'What is 36% of 25?', ['Swap it: 25% of 36.', 'A quarter of 36 is 9.'], ['d_pctswap']);
+SC('mult', 'Percentages and ratio', ['IMC'], 'Percentage multipliers', 'Turn each change into a multiplier and multiply them. Up 20% is × 1.2. Down 25% is × 0.75.',
+  'A price goes up 25%, then down 20%. What is the overall change?', ['1.25 × 0.8 = 1.', 'No change overall.'], ['pch']);
+SC('revpct', 'Percentages and ratio', ['JMC', 'IMC'], 'Undoing a percentage', 'Divide by the multiplier. Never add the percentage back on.',
+  'After a 20% cut, a coat costs £60. What did it cost before?', ['£60 is 80% of the old price.', '60 ÷ 0.8 = £75.'], ['rev']);
+SC('totals', 'Percentages and ratio', ['JMC', 'IMC'], 'Means are really totals', 'Turn every mean into a total straight away: total = mean × how many.',
+  'Five numbers have mean 12. With a sixth number the mean is 13. What is the sixth number?', ['The totals are 60 and 78.', 'So the sixth number is 18.'], ['mean']);
+SC('middle', 'Algebra', ['JMC', 'IMC'], 'The middle of consecutive numbers', 'For an odd number of evenly spaced numbers, the middle one is the mean.',
+  'Five consecutive odd numbers add up to 135. What is the largest?', ['The middle one is 135 ÷ 5 = 27.', 'The largest is 27 + 4 = 31.'], ['cons']);
+SC('avgspd', 'Percentages and ratio', ['IMC'], 'The average speed trap', 'Average speed is total distance ÷ total time. Pick a distance that suits both speeds.',
+  'Out at 12 km/h, back at 8 km/h. What is the average speed?', ['Use 24 km each way: 2 hours plus 3 hours.', '48 km in 5 hours is 9.6 km/h.'], ['spd']);
+SC('rates', 'Percentages and ratio', ['JMC', 'IMC'], 'Add rates, not times', 'Turn each time into a rate (jobs per minute or per hour) and add the rates.',
+  'One tap fills a bath in 3 minutes and another in 6. How long together?', ['1/3 + 1/6 = 1/2 of the bath each minute.', 'So 2 minutes.'], ['d_rates']);
+SC('ratioparts', 'Percentages and ratio', ['JMC', 'IMC', 'Kangaroo'], 'Find what one part is worth', 'In ratio questions, work out one part first. Whatever does not change stays the same number of parts.',
+  'Red to blue is 2 : 3. Six red are added and it becomes 4 : 3. How many blue?', ['Blue stays at 3 parts, red goes from 2 to 4 parts.', '2 parts = 6, so 1 part = 3 and blue = 9.'], ['rat']);
+SC('mixture', 'Percentages and ratio', ['IMC'], 'Mixtures by distance', 'The amounts are in the ratio of the distances to the target, the other way round.',
+  'Drinks of 20% and 50% juice are mixed to make 40%. In what ratio?', ['40 is 20 away from 20 and 10 away from 50.', 'So the amounts are 10 : 20 = 1 : 2.'], ['mix']);
+SC('backwards', 'Logic', ['JMC', 'IMC'], 'Work backwards', 'If you know how a story ends, undo each step starting from the last one.',
+  'Spend a third, then a quarter of the rest, then £6. £12 is left. What was the start?', ['Before the £6: £18.', '£18 is three quarters of £24.', '£24 is two thirds of £36.'], ['wb']);
+SC('mod7', 'Logic', ['JMC', 'IMC'], 'Days of the week', 'Days repeat every 7, so only the remainder on dividing by 7 matters.',
+  'Today is Wednesday. What day is it in 100 days?', ['100 = 14 × 7 + 2.', 'Two days after Wednesday is Friday.'], ['day']);
+SC('liars', 'Logic', ['IMC', 'Kangaroo'], 'Statements that clash', 'If two statements cannot both be true, at most one is. Test “none is true” and look for a contradiction.',
+  'Five people each say “exactly k of us are lying”, for k = 1 to 5. Who is honest?', ['At most one statement is true.', 'If none were, person 5 would be right: a contradiction.', 'So four are lying, and person 4 is honest.'], ['liar']);
+SC('parity', 'Algebra', ['JMC', 'IMC', 'Olympiad'], 'Odd and even', 'n(n + 1) is always even. Odd × odd is odd. Anything × even is even.',
+  'Is n² + n + 1 ever even?', ['n² + n = n(n + 1) is always even.', 'So n² + n + 1 is always odd.'], ['d_parity']);
+SC('recip', 'Algebra', ['IMC', 'SMC'], 'Squaring x + 1/x', '(x + 1/x)² = x² + 2 + 1/x², so x² + 1/x² is the square minus 2.',
+  'If x + 1/x = 3, what is x² + 1/x²?', ['Square both sides: x² + 2 + 1/x² = 9.', 'So x² + 1/x² = 7.'], ['d_recip']);
+SC('sfft', 'Algebra', ['IMC', 'SMC', 'Olympiad'], 'Add 1 and factorise', 'mn + m + n = N becomes (m + 1)(n + 1) = N + 1. Then list factor pairs.',
+  'Positive whole numbers satisfy mn + m + n = 34. What is m + n?', ['(m + 1)(n + 1) = 35 = 5 × 7.', 'So m and n are 4 and 6, and m + n = 10.'], ['d_sfft']);
+SC('amgm', 'Algebra', ['SMC', 'Olympiad'], 'Smallest sum for a fixed product', 'For positive numbers with a fixed product, the sum is smallest when they are equal.',
+  'xy = 36 with x and y positive. What is the smallest x + y?', ['Make them equal: x = y = 6.', 'The smallest sum is 12.'], ['d_amgm']);
+SC('sumprod', 'Algebra', ['SMC'], 'Sum and product of roots', 'For x² − sx + p = 0, the roots add to s and multiply to p. Then p² + q² = s² − 2p.',
+  'The roots of x² − 5x + 3 = 0 are p and q. What is p² + q²?', ['Sum 5, product 3.', '5² − 2 × 3 = 19.'], ['roots']);
+SC('tangent', 'Algebra', ['SMC'], 'Tangent means a repeated root', 'Set the line equal to the curve. It just touches when the discriminant is zero.',
+  'y = 2x + c touches y = x². What is c?', ['x² − 2x − c = 0 needs a repeated root.', '4 + 4c = 0, so c = −1.'], ['tan']);
+SC('telescope', 'Algebra', ['SMC', 'Olympiad'], 'Telescoping sums', '1/(n(n + 1)) = 1/n − 1/(n + 1). Add them and almost everything cancels.',
+  'What is 1/(1×2) + 1/(2×3) + … + 1/(9×10)?', ['It equals 1 − 1/10.', 'So 9/10.'], ['tele']);
+SC('extang', 'Geometry', ['JMC', 'IMC'], 'Go to the exterior angle', 'The exterior angles of any polygon add to 360°. In a regular polygon each one is 360° ÷ n.',
+  'Each interior angle of a regular polygon is 156°. How many sides?', ['Each exterior angle is 24°.', '360 ÷ 24 = 15 sides.'], ['ang']);
+SC('aroundpoint', 'Geometry', ['JMC', 'IMC', 'Kangaroo'], 'Angles round a point', 'Know the regular polygon angles: 60, 90, 108, 120, 135, 140, 144, 150. Round a point they add to 360°.',
+  'A square and a regular hexagon share an edge. What is the gap angle at their shared corner?', ['90° + 120° = 210°.', '360° − 210° = 150°.'], ['pp']);
+SC('clock', 'Geometry', ['JMC', 'IMC'], 'Clock hands', 'The hour hand moves 30° an hour and 0.5° a minute. The minute hand moves 6° a minute.',
+  'What is the angle between the hands at 4:30?', ['Minute hand: 180°. Hour hand: 4.5 × 30° = 135°.', 'The difference is 45°.'], ['clk']);
+SC('triples', 'Geometry', ['JMC', 'IMC', 'SMC'], 'Spot Pythagorean triples', '3-4-5, 5-12-13, 8-15-17, 7-24-25, 20-21-29 and their multiples save you square roots.',
+  'A right-angled triangle has shorter sides 15 and 20. Hypotenuse?', ['15, 20 is 5 × (3, 4).', 'So the hypotenuse is 5 × 5 = 25.'], ['d_triple']);
+SC('diag', 'Geometry', ['IMC'], 'A square from its diagonal', 'The area of a square is half its diagonal squared.',
+  'A square has diagonal 10. What is its area?', ['½ × 10² = 50.'], ['d_diag']);
+SC('sumhyp', 'Geometry', ['IMC', 'SMC'], 'Area from a sum and a hypotenuse', 'If a + b and the hypotenuse c are known, 2ab = (a + b)² − c², and the area is ab ÷ 2.',
+  'A right-angled triangle has hypotenuse 10 and its other sides add to 14. Area?', ['14² − 10² = 96 = 2ab.', 'So ab = 48 and the area is 24.'], ['hsa']);
+SC('incircle', 'Geometry', ['IMC', 'SMC'], 'The circle inside a right triangle', 'For a right-angled triangle, the inscribed circle has radius (a + b − c) ÷ 2.',
+  'What is the radius of the circle inside a 6-8-10 triangle?', ['(6 + 8 − 10) ÷ 2 = 2.'], ['inc']);
+SC('scale', 'Geometry', ['JMC', 'IMC'], 'Scale factors', 'Multiply lengths by k and areas go up by k², volumes by k³.',
+  'The edges of a cube are doubled. What happens to its volume?', ['2³ = 8.', 'It becomes 8 times as big.'], ['d_scale']);
+SC('shaded', 'Geometry', ['JMC', 'IMC', 'Kangaroo'], 'Big shape minus small shape', 'Shaded areas are almost always one area take away another. Four quarter circles make one whole circle.',
+  'A square of side 2 has a quarter circle of radius 1 at each corner. What is the shaded middle?', ['The quarters make one circle of area π.', 'So the shaded area is 4 − π.'], ['qc']);
+SC('grids', 'Counting and probability', ['JMC', 'IMC', 'Kangaroo'], 'Rectangles in a grid', 'A rectangle is fixed by choosing 2 of the horizontal lines and 2 of the vertical lines.',
+  'How many rectangles are in a 2 by 3 grid?', ['3 lines one way give 3 pairs; 4 lines the other way give 6 pairs.', '3 × 6 = 18.'], ['rect']);
+SC('routes', 'Counting and probability', ['IMC', 'Kangaroo'], 'Counting routes', 'On an m by n grid, a route right and up is m + n moves. Choose which n of them go up.',
+  'How many right-or-up routes cross a 3 by 3 grid?', ['6 moves, 3 of them up.', '6 × 5 × 4 ÷ 6 = 20.'], ['path']);
+SC('repeats', 'Counting and probability', ['IMC', 'SMC'], 'Arrangements with repeats', 'Arrange n letters in n! ways, then divide by the factorial of each repeated letter’s count.',
+  'How many ways can LEVEL be arranged?', ['5! = 120.', 'L and E each appear twice: 120 ÷ (2 × 2) = 30.'], ['d_repeats']);
+SC('choose', 'Counting and probability', ['IMC', 'SMC'], 'Choosing a group', 'When order does not matter, multiply down r numbers from n, then divide by r!.',
+  'How many ways are there to choose 3 people from 9?', ['9 × 8 × 7 = 504.', '504 ÷ 6 = 84.'], ['d_choose']);
+SC('atleast', 'Counting and probability', ['IMC', 'SMC'], 'At least one', 'The chance of at least one is 1 minus the chance of none.',
+  'Two dice are rolled. What is the chance of at least one six?', ['No six: 5/6 × 5/6 = 25/36.', 'So at least one six is 11/36.'], ['d_atleast']);
+SC('pigeon', 'Logic', ['JMC', 'IMC', 'Kangaroo'], 'The pigeonhole principle', 'With c boxes, c × (k − 1) + 1 objects guarantee that some box holds k.',
+  'Socks come in 4 colours. How many must you take to be sure of a pair?', ['Worst case: one of each colour, 4 socks.', 'The 5th must make a pair.'], ['d_pigeon']);
+SC('inclexcl', 'Counting and probability', ['SMC'], 'Inclusion–exclusion', 'Add the single counts, subtract the overlaps of two, add back the overlap of all three.',
+  'How many of 1 to 100 are divisible by 2, 3 or 5?', ['50 + 33 + 20 − 16 − 10 − 6 + 3.', 'That is 74.'], ['incl']);
+SC('factpow', 'Number', ['SMC', 'Olympiad'], 'Powers of a prime in n!', 'Add n ÷ p, n ÷ p², n ÷ p³ and so on, ignoring remainders.',
+  'What is the largest power of 2 dividing 20!?', ['10 + 5 + 2 + 1 = 18.', 'So 2¹⁸.'], ['pfact']);
+
 
 /* ───────── Motion, sound and haptics ─────────
    Everything here is presentation. The app works the same without it,
@@ -2076,7 +2335,7 @@ function celebHtml(c) {
   }
   return '';
 }
-const isCalmView = () => !MODE || (MODE === 'run' && RUN && RUN.done) || MODE === 'mockres' || (MODE === 'cards' && DECK && DECK.done) || (MODE === 'sprint' && SPRINT && SPRINT.done) || (MODE === 'duel' && DUEL && DUEL.done);
+const isCalmView = () => !MODE || MODE === 'sc' || (MODE === 'run' && RUN && RUN.done) || MODE === 'mockres' || (MODE === 'cards' && DECK && DECK.done) || (MODE === 'sprint' && SPRINT && SPRINT.done) || (MODE === 'duel' && DUEL && DUEL.done);
 function flushCeleb() {
   if (!CELEB.length || document.querySelector('.ov') || !isCalmView()) return;
   const c = CELEB.shift(), ov = document.createElement('div');
@@ -2124,7 +2383,7 @@ let LASTVIEW = '', MOTION_DIR = 1, LASTBAR = null, RINGSEEN = null;
 function viewKey(setup) {
   if (setup) return 'setup';
   if (!MODE) return 'tab:' + route();
-  const sub = MODE === 'lesson' && LES ? LES.page : MODE === 'run' && RUN ? RUN.i + (RUN.done ? 'd' : '') : MODE === 'cards' && DECK ? DECK.i + (DECK.done ? 'd' : '') : MODE === 'duel' && DUEL ? DUEL.i + (DUEL.done ? 'd' : '') : MODE === 'sprint' && SPRINT && SPRINT.done ? 'd' : '';
+  const sub = MODE === 'lesson' && LES ? LES.page : MODE === 'run' && RUN ? RUN.i + (RUN.done ? 'd' : '') : MODE === 'cards' && DECK ? DECK.i + (DECK.done ? 'd' : '') : MODE === 'duel' && DUEL ? DUEL.i + (DUEL.done ? 'd' : '') : MODE === 'sprint' && SPRINT && SPRINT.done ? 'd' : MODE === 'sc' && SCV ? SCV.s.id : '';
   return MODE + ':' + sub;
 }
 function transition(setup) {
@@ -2215,7 +2474,7 @@ const I = {
 
 /* ───────── State ───────── */
 const KEY = 'podium.v1';
-const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, lessons: {}, quest: null, questAll: 0, bank: null, bankCleared: 0, plan: null, target: 'Silver', freeze: 0, work: {}, gseen: {}, qd: { last: '', n: 0 }, duels: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
+const blank = () => ({ v: 1, xp: 0, streak: 0, best: 0, lastDay: '', days: {}, goal: 30, track: 'imc', exam: '', name: '', onboarded: false, lessons: {}, quest: null, questAll: 0, bank: null, bankCleared: 0, plan: null, target: 'Silver', freeze: 0, work: {}, gseen: {}, sc: {}, scf: 'All', qd: { last: '', n: 0 }, duels: 0, q: {}, cards: {}, mocks: [], badges: {}, daily: {}, sprint: 0, perfect: 0, updated: 0 });
 let S = loadState();
 function loadState() {
   try { const r = JSON.parse(localStorage.getItem(KEY)); if (r && r.v === 1) { const s = Object.assign(blank(), r); if (s.xp > 0) s.onboarded = true; return s; } } catch (e) { /* storage unavailable */ }
@@ -2301,6 +2560,8 @@ const BADGES = [
   ['bank', 'Debt collector', 'Clear 10 questions from your Mistake Bank', () => S.bankCleared >= 10],
   ['duel', 'Challenger', 'Finish a duel', () => S.duels >= 1],
   ['qd7', 'Daily grinder', 'Question of the day 7 days running', () => S.qd.n >= 7],
+  ['sc10', 'Trickster', 'Learn 10 shortcuts', () => Object.values(S.sc).filter(v => v >= 2).length >= 10],
+  ['sc30', 'Bag of tricks', 'Learn 30 shortcuts', () => Object.values(S.sc).filter(v => v >= 2).length >= 30],
   ['quest', 'Full day', 'Finish everything in Today’s plan', () => S.questAll >= 1],
   ['plan5', 'Creature of habit', 'Finish Today’s plan 5 times', () => S.questAll >= 5],
 ];
@@ -2495,7 +2756,7 @@ function setBar({ key, tone = '', title = '', hint = '', primary = null, seconda
     <div class="abar-btns">${btn(secondary, '')}${btn(primary, 'primary')}</div></div></div>`;
 }
 const app = document.getElementById('app');
-let BAR = '', BARKEY = '', DUEL = null, HOMECH = false, CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
+let SCV = null, BAR = '', BARKEY = '', DUEL = null, HOMECH = false, CONFIRM = false, BACKUP = false, SHEET = null, LES = null, LTAB = 'lessons', FACTQ = '', cloudName = '', MODE = null, RUN = null, MOCK = null, DECK = null, SPRINT = null, tickId = 0;
 const ROUTES = ['home', 'learn', 'practice', 'mocks', 'progress', 'account'];
 const readHash = () => { try { let h = String(location.hash || '').slice(1); if (h === 'remember') h = 'learn'; return ROUTES.includes(h) ? h : ''; } catch (e) { return ''; } };
 let ROUTE = readHash() || 'home';
@@ -2526,7 +2787,7 @@ function render() {
   sk.parentElement.classList.toggle('lit', S.lastDay === dayKey());
   if (!XPHOLD) setChip(document.getElementById('chip-xp'), S.xp);
   const anim = transition(setup); BAR = ''; const lastKey = BARKEY; BARKEY = '';
-  app.innerHTML = setup ? vSetup() : MODE === 'lesson' ? vLesson() : MODE === 'run' ? vRun() : MODE === 'mock' ? vMock() : MODE === 'mockres' ? vMockResult() : MODE === 'cards' ? vCards() : MODE === 'sprint' ? vSprint() : MODE === 'sheet' ? vSheet() : MODE === 'duel' ? vDuel()
+  app.innerHTML = setup ? vSetup() : MODE === 'lesson' ? vLesson() : MODE === 'run' ? vRun() : MODE === 'mock' ? vMock() : MODE === 'mockres' ? vMockResult() : MODE === 'cards' ? vCards() : MODE === 'sprint' ? vSprint() : MODE === 'sc' ? vShortcut() : MODE === 'sheet' ? vSheet() : MODE === 'duel' ? vDuel()
     : ({ home: vHome, practice: vPractice, mocks: vMocks, learn: vLearn, progress: vProgress, account: vAccount })[r]();
   const me = document.getElementById('me-btn'); if (me) me.textContent = (S.name || cloudName || '?').trim().charAt(0).toUpperCase() || '?';
   const host = document.getElementById('bar'); host.innerHTML = BAR; document.body.classList.toggle('has-bar', !!BAR);
@@ -2534,7 +2795,7 @@ function render() {
   afterRender(anim);
 }
 function go(mode) { MODE = mode; render(); window.scrollTo(0, 0); }
-function leave() { clearInterval(tickId); MODE = null; RUN = null; DECK = null; SPRINT = null; SHEET = null; LES = null; DUEL = null; render(); window.scrollTo(0, 0); }
+function leave() { clearInterval(tickId); MODE = null; RUN = null; DECK = null; SPRINT = null; SHEET = null; LES = null; DUEL = null; SCV = null; render(); window.scrollTo(0, 0); }
 window.addEventListener('hashchange', () => { const h = readHash(); if (!h || h === ROUTE) return; setRoute(h); });
 
 const trackChips = () => `<div class="chips" role="tablist" aria-label="Track">${TRACKS.map(t => `<button class="chip" role="tab" aria-selected="${t.id === S.track}" data-act="track" data-id="${t.id}">${t.short}</button>`).join('')}</div>`;
@@ -2597,7 +2858,7 @@ function vHome() {
     <button class="shortcut" data-act="golearn"><span class="sc-ic">${I.remember}</span><b>Lessons</b><small>${lsDone} of ${ls.length} done</small></button>
     <button class="shortcut" data-act="nav" data-to="practice"><span class="sc-ic green">${I.practice}</span><b>Practice</b><small>${hasGen(S.track) ? 'Always new questions' : `${done} of ${all} mastered`}</small></button>
     ${BANDS[S.track] ? `<button class="shortcut" data-act="nav" data-to="mocks"><span class="sc-ic orange">${I.mocks}</span><b>Mock paper</b><small>Timed, real marking</small></button>` : ''}
-    <button class="shortcut" data-act="gofacts"><span class="sc-ic gold">${I.check}</span><b>Remember</b><small>Key facts, searchable</small></button>
+    <button class="shortcut" data-act="goshort"><span class="sc-ic gold">${I.bolt}</span><b>Shortcuts</b><small>${scLearned()} of ${SHORTCUTS.length} learned</small></button>
   </div>
   <p class="course">Course: <b>${tr.name}</b> · <button class="link" data-act="homech">Change</button></p>`;
 }
@@ -2642,7 +2903,7 @@ function finishAnswer(q, ok, gain) {
   const banked = RUN.bank && S.bank[q.id] ? Object.assign({}, S.bank[q.id]) : null;
   RUN.times.push(Date.now() - RUN.t0);
   record(q, ok); if (banked) { S.bank[q.id] = banked; bankResult(q, ok); }
-  RUN.ok = ok; RUN.gain = gain; RUN.xp += gain; if (ok) RUN.correct++;
+  RUN.ok = ok; RUN.gain = gain; RUN.xp += gain; if (ok) RUN.correct++; (RUN.right = RUN.right || [])[RUN.i] = ok;
   addXP(gain); checkBadges(); save();
   if (gain > 0 && !calmMotion()) XPHOLD = true;
   render();
@@ -2831,9 +3092,10 @@ function factsHtml() {
   return out || `<p class="empty">Nothing matches “${esc(FACTQ)}”. Try a shorter word, such as “prime” or “circle”.</p>`;
 }
 function vLearn() {
-  const tabs = [['lessons', 'Lessons'], ['facts', 'Remember'], ['cards', 'Flashcards']];
+  const tabs = [['lessons', 'Lessons'], ['sc', 'Shortcuts'], ['facts', 'Remember'], ['cards', 'Cards']];
   let body = '';
-  if (LTAB === 'lessons') {
+  if (LTAB === 'sc') body = scHtml();
+  else if (LTAB === 'lessons') {
     const ls = LESSONS.filter(l => l.tr === S.track);
     body = [1, 2, 3].map(lv => { const g = ls.filter(l => l.lv === lv); return g.length ? `<h3 class="section">${LEVELS[lv]}</h3><div class="list">${g.map(l => `
       <button class="rowbtn" data-act="lesson" data-id="${l.id}"><span class="node ${S.lessons[l.id] ? 'done' : ''}">${S.lessons[l.id] ? I.check : I.remember}</span>
@@ -2850,9 +3112,9 @@ function vLearn() {
     <button class="rowbtn" data-act="deck" data-id="${d.id}"><span class="rowbtn-main"><b>${d.name}</b><small>${TR[d.tr].short} · ${d.note}</small>${bar(100 * l / n)}</span><span class="pill">${l}/${n}</span></button>`; }).join('')}</div>`;
   }
   return `
-  <header class="page-head"><h1>Learn</h1><p class="muted">Lessons, key facts and flashcards</p></header>
+  <header class="page-head"><h1>Learn</h1><p class="muted">Lessons, shortcuts, key facts and flashcards</p></header>
   <div class="seg" role="tablist" aria-label="Learn sections">${tabs.map(([k, n]) => `<button role="tab" aria-selected="${LTAB === k}" data-act="ltab" data-id="${k}">${n}</button>`).join('')}</div>
-  ${trackChips()}
+  ${LTAB === 'sc' ? '' : trackChips()}
   ${body}`;
 }
 const LFIG_AT = { tac: 1, div: 'ex', pct: 0, ang: 2, fac: 1, last: 1, rate: 'ex', area: 'ex', alg: 0, count: 'ex', prob: 'ex', gtrig: 1, gcirc: 0 };
@@ -3016,6 +3278,47 @@ function vDuel() {
       <div class="rv-body"><p class="stem">${q.q}</p>${fig(q)}<p><b>Answer: ${LETTERS[q.a]}</b> (${q.o[q.a]})</p>${stepsHtml(steps(q), 99)}</div></details>`; }).join('')}</div></div>`;
 }
 
+/* ───────── Shortcuts ───────── */
+const scLearned = () => SHORTCUTS.filter(x => (S.sc[x.id] || 0) >= 2).length;
+const scList = () => SHORTCUTS.filter(x => S.scf === 'All' || x.tags.includes(S.scf));
+const scOfDay = () => SHORTCUTS[Math.floor(seeded('sc' + dayKey())() * SHORTCUTS.length)];
+function scHtml() {
+  const L = scList(), d = scOfDay(), ok = x => (S.sc[x.id] || 0) >= 2;
+  return `<section class="card sc-hero">
+      <span class="eyebrow">Shortcut of the day</span><h2>${d.title}</h2><p>${d.trick}</p>
+      <div class="row gap wrap"><button class="btn primary" data-act="scopen" data-id="${d.id}">Learn it</button><button class="btn" data-act="scrandom">Random shortcut</button></div>
+    </section>
+    <div class="row between sc-meta"><span class="muted"><b>${scLearned()}</b> of ${SHORTCUTS.length} learned</span><button class="link" data-act="scmix">Mixed drill · 10 questions</button></div>
+    <div class="chips" role="tablist" aria-label="Challenge">${['All', ...SC_TAGS].map(t => `<button class="chip" role="tab" aria-selected="${S.scf === t}" data-act="scf" data-id="${t}">${t === 'All' ? 'All' : SC_TAG_NAME[t]}</button>`).join('')}</div>
+    ${SC_CATS.map(cat => { const g = L.filter(x => x.cat === cat); return g.length ? `<h3 class="section">${cat}</h3><div class="list">${g.map(x => `
+      <button class="rowbtn" data-act="scopen" data-id="${x.id}"><span class="node ${ok(x) ? 'done' : ''}">${ok(x) ? I.check : I.bolt}</span>
+      <span class="rowbtn-main"><b>${x.title}</b><small>${x.tags.map(t => SC_TAG_NAME[t]).join(' · ')}</small></span><span class="rowbtn-go">${I.arrow}</span></button>`).join('')}</div>` : ''; }).join('')}`;
+}
+function vShortcut() {
+  const x = SCV.s, n = S.sc[x.id] || 0;
+  setBar({ key: 'sc', hint: n >= 2 ? 'Learned · 3 more any time' : '3 questions · 2 right learns it', secondary: ['scrandom', 'Another'], primary: ['sctry', `Try it ${I.arrow}`] });
+  return `<div class="run">
+    <div class="run-top"><button class="icon" data-act="quit" aria-label="Close shortcut">${I.cross}</button><span class="count">${x.cat}</span></div>
+    <article class="qcard sc-card">
+      <div class="tagrow">${x.tags.map(t => `<span class="tag">${SC_TAG_NAME[t]}</span>`).join('')}${n >= 2 ? `<span class="tag good">${I.check} Learned</span>` : ''}</div>
+      <h1>${x.title}</h1>
+      <p class="idea">${x.trick}</p>
+      <div class="example"><span class="eyebrow">Example</span><p class="stem">${x.exq}</p>
+        ${SCV.shown ? stepsHtml(x.exs, x.exs.length) : `<button class="btn" data-act="scshow">Show how</button>`}</div>
+    </article></div>`;
+}
+function scQs(list, n) { // fresh questions that use the given shortcuts, no two alike
+  const out = [], sigs = new Set();
+  for (let i = 0; out.length < n && i < n * 14; i++) {
+    const x = list[i % list.length], tid = x.drill[Math.floor(i / list.length) % x.drill.length];
+    const q = BYID[`G.${tid}.sc${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`];
+    if (!q) continue; const sg = sigOf(q);
+    if (sigs.has(sg) || (S.gseen[sg] && i < n * 7)) continue;
+    sigs.add(sg); q.scid = x.id; out.push(q);
+  }
+  return out;
+}
+
 /* ───────── Account ───────── */
 const encodeState = () => btoa(unescape(encodeURIComponent(JSON.stringify(S))));
 function vAccount() {
@@ -3097,6 +3400,13 @@ const ACT = {
   hint: () => { RUN.hint = true; render(); },
   step: () => { RUN.step++; render(); },
   ltab: d => { LTAB = d.id; render(); },
+  goshort: () => { LTAB = 'sc'; setRoute('learn'); },
+  scf: d => { S.scf = d.id; save(); render(); },
+  scopen: d => { const x = SHORTCUTS.find(y => y.id === d.id); if (!x) return; SCV = { s: x, shown: false }; go('sc'); },
+  scrandom: () => { const L = scList().filter(y => !SCV || y.id !== SCV.s.id), x = L[Math.floor(Math.random() * L.length)]; if (MODE === 'sc') { SCV = { s: x, shown: false }; render(); window.scrollTo(0, 0); } else { SCV = { s: x, shown: false }; go('sc'); } },
+  scshow: () => { SCV.shown = true; sfx('flip'); render(); },
+  sctry: () => { const x = SCV.s; startRun(scQs([x], 3), { title: x.title, sc: x.id, again: () => { SCV = { s: x, shown: true }; ACT.sctry(); } }); },
+  scmix: () => startRun(scQs(shuffle(scList()).slice(0, 10), 10), { title: 'Shortcut mix', scmix: true, again: () => ACT.scmix() }),
   lesson: d => { const l = LESSONS.find(x => x.id === d.id); if (!l) return; LES = { l, page: 0, step: 0 }; go('lesson'); },
   lnext: () => { LES.page++; render(); window.scrollTo(0, 0); },
   lback: () => { if (LES.page > 0) LES.page--; MOTION_DIR = -1; render(); window.scrollTo(0, 0); },
@@ -3118,6 +3428,8 @@ const ACT = {
   next: () => {
     if (RUN.i + 1 < RUN.qs.length) { RUN.i++; RUN.sel = null; RUN.ok = null; RUN.gain = 0; RUN.reveal = false; RUN.step = 1; RUN.hint = false; RUN.pick = null; RUN.t0 = Date.now(); render(); window.scrollTo(0, 0); return; }
     RUN.done = true; sfx('done'); buzz(20);
+    if (RUN.sc) { const was = S.sc[RUN.sc] || 0; S.sc[RUN.sc] = Math.max(was, RUN.correct); if (was < 2 && RUN.correct >= 2) { addXP(10); RUN.xp += 10; toast('Shortcut learned. +10 XP', 'good'); } }
+    if (RUN.scmix) RUN.qs.forEach((q, i) => { if (q.scid && RUN.right && RUN.right[i]) S.sc[q.scid] = Math.max(S.sc[q.scid] || 0, 2); });
     if (RUN.bank || RUN.daily) plan().extra = 1; else if (RUN.qs.length >= 5) plan().set = 1;
     if (RUN.level) { RUN.move = levelAfter(S.track, RUN.correct, RUN.qs.length); if (RUN.move > 0) confetti(); }
     RUN.avg = RUN.times.length ? Math.round(RUN.times.reduce((a, b) => a + b, 0) / RUN.times.length / 1000) : 0;
